@@ -4,22 +4,15 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    private Rigidbody2D rigidbody2D;
-    [SerializeField] private SpriteRenderer characterRenderer;
-
-    private Vector2 moveDirection;
-    private Vector2 lookDirection;
-
-    [Range(1, 20)][SerializeField] private float speed;
-
-    LayerMask target;
-    [SerializeField] List<GameObject> monsterList;
-
-    [SerializeField] float attackDelay = 1;
-
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+
+        if(weaponPrefap != null)
+        {
+            weaponController = Instantiate(weaponPrefap, weaponPivot);
+        }
+
     }
 
     private void Update()
@@ -31,9 +24,18 @@ public class PlayerScript : MonoBehaviour
     {
         Movement(moveDirection);
         Rotate(lookDirection);
-        
     }
 
+    #region move and rotate
+    //캐릭터 이동 및 좌우반전
+    private Rigidbody2D rigidbody2D;
+    [SerializeField] private SpriteRenderer characterRenderer;
+    [SerializeField] private Transform weaponPivot;
+
+    private Vector2 moveDirection;
+    private Vector2 lookDirection;
+
+    [Range(1, 20)][SerializeField] private float speed;
 
     void HandleAction()
     {
@@ -62,12 +64,24 @@ public class PlayerScript : MonoBehaviour
 
         // 스프라이트 좌우 반전
         characterRenderer.flipX = isLeft;
+
+        if (weaponPivot != null)
+        {
+            // 무기 회전 처리
+            weaponPivot.rotation = Quaternion.Euler(0, 0, rotZ);
+        }
+        // 무기도 함께 좌우 반전 처리
+        weaponController?.Rotate(isLeft);
     }
 
+    //가장 가까운 몬스터의 위치를 리턴
     Vector2 NearestMonster()
     {
+        //가장 작은 값
         GameObject target = null;
         float min = float.MaxValue;
+
+        //조회
         foreach (GameObject monster in monsterList)
         {
             float distance = Vector3.Distance(monster.transform.position, transform.position);
@@ -77,7 +91,24 @@ public class PlayerScript : MonoBehaviour
                 target = monster;
             }
         }
+
+        //리턴
         return target.transform.position;
     }
+
+
+
+    #endregion
+
+    //전투
+    [SerializeField] private WeaponController weaponPrefap;
+    private WeaponController weaponController;
+
+    [SerializeField] List<GameObject> monsterList;
+    [SerializeField] float attackDelay = 1;
+
+
+
+
 
 }
