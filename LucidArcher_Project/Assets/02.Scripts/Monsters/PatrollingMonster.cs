@@ -5,7 +5,7 @@ using UnityEngine;
 public class PatrollingMonster : MonsterBase
 {
     [Header("Behaviour")]
-    [SerializeField] PatrolMovement patrolComponent;
+    [SerializeField] PatrolPattern patrolComponent;
 
     int isMove = Animator.StringToHash("IsMove");
 

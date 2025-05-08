@@ -5,7 +5,7 @@ using UnityEngine;
 public class ChasingMonster : MonsterBase
 {
     [Header("Behaviour")]
-    [SerializeField] ChasePlayer chaseComponent;
+    [SerializeField] ChasePattern chaseComponent;
 
     int isMove = Animator.StringToHash("IsMove");
     private void Awake()

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrolMovement : MonoBehaviour
+public class PatrolPattern : MonoBehaviour
 {
     MonsterBase monster;
 

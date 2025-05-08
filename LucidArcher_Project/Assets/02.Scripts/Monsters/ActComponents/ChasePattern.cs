@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChasePlayer : MonoBehaviour
+public class ChasePattern : MonoBehaviour
 {
     public MonsterBase chaser;
 
