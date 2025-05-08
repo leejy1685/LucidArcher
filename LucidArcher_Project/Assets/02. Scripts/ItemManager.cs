@@ -9,9 +9,15 @@ public abstract class ItemManager : MonoBehaviour
 
 
     // Update is called once per frame
+    public float pickupDelay = 0.5f;
+    public float spawnTime;
 
 
-    //아이템 효과 발동
+    private void Start()
+    {
+        spawnTime = Time.time; 
+    }
+
     public abstract void ItemAction(GameObject player); 
 
 
@@ -19,6 +25,11 @@ public abstract class ItemManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+
+            if(Time.time -spawnTime< pickupDelay) {
+                return;
+
+        }
             ItemAction(other.gameObject);
 
         }
