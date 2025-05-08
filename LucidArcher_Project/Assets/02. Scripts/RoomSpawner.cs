@@ -16,13 +16,13 @@ public class RoomSpawner : MonoBehaviour
     private const int MAX_ROOM = 6;
 
     // 프리팹
-    [SerializeField] RoomController startRoom;
-    [SerializeField] RoomController bossRoom;
-    [SerializeField] RoomController[] rooms;
+    [SerializeField] RoomHandler startRoom;
+    [SerializeField] RoomHandler bossRoom;
+    [SerializeField] RoomHandler[] rooms;
 
     // 변수
-    private RoomController previousRoom;
-    private RoomController currentRoom;
+    private RoomHandler previousRoom;
+    private RoomHandler currentRoom;
     private int roomCount;
 
     private void Awake()
@@ -36,17 +36,20 @@ public class RoomSpawner : MonoBehaviour
         SpawnRoom(Vector3.zero);
     }
 
+    // 방 소환
     public void SpawnRoom(Vector3 detectionPosition)
     {
-        if (roomCount > MAX_ROOM) return;
+        if (roomCount >= MAX_ROOM) return;
 
-        if(currentRoom != null) previousRoom = currentRoom;
+        previousRoom?.gameObject.SetActive(false);
+        if (currentRoom != null) previousRoom = currentRoom;
+        roomCount++;
 
         switch (roomCount)
         {
-            case 0:
+            case 1:
                 currentRoom = Instantiate(startRoom, transform);
-                currentRoom.InitRoom(RoomState.Start, Vector3.zero);
+                currentRoom.InitRoom(RoomState.Start, detectionPosition);
                 break;
 
             case MAX_ROOM:
@@ -59,8 +62,28 @@ public class RoomSpawner : MonoBehaviour
                 currentRoom.InitRoom(RoomState.Enemy, detectionPosition);
                 break;
         }
+    }
 
-        previousRoom?.gameObject.SetActive(false);
-        roomCount++;
+    // 층 이동
+    public void MoveNextFloor(Vector3 initPosition)
+    {
+        DestroyAllRoom();
+
+        roomCount = 0;
+        SpawnRoom(initPosition);
+    }
+
+    // 모든 방 파괴
+    private void DestroyAllRoom()
+    {
+        previousRoom = null;
+        currentRoom = null;
+
+        RoomHandler[] objs = GetComponentsInChildren<RoomHandler>(true);
+
+        foreach (RoomHandler obj in objs)
+        {
+            obj.DestroyRoom();
+        }
     }
 }

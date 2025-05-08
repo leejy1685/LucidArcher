@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ExitDetection : MonoBehaviour
+public class ExitDetector : MonoBehaviour
 {
     private bool isSpawn = false;
 
