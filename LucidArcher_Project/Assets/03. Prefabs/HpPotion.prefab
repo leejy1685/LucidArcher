@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8864885887779208175}
   - component: {fileID: 941027440186599658}
-  - component: {fileID: 5822053491846427576}
   - component: {fileID: 1167638097125561021}
-  - component: {fileID: 2798244256730667730}
+  - component: {fileID: 2077735589458939433}
+  - component: {fileID: 1516717841782206391}
   m_Layer: 0
   m_Name: HpPotion
   m_TagString: Untagged
@@ -87,8 +87,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &5822053491846427576
-PolygonCollider2D:
+--- !u!114 &1167638097125561021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2981918888953190148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52990d19fefded7499227066a5060a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupDelay: 0.5
+  spawnTime: 0
+--- !u!61 &2077735589458939433
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -129,31 +143,10 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.4375, y: 0.4375}
-      - {x: -0.4375, y: -0.375}
-      - {x: -0.3125, y: -0.5}
-      - {x: 0.25, y: -0.5}
-      - {x: 0.4375, y: -0.4375}
-      - {x: 0.4375, y: 0.375}
-      - {x: 0.375, y: 0.4375}
-  m_UseDelaunayMesh: 0
---- !u!114 &1167638097125561021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2981918888953190148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52990d19fefded7499227066a5060a4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickupDelay: 0.5
-  spawnTime: 0
---- !u!50 &2798244256730667730
+  serializedVersion: 2
+  m_Size: {x: 0.7, y: 1}
+  m_EdgeRadius: 0
+--- !u!50 &1516717841782206391
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
