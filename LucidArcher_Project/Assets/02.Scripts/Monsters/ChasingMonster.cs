@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BigZombie : MonsterBase
+public class ChasingMonster : MonsterBase
 {
-    [Header("Big Zombie")]
+    [Header("Behaviour")]
     [SerializeField] ChasePlayer chaseComponent;
 
     int isMove = Animator.StringToHash("IsMove");
@@ -12,7 +12,7 @@ public class BigZombie : MonsterBase
     {
         chaseComponent.chaser = this;
     }
-    protected override void Update()
+    private void Update()
     {
         if(detectedEnemy != null)
         {

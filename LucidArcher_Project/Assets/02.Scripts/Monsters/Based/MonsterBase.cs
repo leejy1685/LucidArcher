@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class MonsterBase : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] protected MonsterData stats;
+    [SerializeField] public MonsterData stats;
     public float MaxHP => stats.HP;
     [SerializeField] protected float currentHP;
 
@@ -21,14 +21,8 @@ public abstract class MonsterBase : MonoBehaviour
     protected virtual void Start()
     {
         currentHP = stats.HP;
-        sightCollider.radius = stats.SightRange;
+        if(sightCollider != null) sightCollider.radius = stats.SightRange;
     }   
-    
-    protected virtual void Update()
-    {
-
-    }
-
 
     public void TakeDamage(float damage)
     {
