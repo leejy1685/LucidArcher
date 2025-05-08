@@ -64,7 +64,7 @@ public class RoomSpawner : MonoBehaviour
         }
     }
 
-    // 층 이동
+    // 다음 층으로 이동
     public void MoveNextFloor(Vector3 initPosition)
     {
         DestroyAllRoom();

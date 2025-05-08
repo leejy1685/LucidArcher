@@ -1,19 +1,12 @@
-using System.Collections;
 using UnityEngine;
 
 public class StairHandler : MonoBehaviour
 {
-    // 상수
-
     // 외부 오브젝트
     [SerializeField] private GameObject frontTile;
 
-    // 프리팹
-
     // 변수
     private bool canGoDown = false;
-
-    // gameObject 컴포넌트
 
     public void MoveFrontTile()
     {
