@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class RoomHandler : MonoBehaviour
 {
+    // 상수
+    private const int X_MAX = 12;
+    private const int Y_MAX = 6;
+
     // 외부 오브젝트
     [SerializeField] private GameObject gate;
     [SerializeField] private GameObject exitDetection;
@@ -38,8 +42,8 @@ public class RoomHandler : MonoBehaviour
 
         if(roomState == RoomState.Boss)
         {
-            int randX = Random.Range(-7, 7);
-            int randY = Random.Range(-3, 3);
+            int randX = Random.Range(-X_MAX, X_MAX);
+            int randY = Random.Range(-Y_MAX, Y_MAX);
             stair = Instantiate(stairPrefab, transform);
             stair.transform.localPosition = new Vector3(randX + 0.5f, randY + 0.5f);
 
