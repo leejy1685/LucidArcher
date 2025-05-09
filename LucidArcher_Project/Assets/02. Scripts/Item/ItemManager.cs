@@ -15,6 +15,8 @@ public abstract class ItemManager : MonoBehaviour
     public float spawnTime; // 아이템 생성된 시간 변수
 
     private float gravityDelay = 0.3f; // 아이템 스폰되자마자 중력 0되는 거 방지 딜레이
+
+    public GameObject Monster; //몬스터 게임 오브젝트
     private void Start()
     {
         spawnTime = Time.time;  //아이템 생성시 시간 기록
@@ -39,6 +41,8 @@ public abstract class ItemManager : MonoBehaviour
             this.enabled = false;
 
         }
+
+        
     }
 
     public abstract void ItemAction(GameObject player);  //자식 클래스에서 구현 될 메서드
