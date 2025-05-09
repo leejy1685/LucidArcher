@@ -5,6 +5,8 @@ using UnityEngine;
 public abstract class ItemManager : MonoBehaviour
 {
 
+
+
     //private string itemName; //아이템 이름인데 쓸 진 아직 모름 아이템 설명 필요할 때 쓸 수도?
 
     public float itemY; //드랍될 아이템이 멈춰야 할 좌표
@@ -50,6 +52,8 @@ public abstract class ItemManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+
+        
         if (other.CompareTag("Player"))
         {
 
@@ -59,7 +63,7 @@ public abstract class ItemManager : MonoBehaviour
 
             }
             ItemAction(other.gameObject); //아이템 고유 효과 발동
-
+            
         }
     }
 }
