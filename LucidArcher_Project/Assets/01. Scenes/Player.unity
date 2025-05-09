@@ -361,12 +361,13 @@ MonoBehaviour:
   characterRenderer: {fileID: 460962366}
   weaponPivot: {fileID: 450697741}
   speed: 5
+  HP: 6
+  MP: 10
   targetLayer:
     serializedVersion: 2
     m_Bits: 64
   radius: 10
   weaponPrefap: {fileID: 3677935211016202402, guid: be3f0a510feb27b478aeb836c51b7c4a, type: 3}
-  weaponController: {fileID: 0}
   attackDelay: 1
 --- !u!1 &1155642019
 GameObject:

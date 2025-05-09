@@ -9,6 +9,11 @@ EditorBuildSettings:
     path: Assets/01. Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+<<<<<<< HEAD
     path: Assets/01. Scenes/MapInit.unity
     guid: 43f6e670f421be743b809ef478b5dc02
+=======
+    path: Assets/01. Scenes/UIScene.unity
+    guid: b817f1e3c8db6f0438f6368889bc205d
+>>>>>>> origin/Parkwonhee
   m_configObjects: {}
