@@ -20,11 +20,25 @@ public class RangeWeaponController : MonoBehaviour
         weaponRenderer.flipY = isLeft;
     }
 
-    public void ShotBullet(Vector2 lookDirection)
+    public void CreateArrow(Vector2 lookDirection,LayerMask targetLayer)
     {
+        //각도 계산
         Quaternion quaternion = transform.rotation;
         quaternion = quaternion * Quaternion.Euler(0, 0, -90);
-        ArrowController go = Instantiate(arrow,transform.position, quaternion);
-        go.ShootBullet(lookDirection, bulletSpeed);
+
+        //발사되는 포지션
+        Vector2 shootPosition = transform.position;
+
+        shootPosition.y += (bulletNum - 1) * 0.1f; 
+        //발사
+        for (int i = 0; i < bulletNum; i++)
+        {
+            ArrowController go = Instantiate(arrow, shootPosition, quaternion);
+            go.Init(targetLayer);
+            go.ShootArrow(lookDirection, bulletSpeed);
+
+            //추가화살 포지션 조절
+            shootPosition.y -= 0.2f;
+        }
     }
 }

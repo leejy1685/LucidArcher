@@ -27,9 +27,10 @@ public class PlayerScript : MonoBehaviour
 
     //무기
     [SerializeField] private RangeWeaponController weaponPrefap;
-    public RangeWeaponController weaponController;
+    private RangeWeaponController weaponController;
 
     //공격 딜레이
+    float attackTime;
     [SerializeField] float attackDelay = 1;
 
     private void Start()
@@ -49,26 +50,23 @@ public class PlayerScript : MonoBehaviour
         HandleAction();
     }
 
-    float time;
-
     private void FixedUpdate()
     {
         // 원형 레이캐스트 시뮬레이션
         targets = Physics2D.CircleCastAll(transform.position, radius, Vector2.zero, 0, targetLayer);
 
+        //이동과 캐릭터 전환
         Movement(moveDirection);
         Rotate(lookDirection);
 
-        time += Time.deltaTime;
-        if (targets.Length > 0 && time > attackDelay)
-        {
-            weaponController.ShotBullet(lookDirection);
-            time = 0;
-        }
+        //공격
+        attackTime += Time.deltaTime;
+        Attack();
     }
 
     #region move and rotate
 
+    //캐릭터 조작
     void HandleAction()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -79,9 +77,6 @@ public class PlayerScript : MonoBehaviour
             lookDirection = NearestMonster().position - transform.position;
         else
             lookDirection = moveDirection;
-
-
-        Debug.Log(lookDirection);
     }
 
     //이동
@@ -140,13 +135,14 @@ public class PlayerScript : MonoBehaviour
 
     #region Attack
 
-
+    //공격 무기에서 화살 제작
     void Attack()
-    {
-
-
-
-        
+    {   //근처에 몬스터가 있을 때
+        if (targets.Length > 0 && attackTime > attackDelay)
+        {
+            weaponController.CreateArrow(lookDirection, targetLayer);
+            attackTime = 0;
+        }
     }
 
 
