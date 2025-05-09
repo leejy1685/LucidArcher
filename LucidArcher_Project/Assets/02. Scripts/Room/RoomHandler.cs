@@ -7,16 +7,21 @@ public class RoomHandler : MonoBehaviour
     private const int Y_MAX = 6;
 
     // 외부 오브젝트
+    [Header("GameObjects")]
     [SerializeField] private GameObject gate;
-    [SerializeField] private GameObject exitDetection;
+    [SerializeField] private GameObject exitDetector;
     private GameObject stair;
 
     // 프리팹
+    [Header("Prefabs")]
     [SerializeField] private GameObject stairPrefab;
 
     // 변수
     private RoomState roomState;
     private bool isExcuted = false;
+
+    public float MaxX { get; private set; }
+    public float MaxY { get; private set; }
 
     private void Update()
     {
@@ -30,14 +35,16 @@ public class RoomHandler : MonoBehaviour
     {
         this.roomState = roomState;
         transform.position = position;
+        MaxX = exitDetector.transform.GetChild(0).localPosition.x;
+        MaxY = exitDetector.transform.GetChild(2).localPosition.y;
 
-        if(roomState == RoomState.Start)
+        if (roomState == RoomState.Start)
         {
-            exitDetection.SetActive(true);
+            exitDetector.SetActive(true);
         }
         else
         {
-            exitDetection.SetActive(false);
+            exitDetector.SetActive(false);
         }
 
         if(roomState == RoomState.Boss)
@@ -63,9 +70,10 @@ public class RoomHandler : MonoBehaviour
     private void ExcuteEvent()
     {
         isExcuted = true;
-        
+
         // 적 소환 등 실행
 
+        exitDetector.SetActive(true);
         ControllGate(false);
     }
 
@@ -76,7 +84,6 @@ public class RoomHandler : MonoBehaviour
 
         if (roomState != RoomState.Boss)
         {
-            exitDetection.SetActive(true);
             ControllGate(true);
         }
         else
