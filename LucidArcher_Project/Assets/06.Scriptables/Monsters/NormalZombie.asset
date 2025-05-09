@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c542eb859ea858d448c14fd2c3e700ec, type: 3}
-  m_Name: SmolZombie
+  m_Name: NormalZombie
   m_EditorClassIdentifier: 
   monsterName: Smol Zombie
-  hp: 30
-  moveSpeed: 4
-  atk: 2
+  hp: 100
+  moveSpeed: 2
+  atk: 3
   atkDelay: 0
-  def: 2
+  def: 8
   range: 0
-  sightRange: 8.5
+  sightRange: 4

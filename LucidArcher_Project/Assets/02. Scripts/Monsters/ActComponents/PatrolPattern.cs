@@ -14,10 +14,10 @@ public class PatrolPattern : MonoBehaviour
     private Vector2 p2;
     private Vector2 destination;
 
-    private void Awake()
+    private void Start()
     {
-        p1 = point1.position;
-        p2 = point2.position;
+        p1 = monster.transform.position + point1.localPosition;
+        p2 = monster.transform.position + point2.localPosition;
         destination = p1;
     }
 

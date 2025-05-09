@@ -7,16 +7,16 @@ public class ChasingMonster : MonsterBase
     [Header("Behaviour")]
     [SerializeField] ChasePattern chaseComponent;
 
-    int isMove = Animator.StringToHash("IsMove");
+    readonly int IsMove = Animator.StringToHash("IsMove");
     private void Awake()
     {
-        chaseComponent.chaser = this;
+        chaseComponent.Init(this);
     }
     private void Update()
     {
         if(detectedEnemy != null)
         {
-            animator.SetBool(isMove, true);
+            animator.SetBool(IsMove, true);
             chaseComponent.Chase(detectedEnemy);
         }
     }
@@ -25,6 +25,6 @@ public class ChasingMonster : MonsterBase
     {
         base.OnPlayerMissed();
         rb.velocity = Vector2.zero;
-        animator.SetBool(isMove, false);
+        animator.SetBool(IsMove, false);
     }
 }

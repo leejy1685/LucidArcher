@@ -9,6 +9,6 @@ public class TestPlayer : MonoBehaviour
 
         Vector3 addPos = new Vector3(x, y, 0);
 
-        transform.position += addPos * 5f * Time.deltaTime;
+        transform.position += addPos * 15f * Time.deltaTime;
     }
 }

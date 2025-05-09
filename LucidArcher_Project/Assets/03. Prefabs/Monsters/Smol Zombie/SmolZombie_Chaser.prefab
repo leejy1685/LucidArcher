@@ -93,9 +93,9 @@ GameObject:
   - component: {fileID: 5012861558709276884}
   - component: {fileID: 8326639956605407672}
   - component: {fileID: 6723013899438006152}
-  - component: {fileID: 7662128237581430521}
+  - component: {fileID: 4829992560133388988}
   m_Layer: 7
-  m_Name: BigZombie_Chaser
+  m_Name: SmolZombie_Chaser
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,15 +202,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e92b72a9f7978b47aea6b259656e07b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 59e45d0eac0e46c41a676c4bc0660bad, type: 2}
+  stats: {fileID: 11400000, guid: b75d40d0e25a91b43b33210d712e0de0, type: 2}
   currentHP: 0
   sightCollider: {fileID: 6282223703303585118}
   sprite: {fileID: 5684283458455448967}
   animator: {fileID: 3933419230226117675}
   rb: {fileID: 8326639956605407672}
   detectedEnemy: {fileID: 0}
-  chaseComponent: {fileID: 7662128237581430521}
---- !u!114 &7662128237581430521
+  chaseComponent: {fileID: 4829992560133388988}
+--- !u!114 &4829992560133388988
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -297,7 +297,7 @@ SpriteRenderer:
   m_SortingLayerID: -417828581
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2be10a12efbd96d4e8ff86c1f3c55943, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 74b08d52bbbe1f6429e7d8b155799cfd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -318,7 +318,7 @@ Animator:
   m_GameObject: {fileID: 8818271631395283912}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 284c96b01030b1544bdf234faff5b04b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0297b71b623faec4aa7b21a43861b184, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
