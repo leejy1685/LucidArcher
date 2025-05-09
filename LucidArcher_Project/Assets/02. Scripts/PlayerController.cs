@@ -17,6 +17,8 @@ public class PlayerScript : MonoBehaviour
 
     //이동 속도
     [Range(1, 20)][SerializeField] private float speed;
+    //체력
+    [Range(1, 10)][SerializeField] private int HP = 6;
 
     //몬스터 인식
     public LayerMask targetLayer;
@@ -33,7 +35,7 @@ public class PlayerScript : MonoBehaviour
     float attackTime;
     [SerializeField] float attackDelay = 1;
 
-    private void Start()
+    private void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
 
@@ -41,6 +43,8 @@ public class PlayerScript : MonoBehaviour
         {
             weaponController = Instantiate(weaponPrefap, weaponPivot);
         }
+
+        HP = 6;
 
     }
 

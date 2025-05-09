@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponRenderer: {fileID: 8724346132587301213}
-  bulletNum: 3
+  bulletNum: 1
   damage: 0
   bulletSpeed: 10
   arrow: {fileID: -2732247655681259535, guid: 559cda13bf40fb0468439693d3bb2c7b, type: 3}
