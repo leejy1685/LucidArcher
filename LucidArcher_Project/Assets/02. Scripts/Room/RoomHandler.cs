@@ -15,6 +15,7 @@ public class RoomHandler : MonoBehaviour
     // 프리팹
     [Header("Prefabs")]
     [SerializeField] private GameObject stairPrefab;
+    [SerializeField] private GameObject[] monsterPrefabs;
 
     // 변수
     private RoomState roomState;
@@ -71,7 +72,7 @@ public class RoomHandler : MonoBehaviour
     {
         isExcuted = true;
 
-        // 적 소환 등 실행
+        // 적 스폰
 
         exitDetector.SetActive(true);
         ControllGate(false);
