@@ -1,9 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerScript : MonoBehaviour
 {
+    //캐릭터 이동
+    private Rigidbody2D rigidbody2D;
+    [SerializeField] private SpriteRenderer characterRenderer;
+    [SerializeField] private Transform weaponPivot;
+
+    //이동방향 보는 방향
+    private Vector2 moveDirection;
+    private Vector2 lookDirection;
+
+    //이동 속도
+    [Range(1, 20)][SerializeField] private float speed;
+
+    //몬스터 인식
+    public LayerMask targetLayer;
+    RaycastHit2D[] targets;
+
+    //인식 거리
+    [SerializeField] float radius = 10f;
+
+    //무기
+    [SerializeField] private RangeWeaponController weaponPrefap;
+    public RangeWeaponController weaponController;
+
+    //공격 딜레이
+    [SerializeField] float attackDelay = 1;
+
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -15,27 +43,31 @@ public class PlayerScript : MonoBehaviour
 
     }
 
+
     private void Update()
     {
         HandleAction();
     }
 
+    float time;
+
     private void FixedUpdate()
     {
+        // 원형 레이캐스트 시뮬레이션
+        targets = Physics2D.CircleCastAll(transform.position, radius, Vector2.zero, 0, targetLayer);
+
         Movement(moveDirection);
         Rotate(lookDirection);
+
+        time += Time.deltaTime;
+        if (targets.Length > 0 && time > attackDelay)
+        {
+            weaponController.ShotBullet(lookDirection);
+            time = 0;
+        }
     }
 
     #region move and rotate
-    //캐릭터 이동 및 좌우반전
-    private Rigidbody2D rigidbody2D;
-    [SerializeField] private SpriteRenderer characterRenderer;
-    [SerializeField] private Transform weaponPivot;
-
-    private Vector2 moveDirection;
-    private Vector2 lookDirection;
-
-    [Range(1, 20)][SerializeField] private float speed;
 
     void HandleAction()
     {
@@ -43,10 +75,13 @@ public class PlayerScript : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         moveDirection = new Vector2(horizontal, vertical).normalized;
 
-        // 마우스 포인터의 스크린 좌표를 가져옴
-        Vector2 targetPostion = NearestMonster();
-        // 현재 위치와 마우스 위치 사이의 방향 벡터 계산
-        lookDirection = (targetPostion - (Vector2)transform.position);
+        if(targets.Length > 0 ) 
+            lookDirection = NearestMonster().position - transform.position;
+        else
+            lookDirection = moveDirection;
+
+
+        Debug.Log(lookDirection);
     }
 
     //이동
@@ -75,40 +110,45 @@ public class PlayerScript : MonoBehaviour
     }
 
     //가장 가까운 몬스터의 위치를 리턴
-    Vector2 NearestMonster()
+    Transform NearestMonster()
     {
-        //가장 작은 값
-        GameObject target = null;
-        float min = float.MaxValue;
+        Transform result = null;
+        float diff = 100; //플레이어와의 거리
 
-        //조회
-        foreach (GameObject monster in monsterList)
-        {
-            float distance = Vector3.Distance(monster.transform.position, transform.position);
-            if (distance < min)
+        //foreach 문으로 캐스팅 결와 오브젝트를 하나씩 방문
+        foreach (RaycastHit2D target in targets)
+        {  //CircleCastAll에 맞은 애들을 하나씩 접근
+            Vector3 myPos = transform.position;             //플레이어 위치
+            Vector3 targetPos = target.transform.position;  //타겟의 위치
+            float curDiff = Vector3.Distance(myPos, targetPos); //거리를 구한다.
+
+            if (curDiff < diff) //최소 거리를 저장
             {
-                min = distance;
-                target = monster;
+                diff = curDiff;
+                result = target.transform; //결과는 가장 가까운 타겟의 transform으로 지정
             }
+
         }
 
-        //리턴
-        return target.transform.position;
+        return result;
     }
 
 
 
     #endregion
 
-    //전투
-    [SerializeField] private WeaponController weaponPrefap;
-    private WeaponController weaponController;
 
-    [SerializeField] List<GameObject> monsterList;
-    [SerializeField] float attackDelay = 1;
+    #region Attack
 
 
+    void Attack()
+    {
 
 
 
+        
+    }
+
+
+    #endregion
 }
