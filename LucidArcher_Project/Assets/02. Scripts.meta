@@ -1,6 +1,15 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<<< HEAD:LucidArcher_Project/Assets/02. Scripts.meta
 guid: 6236427013b79b94f8ddff14f7c0c52a
 folderAsset: yes
+========
+guid: 43f6e670f421be743b809ef478b5dc02
+>>>>>>>> origin/DongJun_MapInit:LucidArcher_Project/Assets/01. Scenes/MapInit.unity.meta
+=======
+guid: 18203ae0cdf2b50478786fc0a3c85f8f
+folderAsset: yes
+>>>>>>> origin/DongJun_MapInit
 DefaultImporter:
   externalObjects: {}
   userData: 

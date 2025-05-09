@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 95c74422ce3e90c46a3ee5a12aea0c50
+=======
+guid: 0ef8af698a325d142a93b320cd1486ca
+>>>>>>> origin/DongJun_MapInit
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
