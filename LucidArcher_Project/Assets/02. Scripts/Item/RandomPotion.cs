@@ -25,7 +25,8 @@ public class RandomPotion : ItemManager
 
             case 1:
                 // n초 동안 공격력증가
-                StartCoroutine(RandomDamageBuff(weaponstat, weaponstat.Damage * 0.1f, 7f));
+                //StartCoroutine(RandomDamageBuff(weaponstat, weaponstat.Damage * 0.1f, 1f));
+                weaponstat.RandBuff(weaponstat.Damage * 0.1f, 1f);
 
                 break;
             case 2:
@@ -37,7 +38,7 @@ public class RandomPotion : ItemManager
                 //상태이상 (방향키 반전, 화상, 슬로우 등)
                 Debug.Log("이동속도 감소");
 
-                StartCoroutine(RandomSlowBuff(Playerstat, -7f, 7f));
+                StartCoroutine(RandomSlowBuff(Playerstat, 7f, 1f));
 
                 
                 break;
@@ -48,7 +49,7 @@ public class RandomPotion : ItemManager
         Destroy(gameObject);
     }
 
-    private IEnumerator RandomDamageBuff(WeaponStat weaponstat, float damage, float duration)
+     IEnumerator RandomDamageBuff(WeaponStat weaponstat, float damage, float duration)
     {
         Debug.Log($"{weaponstat.Damage}데미지에서 7초동안 10% 증가해서 {weaponstat.Damage * 1.1f}이 됐습니다. ");
 
@@ -60,7 +61,7 @@ public class RandomPotion : ItemManager
 
     }
 
-    private IEnumerator RandomSlowBuff(PlayerStatHendler playerStat, float speed, float duration)
+     IEnumerator RandomSlowBuff(PlayerStatHendler playerStat, float speed, float duration)
     {
 
         playerStat.PlusSpeed(-speed);

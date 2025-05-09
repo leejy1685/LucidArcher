@@ -23,4 +23,22 @@ public class WeaponStat : MonoBehaviour
         Damage += input;
 
     }
+
+    public void RandBuff(float damage, float duration)
+    {
+
+        StartCoroutine(RandomDamageBuff(damage,duration));
+
+    }
+    IEnumerator RandomDamageBuff( float damage, float duration)
+    {
+        Debug.Log($"{Damage}데미지에서 7초동안 10% 증가해서 {Damage * 1.1f}이 됐습니다. ");
+
+        PlusDamage(damage);
+        yield return new WaitForSeconds(duration);
+        Debug.Log($"물약 효과가 종료되어 공격력이 원래 수치인{Damage}으로 됐습니다. ");
+
+        PlusDamage(-damage);
+
+    }
 }

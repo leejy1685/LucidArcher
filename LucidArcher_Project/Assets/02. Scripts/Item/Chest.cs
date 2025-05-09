@@ -18,9 +18,10 @@ public class Chest : MonoBehaviour
         Destroy(gameObject, 1.0f);
 
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
+
     {
-        if (collision.collider.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
 
             animator.SetTrigger("Open"); //트리거 발생 시 상자여는 애니메이션 재생
@@ -32,6 +33,8 @@ public class Chest : MonoBehaviour
   
 
     }
+
+    
 
 
     void DropItems()
