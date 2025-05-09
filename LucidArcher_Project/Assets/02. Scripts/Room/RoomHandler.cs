@@ -10,15 +10,12 @@ public class RoomHandler : MonoBehaviour
     [Header("GameObjects")]
     [SerializeField] private GameObject gate;
     [SerializeField] private GameObject exitDetector;
+    [SerializeField] private MonsterSpawner monsterSpawner;
     private GameObject stair;
 
     // 프리팹
     [Header("Prefabs")]
     [SerializeField] private GameObject stairPrefab;
-    [SerializeField] private GameObject[] monsterPrefabs;
-
-
-    //테스트 프리펩
     [SerializeField] private GameObject Chest;
 
     // 변수
@@ -28,13 +25,6 @@ public class RoomHandler : MonoBehaviour
     public float MaxX { get; private set; }
     public float MaxY { get; private set; }
 
-    private void Update()
-    {
-        // 임시 테스트용
-        if(Input.GetKeyDown(KeyCode.Space))
-            EndEvent();
-    }
-
     // 방의 위치와 상태 초기화
     public void InitRoom(RoomState roomState, Vector3 position)
     {
@@ -42,6 +32,7 @@ public class RoomHandler : MonoBehaviour
         transform.position = position;
         MaxX = exitDetector.transform.GetChild(0).localPosition.x;
         MaxY = exitDetector.transform.GetChild(2).localPosition.y;
+        monsterSpawner.Init(this, Random.Range(4, 9));
 
         if (roomState == RoomState.Start)
         {
@@ -76,17 +67,19 @@ public class RoomHandler : MonoBehaviour
     {
         isExcuted = true;
 
-        // 적 스폰
-        SpawnChest();
+        monsterSpawner.SpawnMosnters();
 
         exitDetector.SetActive(true);
         ControllGate(false);
     }
 
     // 이벤트 종료 후 경험치, 아이템 등 획득 / 보스 방이면 계단도 보이게
-    private void EndEvent()
+    public void EndEvent()
     {
+        if (roomState == RoomState.Start) return;
+
         // 경험치, 아이템 등 획득
+        SpawnChest();
 
         if (roomState != RoomState.Boss)
         {
@@ -104,6 +97,7 @@ public class RoomHandler : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // 플레이어가 어느 정도 방 안에 들어오면 이벤트 실행
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isExcuted && collision.CompareTag("Player"))
@@ -115,14 +109,8 @@ public class RoomHandler : MonoBehaviour
     }
 
     // 상자 소환
-    public void SpawnChest()
+    private void SpawnChest()
     {
-        Vector3 roomCenter = transform.position;
-
-        GameObject chest = Instantiate(Chest, roomCenter, Quaternion.identity);
-
-
-
-
+        GameObject chest = Instantiate(Chest, transform.position, Quaternion.identity, transform);
     }
 }

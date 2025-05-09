@@ -1,5 +1,56 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &101310177413908845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1357186999782898972}
+  - component: {fileID: 6336174157951915240}
+  m_Layer: 0
+  m_Name: MonsterSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1357186999782898972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101310177413908845}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7564590931581051191}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6336174157951915240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101310177413908845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ee25f88bba1194fa8f9045dc09c4e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterPrefabs:
+  - {fileID: 6577821320862494590, guid: c7b94344390401d44b4b35b10f0a61b7, type: 3}
+  - {fileID: 2768623506896009946, guid: 5b579c7eec46d8146a3c099518b7ef4b, type: 3}
+  - {fileID: 6577821320862494590, guid: acaa2341c87ec3b44bbbb04a8d767f93, type: 3}
+  - {fileID: 2768623506896009946, guid: 8591ee46053337f48a898aa4df77aaf9, type: 3}
+  - {fileID: 6577821320862494590, guid: 44b5dde731b966e499a830f4c1d40593, type: 3}
+  - {fileID: 2768623506896009946, guid: fc336c84709ea82429a5aa1dc6f67f83, type: 3}
 --- !u!1 &614371447474685670
 GameObject:
   m_ObjectHideFlags: 0
@@ -9561,6 +9612,7 @@ Transform:
   m_Children:
   - {fileID: 449721109421297064}
   - {fileID: 5239751557264659337}
+  - {fileID: 1357186999782898972}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &8321196915626248121
@@ -9622,5 +9674,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gate: {fileID: 8012924667885936770}
   exitDetector: {fileID: 1317766938753151432}
+  monsterSpawner: {fileID: 6336174157951915240}
   stairPrefab: {fileID: 2784487209585270011, guid: 7b2ac160dae02fe49843cb9b8d45d70f, type: 3}
   Chest: {fileID: 3247758268415638281, guid: 0980db6fda712be459f932af1270ec4f, type: 3}
