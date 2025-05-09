@@ -17,6 +17,10 @@ public class RoomHandler : MonoBehaviour
     [SerializeField] private GameObject stairPrefab;
     [SerializeField] private GameObject[] monsterPrefabs;
 
+
+    //테스트 프리펩
+    [SerializeField] private GameObject Chest;
+
     // 변수
     private RoomState roomState;
     private bool isExcuted = false;
@@ -73,6 +77,7 @@ public class RoomHandler : MonoBehaviour
         isExcuted = true;
 
         // 적 스폰
+        SpawnChest()
 
         exitDetector.SetActive(true);
         ControllGate(false);
@@ -107,5 +112,17 @@ public class RoomHandler : MonoBehaviour
 
             ExcuteEvent();
         }
+    }
+
+    // 상자 소환
+    public void SpawnChest()
+    {
+        Vector3 roomCenter = transform.position;
+
+        GameObject chest = Instantiate(Chest, roomCenter, Quaternion.identity);
+
+
+
+
     }
 }

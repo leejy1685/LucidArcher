@@ -9623,3 +9623,4 @@ MonoBehaviour:
   gate: {fileID: 8012924667885936770}
   exitDetector: {fileID: 1317766938753151432}
   stairPrefab: {fileID: 2784487209585270011, guid: 7b2ac160dae02fe49843cb9b8d45d70f, type: 3}
+  Chest: {fileID: 3247758268415638281, guid: 0980db6fda712be459f932af1270ec4f, type: 3}
