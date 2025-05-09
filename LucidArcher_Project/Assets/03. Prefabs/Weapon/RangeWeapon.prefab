@@ -147,5 +147,5 @@ MonoBehaviour:
   bulletNum: 1
   damage: 100
   bulletSpeed: 10
-  knockbackDuration: 0.5
+  knockbackDuration: 0.1
   knockbackPower: 1

@@ -18,10 +18,17 @@ public abstract class MonsterBase : MonoBehaviour
 
     public GameObject detectedEnemy;    // 몬스터 입장에서 enemy, 즉 플레이어. 혹은 허수아비 스킬을 만든다면 허수아비, 상태이상 시 동족
 
+
+    //넉백
+    KnockbackApplier knockbackApplier;
+
     protected virtual void Start()
     {
         currentHP = stats.HP;
         if(sightCollider != null) sightCollider.radius = stats.SightRange;
+
+        //넉백정보
+        knockbackApplier = GetComponent<KnockbackApplier>();
     }   
 
     public void TakeDamage(float damage)
@@ -49,7 +56,12 @@ public abstract class MonsterBase : MonoBehaviour
     public void Move(Vector2 direction)
     {
         sprite.flipX = direction.x < 0;
-        rb.velocity = direction * stats.MoveSpeed;
+
+        direction = direction* stats.MoveSpeed;
+        //넉백 적용
+        direction = knockbackApplier.ApplyKnockback(direction);
+
+        rb.velocity = direction;
     }
 
 }

@@ -32,16 +32,17 @@ public class PlayerController : MonoBehaviour
     //공격 속도
     private float attackTime;
 
-    //넉백
-    float knockbackDuration; //넉백 시간
-    Vector2 knockback;
+    //대쉬기능 (일시 무적)
+    private float dashTime = 0.3f;
+    private float superTime;
+    private bool isSuper;
 
     private void Awake()
     {
         stat = GetComponent<PlayerStatHendler>();
         rigidbody2D = GetComponent<Rigidbody2D>();
 
-        if(weaponPrefap != null)
+        if (weaponPrefap != null)
         {
             weaponController = Instantiate(weaponPrefap, weaponPivot);
         }
@@ -65,6 +66,12 @@ public class PlayerController : MonoBehaviour
         
         //공격
         Attack();
+
+        //대쉬
+        //Dash();
+        //Debug.Log(this.gameObject.layer);
+        //Debug.Log(targetLayer.Description());
+        //Physics2D.IgnoreLayerCollision(this.gameObject.layer, , isSuper);
     }
 
     #region move and rotate
@@ -80,6 +87,13 @@ public class PlayerController : MonoBehaviour
             lookDirection = NearestMonster().position - transform.position;
         else
             lookDirection = moveDirection;
+
+        //대쉬중이 아니고, 이동 중 일 때, 스패이스를 누르면 대쉬
+        if (!isSuper && Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(moveDirection.magnitude) > 0.5f)
+        {
+            isSuper = true;
+            superTime = 0;
+        }
     }
 
     //이동
@@ -87,13 +101,6 @@ public class PlayerController : MonoBehaviour
     {
         //이동 방향에 속도 넣기
         direction = direction * stat.Speed;
-
-        // 넉백 중이면 이동 속도 감소 + 넉백 방향 적용
-        if (knockbackDuration > 0.0f)
-        {
-            direction *= 0.2f; // 이동 속도 감소
-            direction += knockback;// 넉백 방향 추가
-        }
 
         //물리 실행
         rigidbody2D.velocity = direction;
@@ -146,7 +153,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
 
-    #region Attack
+    #region Battle
 
     //공격 무기에서 화살 제작
     void Attack()
@@ -161,12 +168,37 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //넉백 적용
-    public void ApplyKnockback(Transform other, float power, float duration)
+    void Dash()
     {
-        knockbackDuration = duration;
-        // 상대 방향을 반대로 밀어냄
-        knockback = -(other.position - transform.position).normalized * power;
+        superTime += Time.deltaTime;
+        if(superTime < dashTime)
+        {
+            //충돌무시
+
+            //스피드 증가
+        }
+        else
+        {
+            //스피드 정상화
+            //무적 종료
+            isSuper = false;
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        //대쉬 중 무적
+        if (isSuper)
+            return;
+
+        //Debug.Log("대미지 받음");
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        TakeDamage(1);
+
+        Debug.Log((targetLayer | 1 << collision.gameObject.layer));
     }
 
     #endregion

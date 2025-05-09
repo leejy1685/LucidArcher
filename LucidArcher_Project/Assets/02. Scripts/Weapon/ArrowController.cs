@@ -28,7 +28,9 @@ public class ArrowController : MonoBehaviour
         {
             Destroy(gameObject);
             //³Ë¹é Àû¿ë
-            //collision.GetComponent<PlayerController>().ApplyKnockback(transform, weaponStat.KnockbackPower, weaponStat.KnockbackDuration);
+            collision.GetComponent<KnockbackApplier>().Knockback(transform, weaponStat.KnockbackPower, weaponStat.KnockbackDuration);
+            collision.GetComponent<MonsterBase>().TakeDamage(weaponStat.Damage);
+
         }
 
     }
