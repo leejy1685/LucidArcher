@@ -10,19 +10,20 @@ public class MonsterProjectile : MonoBehaviour
 
     [SerializeField] Vector2 targetPosition;
     [SerializeField] Vector2 direction;
+    [SerializeField] float damage;
 
     [Header("Required Components")]
     [SerializeField] Rigidbody2D rb;
 
-    [Header("Properties")]
+    [Header("Required Properties")]
     [SerializeField] float speed;
-    [SerializeField] int damage;
     [SerializeField] float lifeTime;
     float lifeRemained;
     [SerializeField] LayerMask targetMask;
     internal void Init(MonsterBase _owner, Queue<MonsterProjectile> projectilePool, Vector2 launchPosition, Vector2 _targetPosition)
     {
         owner = _owner;
+        damage = owner.stats.Atk;
         basePool = projectilePool;
         transform.position = launchPosition;
         targetPosition = _targetPosition;

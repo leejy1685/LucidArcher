@@ -43,7 +43,7 @@ public abstract class MonsterBase : MonoBehaviour
     void Die()
     {
         // TODO
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     public virtual void OnPlayerDetected(GameObject Player)
