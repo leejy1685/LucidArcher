@@ -77,7 +77,7 @@ public class RoomHandler : MonoBehaviour
         isExcuted = true;
 
         // 적 스폰
-        SpawnChest()
+        SpawnChest();
 
         exitDetector.SetActive(true);
         ControllGate(false);
