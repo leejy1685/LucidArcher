@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 632baf280c800984c9d62ee5cb1baeec
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - characterRenderer: {instanceID: 0}
+  - weaponPivot: {instanceID: 0}
+  - weaponPrefap: {fileID: 3677935211016202402, guid: be3f0a510feb27b478aeb836c51b7c4a, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

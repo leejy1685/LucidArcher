@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:LucidArcher_Project/Assets/02. Scripts.meta
+guid: de83aed3f7ef8584cad31e7484bbba6d
+folderAsset: yes
+========
 guid: b817f1e3c8db6f0438f6368889bc205d
+>>>>>>>> origin/Parkwonhee:LucidArcher_Project/Assets/01. Scenes/UIScene.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
