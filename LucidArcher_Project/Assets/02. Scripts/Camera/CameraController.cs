@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
     private float maxX;
     private float maxY;
 
-    private void Start()
+    private void Awake()
     {
         cameraHalfHeight = Camera.main.orthographicSize;
         cameraHalfWidth = cameraHalfHeight * Camera.main.aspect;
@@ -63,14 +63,5 @@ public class CameraController : MonoBehaviour
         roomPosition = _roomPosition;
         maxX = _maxX - cameraHalfWidth;
         maxY = _maxY - cameraHalfHeight;
-    }
-
-    // 기존 카메라 이동 방식(너무 경직되있음) : 현재 사용 안함
-    private void MoveToTarget(Vector3 targetPosition)
-    {
-        float cameraX = CheckPositionLimit(targetPosition.x, true);
-        float cameraY = CheckPositionLimit(targetPosition.y, false);
-
-        transform.position = new Vector3(cameraX, cameraY, -10);
     }
 }
