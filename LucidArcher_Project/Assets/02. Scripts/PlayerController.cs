@@ -19,6 +19,7 @@ public class PlayerScript : MonoBehaviour
     [Range(1, 20)][SerializeField] private float speed;
     //체력
     [Range(1, 10)][SerializeField] private int HP = 6;
+    [Range(1, 10)][SerializeField] private float MP = 100;
 
     //몬스터 인식
     public LayerMask targetLayer;
@@ -45,6 +46,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         HP = 6;
+        MP = 100;
 
     }
 
