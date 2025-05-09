@@ -9,12 +9,13 @@ public class GameUI : BaseUI
     public Slider Exp;
     public TextMeshProUGUI stage;
 
+    
 
-
-    int playerHp = 10;
+    public int playerHp = 9;
 
     [SerializeField] private Transform hpTransform;
     [SerializeField] private List<GameObject> heartPrefabs;
+    [SerializeField] private List<GameObject> createdHeart;
 
     protected override UIState GetUIState()
     {
@@ -43,36 +44,32 @@ public class GameUI : BaseUI
         {
             if (lastHeart % 2 == 0)
             {
-                GameObject createdHeart = Instantiate(selectedHeart, hpTransform);
-                createdHeart.transform.localPosition = new Vector3((i) * 25, 0, 0);
+                createdHeart[i] = Instantiate(selectedHeart, hpTransform);
+                createdHeart[i].transform.localPosition = new Vector3((i) * 25, 0, 0);
             }
             
             else
             {
                 if (i <= lastHeart - 2) // 마지막 하트 전까지는 Full하트트 생성성
                 {
-                    GameObject createdHeart = Instantiate(selectedHeart, hpTransform);
-                    createdHeart.transform.localPosition = new Vector3((i) * 25, 0, 0);
+                    createdHeart[i] = Instantiate(selectedHeart, hpTransform);
+                    createdHeart[i].transform.localPosition = new Vector3((i) * 75, 0, 0);
                 }
-                else // 마지막 하트에선 Half하트트 생성
+                else // 마지막 하트에선 Half하트 생성
                 {
-                    GameObject createdHeart = Instantiate(selectedHeart, hpTransform);
-                    createdHeart.transform.localPosition = new Vector3((i) * 25, 0, 0);
+                    createdHeart[i] = Instantiate(selectedHeart, hpTransform);
+                    
+                    Transform full = createdHeart[i].transform.GetChild(0);
+                    Transform half = createdHeart[i].transform.GetChild(1);
+
+                    full.gameObject.SetActive(false);
+                    half.gameObject.SetActive(true);
+
+                    createdHeart[i].transform.localPosition = new Vector3((i) * 75, 0, 0);
                 }
 
             }
         }
-
-
-        // 만약 플레이어가 맞았어
-        // 그러면 hit이이 true가 됨
-        // 남아있는 체력에 따른 하트의 관리가 필요함
-        // 위 요소들을 통해 하트의 SetActive를 관리하고자 함
-
-    }
-
-    public void AddHeartPrefab()
-    {
 
     }
 
