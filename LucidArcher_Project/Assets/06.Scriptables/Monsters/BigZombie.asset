@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BigZombie
   m_EditorClassIdentifier: 
   monsterName: Big Zombie
-  hp: 0
+  hp: 200
   moveSpeed: 1
   atk: 10
   atkDelay: 0

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c542eb859ea858d448c14fd2c3e700ec, type: 3}
   m_Name: SmolZombie
   m_EditorClassIdentifier: 
-  monsterName: Big Zombie
-  hp: 0
-  moveSpeed: 1
-  atk: 10
+  monsterName: Smol Zombie
+  hp: 100
+  moveSpeed: 4
+  atk: 3
   atkDelay: 0
-  def: 15
+  def: 8
   range: 0
-  sightRange: 5
+  sightRange: 4
