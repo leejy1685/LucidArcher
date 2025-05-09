@@ -10,7 +10,7 @@ public class StairHandler : MonoBehaviour
 
     public void MoveFrontTile()
     {
-        frontTile.SetActive(false);
+        frontTile.GetComponent<Animator>().SetTrigger("Move");
         canGoDown = true;
     }
 

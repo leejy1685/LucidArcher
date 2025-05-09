@@ -5,7 +5,10 @@ public class RoomHandler : MonoBehaviour
     // 외부 오브젝트
     [SerializeField] private GameObject gate;
     [SerializeField] private GameObject exitDetection;
-    [SerializeField] private GameObject stair;
+    private GameObject stair;
+
+    // 프리팹
+    [SerializeField] private GameObject stairPrefab;
 
     // 변수
     private RoomState roomState;
@@ -37,13 +40,10 @@ public class RoomHandler : MonoBehaviour
         {
             int randX = Random.Range(-7, 7);
             int randY = Random.Range(-3, 3);
+            stair = Instantiate(stairPrefab, transform);
             stair.transform.localPosition = new Vector3(randX + 0.5f, randY + 0.5f);
 
             stair.SetActive(true);
-        }
-        else
-        {
-            stair.SetActive(false);
         }
 
         ControllGate(true);

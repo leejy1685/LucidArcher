@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startRoom: {fileID: 758765729358020310, guid: 786d63dd9d635e143a050cb745ce95df, type: 3}
-  bossRoom: {fileID: 6608492580027946472, guid: f84230e31df2ae241940bd713082feb2, type: 3}
+  bossRoom: {fileID: 2054471479956643234, guid: f84230e31df2ae241940bd713082feb2, type: 3}
   rooms:
   - {fileID: 758765729358020310, guid: 786d63dd9d635e143a050cb745ce95df, type: 3}
 --- !u!4 &1763777702

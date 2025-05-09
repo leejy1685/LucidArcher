@@ -37,7 +37,7 @@ public class RoomSpawner : MonoBehaviour
     }
 
     // 방 소환
-    public void SpawnRoom(Vector3 detectionPosition)
+    public void SpawnRoom(Vector3 initPosition)
     {
         if (roomCount >= MAX_ROOM) return;
 
@@ -49,17 +49,17 @@ public class RoomSpawner : MonoBehaviour
         {
             case 1:
                 currentRoom = Instantiate(startRoom, transform);
-                currentRoom.InitRoom(RoomState.Start, detectionPosition);
+                currentRoom.InitRoom(RoomState.Start, initPosition);
                 break;
 
             case MAX_ROOM:
                 currentRoom = Instantiate(bossRoom, transform);
-                currentRoom.InitRoom(RoomState.Boss, detectionPosition);
+                currentRoom.InitRoom(RoomState.Boss, initPosition);
                 break;
 
             default:
                 currentRoom = Instantiate(rooms[Random.Range(0, rooms.Length)], transform);
-                currentRoom.InitRoom(RoomState.Enemy, detectionPosition);
+                currentRoom.InitRoom(RoomState.Enemy, initPosition);
                 break;
         }
     }
