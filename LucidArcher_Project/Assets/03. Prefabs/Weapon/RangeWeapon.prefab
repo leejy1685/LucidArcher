@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8946694378320944680}
   - component: {fileID: 3677935211016202402}
+  - component: {fileID: -1471012593068958616}
   m_Layer: 0
   m_Name: RangeWeapon
   m_TagString: Untagged
@@ -130,7 +131,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponRenderer: {fileID: 8724346132587301213}
-  bulletNum: 1
-  damage: 0
-  bulletSpeed: 10
   arrow: {fileID: -2732247655681259535, guid: 559cda13bf40fb0468439693d3bb2c7b, type: 3}
+--- !u!114 &-1471012593068958616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6573192994229271454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bdcfa459cea94241bd7431f75ecf736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletNum: 1
+  damage: 100
+  bulletSpeed: 10
+  knockbackDuration: 0.5
+  knockbackPower: 1
