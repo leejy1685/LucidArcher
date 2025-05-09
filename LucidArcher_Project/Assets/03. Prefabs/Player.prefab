@@ -204,8 +204,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterRenderer: {fileID: 2592106008662430337}
+  weaponPivot: {fileID: 0}
   speed: 5
-  monsterList:
-  - {fileID: 0}
-  - {fileID: 0}
+  HP: 6
+  MP: 10
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  radius: 10
+  weaponPrefap: {fileID: 0}
   attackDelay: 1

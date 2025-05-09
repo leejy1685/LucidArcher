@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class LeapersHand : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public LayerMask mask;
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if((mask | 1<<collision.gameObject.layer) == mask)
+        {
+            MonsterBase enemy = collision.gameObject.GetComponent<MonsterBase>();
+            enemy.TakeDamage(25);
+        }
     }
 }

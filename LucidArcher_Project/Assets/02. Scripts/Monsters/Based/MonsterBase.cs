@@ -21,13 +21,22 @@ public abstract class MonsterBase : MonoBehaviour
     protected virtual void Start()
     {
         currentHP = stats.HP;
-        if(sightCollider != null) sightCollider.radius = stats.SightRange;
+        if (sightCollider != null)
+        {
+            sightCollider.radius = stats.SightRange;
+        }
     }   
 
     public void TakeDamage(float damage)
     {
         // TODO : HP °è»ê
+        float effectiveDamage = Mathf.Max(0.5f, damage - stats.Def); 
+        currentHP -= effectiveDamage;
 
+        float damagedDensity = Mathf.Min(effectiveDamage / 8, 1);
+        Debug.Log(damagedDensity);
+        sprite.color = Color.white - new Color(0, 1, 1, 0) * damagedDensity;
+        
         if (currentHP <= 0) Die();
     }
 
@@ -53,4 +62,14 @@ public abstract class MonsterBase : MonoBehaviour
         rb.velocity = direction * stats.MoveSpeed;
     }
 
+    private void LateUpdate()
+    {
+        sprite.color = Color.Lerp(sprite.color, Color.white, 0.01f);
+    }
+
+    protected bool IsEnemyInRange()
+    {
+        if ((transform.position - detectedEnemy.transform.position).magnitude <= stats.Range) return true;
+        return false;
+    }
 }
