@@ -68,10 +68,7 @@ public class PlayerController : MonoBehaviour
         Attack();
 
         //대쉬
-        //Dash();
-        //Debug.Log(this.gameObject.layer);
-        //Debug.Log(targetLayer.Description());
-        //Physics2D.IgnoreLayerCollision(this.gameObject.layer, , isSuper);
+        Dash();
     }
 
     #region move and rotate
@@ -170,19 +167,16 @@ public class PlayerController : MonoBehaviour
 
     void Dash()
     {
+        //무적 시간 체크
         superTime += Time.deltaTime;
-        if(superTime < dashTime)
-        {
-            //충돌무시
-
-            //스피드 증가
-        }
-        else
-        {
-            //스피드 정상화
-            //무적 종료
+        if(superTime > dashTime)
+        {   //무적 종료
             isSuper = false;
         }
+
+        //충돌무시
+        int targetLayerIndex = (int)Mathf.Log(targetLayer.value, 2);
+        Physics2D.IgnoreLayerCollision(this.gameObject.layer, targetLayerIndex, isSuper);
     }
 
     public void TakeDamage(int damage)
@@ -190,15 +184,11 @@ public class PlayerController : MonoBehaviour
         //대쉬 중 무적
         if (isSuper)
             return;
-
-        //Debug.Log("대미지 받음");
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
         TakeDamage(1);
-
-        Debug.Log((targetLayer | 1 << collision.gameObject.layer));
     }
 
     #endregion
