@@ -9,8 +9,9 @@ public class Chest : MonoBehaviour
 
      
     public float dropForce = 2f; //아이템 튀어오를때 힘
+
     
-    
+
 
     public void DestroyChest() // 상자 제거
     {
@@ -42,7 +43,7 @@ public class Chest : MonoBehaviour
         {
             GameObject item_prefab = itemPrefabs[Random.Range(0, itemPrefabs.Length)]; //아이템 목록중에 하나 정함
 
-            Vector3 spawnPos = transform.position + new Vector3(Random.Range(-0.2f, 0.2f), -0.2f, 0); //아이템 나올 위치 랜덤으로 설정
+            Vector3 spawnPos = transform.position + new Vector3(Random.Range(-0.15f, 0.15f), -0.2f, 0); //아이템 나올 위치 랜덤으로 설정
 
             GameObject item = Instantiate(item_prefab, spawnPos, Quaternion.identity); //아이템 생성
 
@@ -52,6 +53,13 @@ public class Chest : MonoBehaviour
                 // 위로 + 옆으로 약간 튀는 랜덤 힘
                 Vector2 force = new Vector2(Random.Range(-1f, 1f), 1f) * dropForce;
                 rb.AddForce(force, ForceMode2D.Impulse);
+            }
+
+            ItemManager drop = item.GetComponent<ItemManager>();
+            if(drop != null)
+            {
+
+                drop.itemY = transform.position.y;
             }
 
         }
