@@ -4,8 +4,11 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class PlayerScript : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
+    //Player스텟
+    PlayerStatHendler stat;
+
     //캐릭터 이동
     private Rigidbody2D rigidbody2D;
     [SerializeField] private SpriteRenderer characterRenderer;
@@ -15,38 +18,33 @@ public class PlayerScript : MonoBehaviour
     private Vector2 moveDirection;
     private Vector2 lookDirection;
 
-    //이동 속도
-    [Range(1, 20)][SerializeField] private float speed;
-    //체력
-    [Range(1, 10)][SerializeField] private int HP = 6;
-    [Range(1, 10)][SerializeField] private float MP = 100;
-
     //몬스터 인식
     public LayerMask targetLayer;
     RaycastHit2D[] targets;
 
     //인식 거리
-    [SerializeField] float radius = 10f;
+    [SerializeField] float radius = 30f;
 
     //무기
     [SerializeField] private RangeWeaponController weaponPrefap;
     private RangeWeaponController weaponController;
 
-    //공격 딜레이
-    float attackTime;
-    [SerializeField] float attackDelay = 1;
+    //공격 속도
+    private float attackTime;
+
+    //넉백
+    float knockbackDuration; //넉백 시간
+    Vector2 knockback;
 
     private void Awake()
     {
+        stat = GetComponent<PlayerStatHendler>();
         rigidbody2D = GetComponent<Rigidbody2D>();
 
         if(weaponPrefap != null)
         {
             weaponController = Instantiate(weaponPrefap, weaponPivot);
         }
-
-        HP = 6;
-        MP = 100;
 
     }
 
@@ -58,15 +56,14 @@ public class PlayerScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // 원형 레이캐스트 시뮬레이션
+        // 원형 레이캐스트로 몬스터 탐색
         targets = Physics2D.CircleCastAll(transform.position, radius, Vector2.zero, 0, targetLayer);
 
         //이동과 캐릭터 전환
         Movement(moveDirection);
         Rotate(lookDirection);
-
+        
         //공격
-        attackTime += Time.deltaTime;
         Attack();
     }
 
@@ -88,7 +85,17 @@ public class PlayerScript : MonoBehaviour
     //이동
     void Movement(Vector2 direction)
     {
-        direction = direction * speed;
+        //이동 방향에 속도 넣기
+        direction = direction * stat.Speed;
+
+        // 넉백 중이면 이동 속도 감소 + 넉백 방향 적용
+        if (knockbackDuration > 0.0f)
+        {
+            direction *= 0.2f; // 이동 속도 감소
+            direction += knockback;// 넉백 방향 추가
+        }
+
+        //물리 실행
         rigidbody2D.velocity = direction;
     }
 
@@ -143,14 +150,24 @@ public class PlayerScript : MonoBehaviour
 
     //공격 무기에서 화살 제작
     void Attack()
-    {   //근처에 몬스터가 있을 때
-        if (targets.Length > 0 && attackTime > attackDelay)
+    {
+        //공격 속도 계산
+        attackTime += Time.deltaTime;
+        //근처에 몬스터가 있을 때
+        if (targets.Length > 0 && attackTime > stat.AttackDelay)
         {
             weaponController.CreateArrow(lookDirection, targetLayer);
             attackTime = 0;
         }
     }
 
+    //넉백 적용
+    public void ApplyKnockback(Transform other, float power, float duration)
+    {
+        knockbackDuration = duration;
+        // 상대 방향을 반대로 밀어냄
+        knockback = -(other.position - transform.position).normalized * power;
+    }
 
     #endregion
 }

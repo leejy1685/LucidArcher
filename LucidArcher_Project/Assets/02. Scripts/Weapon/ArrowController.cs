@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class ArrowController : MonoBehaviour
 {
+    WeaponStat weaponStat;
     private Rigidbody2D rigidbody2D;
     LayerMask target;
 
-    public void Init(LayerMask targetLayer)
+    public void Init(LayerMask targetLayer,RangeWeaponController rangeWeaponController)
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         target = targetLayer;
+        weaponStat = rangeWeaponController.Stat;
     }
 
     public void ShootArrow(Vector2 lookDirection,float speed)
@@ -22,10 +24,13 @@ public class ArrowController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if((target | 1<<collision.gameObject.layer) == target)
+        if ((target | 1 << collision.gameObject.layer) == target)
         {
             Destroy(gameObject);
+            //³Ë¹é Àû¿ë
+            //collision.GetComponent<PlayerController>().ApplyKnockback(transform, weaponStat.KnockbackPower, weaponStat.KnockbackDuration);
         }
+
     }
 
 }
