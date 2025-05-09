@@ -20,15 +20,15 @@ public class PlayerStatHendler : MonoBehaviour
     [Range(0f,100f)][SerializeField] private float lucidPower = 0f;
     public float LucidPower { get { return lucidPower; } set { lucidPower = value; } }
    
-    public void PlusHP()
-    { 
-        Hp++;
+    public void PlusHP(int input)
+    {
+        Hp += input;
     }
 
-    public void PlsySpeed()
+    public void PlusSpeed(float input)
     {
 
-        Speed += 0.75f;
+        Speed += input;
     }
 
     public void PlusLucidPower(float input)

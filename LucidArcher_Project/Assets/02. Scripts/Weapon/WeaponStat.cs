@@ -16,4 +16,11 @@ public class WeaponStat : MonoBehaviour
     public float KnockbackDuration { get { return knockbackDuration; } }
     [SerializeField] float knockbackPower = 1f;
     public float KnockbackPower { get { return knockbackPower; } }
+
+    public void PlusDamage(float input)
+    {
+
+        Damage += input;
+
+    }
 }

@@ -9,11 +9,11 @@ public class LucidOrb : ItemManager
     public override void ItemAction(GameObject player)
     {
         //특수게이지 로직
-        PlayerStatHendler stat = player.GetComponent<PlayerStatHendler>();
+        PlayerStatHendler Playerstat = player.GetComponent<PlayerStatHendler>();
 
         //player.act ++;
 
-        stat.PlusLucidPower(10f);
+        Playerstat.PlusLucidPower(10f);
         Destroy(gameObject);
 
     }

@@ -10,7 +10,7 @@ public class Heart : ItemManager
         //if(Player.Hp == Player.MaxHp) return;
         PlayerStatHendler stat = player.GetComponent<PlayerStatHendler>();
 
-        stat.PlusHP();
+        stat.PlusHP(1);
         Destroy(gameObject);
 
     }

@@ -19,21 +19,27 @@ public class RandomPotion : ItemManager
         {
             case 0:
                 //체력회복
+                Debug.Log("체력 1회복");
                 Playerstat.PlusHP(1);
                 break;
 
             case 1:
                 // n초 동안 공격력증가
-                StartCoroutine(RandomDamageBuff(weaponstat, 1, 7f));
-                
+                StartCoroutine(RandomDamageBuff(weaponstat, weaponstat.Damage * 0.1f, 7f));
+
                 break;
             case 2:
                 //데미지
+                Debug.Log("체력 1감소");
                 Playerstat.PlusHP(-1);
                 break;
             case 3:
                 //상태이상 (방향키 반전, 화상, 슬로우 등)
-                Playerstat.PlusSpeed(-5f);
+                Debug.Log("이동속도 감소");
+
+                StartCoroutine(RandomSlowBuff(Playerstat, -7f, 7f));
+
+                
                 break;
 
 
@@ -42,11 +48,26 @@ public class RandomPotion : ItemManager
         Destroy(gameObject);
     }
 
-    private IEnumerator RandomDamageBuff(WeaponStat weaponstat, int damage, float duration)
+    private IEnumerator RandomDamageBuff(WeaponStat weaponstat, float damage, float duration)
     {
+        Debug.Log($"{weaponstat.Damage}데미지에서 7초동안 10% 증가해서 {weaponstat.Damage * 1.1f}이 됐습니다. ");
+
         weaponstat.PlusDamage(damage);
         yield return new WaitForSeconds(duration);
+        Debug.Log($"물약 효과가 종료되어 공격력이 원래 수치인{weaponstat.Damage}으로 됐습니다. ");
+
         weaponstat.PlusDamage(-damage);
+
+    }
+
+    private IEnumerator RandomSlowBuff(PlayerStatHendler playerStat, float speed, float duration)
+    {
+
+        playerStat.PlusSpeed(-speed);
+        yield return new WaitForSeconds(duration);
+
+        playerStat.PlusSpeed(speed);
+
 
     }
 }

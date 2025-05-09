@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5444123188373551631}
   - component: {fileID: 1772973941729342958}
   m_Layer: 0
-  m_Name: SoulHeart
+  m_Name: LucidHeart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

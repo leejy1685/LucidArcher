@@ -2509,6 +2509,7 @@ GameObject:
   - component: {fileID: 1046298071}
   - component: {fileID: 1046298074}
   - component: {fileID: 1046298075}
+  - component: {fileID: 1046298076}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2621,6 +2622,7 @@ MonoBehaviour:
   hp: 6
   stamina: 3
   attackDelay: 0
+  lucidPower: 0
 --- !u!114 &1046298075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2640,6 +2642,23 @@ MonoBehaviour:
     m_Bits: 0
   radius: 30
   weaponPrefap: {fileID: 3677935211016202402, guid: be3f0a510feb27b478aeb836c51b7c4a, type: 3}
+--- !u!114 &1046298076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046298069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bdcfa459cea94241bd7431f75ecf736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletNum: 0
+  damage: 100
+  bulletSpeed: 0
+  knockbackDuration: 0.5
+  knockbackPower: 1
 --- !u!1 &1134176677
 GameObject:
   m_ObjectHideFlags: 0
@@ -3898,6 +3917,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1544861274}
+  - component: {fileID: 1544861275}
   m_Layer: 0
   m_Name: WeaponPivot
   m_TagString: Untagged
@@ -3920,6 +3940,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1046298073}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1544861275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544861273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bdcfa459cea94241bd7431f75ecf736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletNum: 0
+  damage: 0
+  bulletSpeed: 0
+  knockbackDuration: 0.5
+  knockbackPower: 1
 --- !u!1 &1686701011
 GameObject:
   m_ObjectHideFlags: 0
