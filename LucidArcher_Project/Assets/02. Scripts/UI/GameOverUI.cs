@@ -23,11 +23,11 @@ public class GameOverUI : BaseUI
 
     public void OnclickRetryButton()
     {
-        SceneManager.LoadScene("UIScene");
+        uIManager.ChangeState(UIState.Game);
     }
 
     public void OnClickRobbyButton()
     {
-
+        uIManager.ChangeState(UIState.Robby);
     }
 }

@@ -4,15 +4,18 @@ using UnityEngine;
 
 public enum UIState
 {
+    Start,
+    Robby,
     Game,
-    GameOver,
-    Robby
+    GameOver
 }
 
 public class UIManager : MonoBehaviour
 {
     private GameUI gameUI;
     private GameOverUI gameOverUI;
+    private RobbyUI robbyUI;
+    private StartUI startUI;
 
     private UIState currentState;
 
@@ -22,11 +25,15 @@ public class UIManager : MonoBehaviour
         gameUI.InIt(this);
         gameOverUI = GetComponentInChildren<GameOverUI>(true);
         gameOverUI.InIt(this);
+        robbyUI = GetComponentInChildren<RobbyUI>(true);
+        robbyUI.InIt(this);
+        startUI = GetComponentInChildren<StartUI>(true);
+        startUI.InIt(this);
 
-        ChangeState(UIState.Game);
+        ChangeState(UIState.Start);
     }
 
-// 임시 게임 종료 버튼 : Space바바
+// 임시 게임 종료 버튼 : Space바
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -51,6 +58,9 @@ public class UIManager : MonoBehaviour
 
         gameUI.SetActive(currentState);
         gameOverUI.SetActive(currentState);
+        robbyUI.SetActive(currentState);
+        startUI.SetActive(currentState);
+        
     }
 
 
