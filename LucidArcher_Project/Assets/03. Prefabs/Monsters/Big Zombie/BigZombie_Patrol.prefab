@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2146777137423770489}
   - component: {fileID: 1886179608438790181}
   - component: {fileID: 938748919534926041}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: BigZombie_Patrol
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 1678191396667096391}
   - component: {fileID: 9087954037496320214}
   - component: {fileID: 5374641682873406322}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5277873938826541812}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: PatrolPoint1
   m_TagString: Untagged
   m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
@@ -304,7 +304,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5752985493518286151}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: PatrolPoint2
   m_TagString: Untagged
   m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}

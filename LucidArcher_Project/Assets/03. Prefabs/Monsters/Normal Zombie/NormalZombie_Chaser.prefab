@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 8326639956605407672}
   - component: {fileID: 6723013899438006152}
   - component: {fileID: 4829992560133388988}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: NormalZombie_Chaser
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 5684283458455448967}
   - component: {fileID: 3933419230226117675}
   - component: {fileID: 8783636589544642014}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
