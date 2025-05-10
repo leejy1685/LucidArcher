@@ -50,7 +50,7 @@ public class MonsterProjectile : MonoBehaviour
         //}
         if (collision.CompareTag("Player"))
         {
-            RetriveProjectile();
+            //RetriveProjectile();
         }
     }
 

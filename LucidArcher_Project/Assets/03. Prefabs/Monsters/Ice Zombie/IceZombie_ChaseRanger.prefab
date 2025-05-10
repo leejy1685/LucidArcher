@@ -359,3 +359,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 72280032168499960, guid: 19fae19a09ee5404da73d2407fdd1b03, type: 3}
   projectilePoolSize: 10
+  emitterCountPerShot: 1
