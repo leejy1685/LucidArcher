@@ -38,7 +38,7 @@ public class PlayerStatHendler : MonoBehaviour
 
     }
     // 공격 딜레이
-    [Range(0.1f, 1f)][SerializeField] private float attackDelay;
+    [Range(0.1f, 1f)][SerializeField] private float attackDelay = 1f;
     public float AttackDelay { get { return attackDelay; } }
 
     //특수게이지
@@ -53,10 +53,44 @@ public class PlayerStatHendler : MonoBehaviour
     //최대체력 몇 번 증가시켰는지 확인하기 위한 변수
     public int UpgradeMaxHp_Count = 0;
 
+    public int UpgradeAttackDelay_Count = 0;
+
+    public int UpgradeSpeed_Count = 0;
+    
+
+    public void UpgradeAttackDelay() // 공속 업그레이드
+    {
+        if (UpgradeAttackDelay_Count < 4)
+        {
+            attackDelay -= 0.2f;
+            UpgradeAttackDelay_Count++;
+
+        }
+        else
+        {
+
+            return;
+        }
+
+
+    }
+    public void UpgradeSpeed() // 이동속도 업그레이드
+    {
+        if (UpgradeSpeed_Count < 4)
+        {
+            basespeed += 0.75f;
+            UpgradeSpeed_Count++;
+        }
+        else
+        {
+            return;
+        }
 
 
 
 
+
+    }
 
 
     public void SetHP(int input)
@@ -66,7 +100,7 @@ public class PlayerStatHendler : MonoBehaviour
         Hp += input;
     }
 
-
+    
     
 
     public void UpgradeMaxHP() //최대체력 증가 최대 4번까지 증가시 하트 한칸 증가
