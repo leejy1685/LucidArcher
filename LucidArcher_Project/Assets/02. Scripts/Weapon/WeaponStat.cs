@@ -17,6 +17,9 @@ public class WeaponStat : MonoBehaviour
     [SerializeField] float knockbackPower = 1f;
     public float KnockbackPower { get { return knockbackPower; } }
 
+
+    public int UpgradeDamage_Count = 0;
+    public int UpgradeBulletNum_Count = 0;
     public void PlusDamage(float input) //공격력증가
     {
 
@@ -24,12 +27,40 @@ public class WeaponStat : MonoBehaviour
 
     }
 
-
-    public void PlusBulletNum()
+    public void UpgradeDamage() //공격력 업그레이드 10%씩
     {
+        if (UpgradeDamage_Count < 4)
+        {
+            PlusDamage(Damage * 0.1f);
+            UpgradeDamage_Count++;
+        }
+        else
+        {
+
+            return;
+        }
 
 
-        BulletNum++;
+        
+
+
+    }
+
+
+    public void UpgradeBulletNum() //화살 개수 증가
+    {
+        if (UpgradeBulletNum_Count < 4)
+        {
+            BulletNum++;
+            UpgradeBulletNum_Count++;
+
+        }
+        else
+        {
+
+            return;
+        }
+
     }
     public void RandBuff(float damage, float duration)
     {
