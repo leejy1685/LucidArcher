@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     RaycastHit2D[] targets;
 
     //인식 거리
-    [SerializeField] float radius = 30f;
+    [SerializeField] float radius;
 
     //무기
     [SerializeField] private RangeWeaponController weaponPrefap;
@@ -32,25 +32,50 @@ public class PlayerController : MonoBehaviour
     //공격 속도
     private float attackTime;
 
-    //넉백
-    float knockbackDuration; //넉백 시간
-    Vector2 knockback;
+    //대쉬기능 (일시 무적)
+    private float dashTime = 1f;
+    private float inDashTime;
+    private bool isDash;
+
+    //애니메이션
+    Animator animator;
+
+    //애니메이션 동작 관리
+    const string MOVE = "IsMove";
+    const string DASH = "IsDash";
+    const string DAMAGE = "OnDamage";
+
+    //대미지 무적 시간
+    private float damageTime = 0.5f;
+    private float onDamageTime;
+    private bool onDamage;
+
+    //방어막
+    [SerializeField] int shield;
+    public int Shield
+    {
+        get => shield;
+        set => shield = Mathf.Clamp(value, 0, 3);
+    }
+
 
     private void Awake()
     {
         stat = GetComponent<PlayerStatHendler>();
         rigidbody2D = GetComponent<Rigidbody2D>();
 
-        if(weaponPrefap != null)
+        if (weaponPrefap != null)
         {
             weaponController = Instantiate(weaponPrefap, weaponPivot);
         }
 
+        animator = characterRenderer.GetComponent<Animator>();
     }
 
 
     private void Update()
     {
+        //캐릭터 조작
         HandleAction();
     }
 
@@ -65,6 +90,12 @@ public class PlayerController : MonoBehaviour
         
         //공격
         Attack();
+
+        //대쉬
+        Dash();
+
+        //무적 시간 확인
+        CheckSuperTime();
     }
 
     #region move and rotate
@@ -72,14 +103,23 @@ public class PlayerController : MonoBehaviour
     //캐릭터 조작
     void HandleAction()
     {
+        //상하좌우 입력
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         moveDirection = new Vector2(horizontal, vertical).normalized;
 
+        //주변에 몬스터가 있을 때
         if(targets.Length > 0 ) 
             lookDirection = NearestMonster().position - transform.position;
         else
             lookDirection = moveDirection;
+
+        //대쉬중이 아니고, 이동 중 일 때, 스패이스를 누르면 대쉬
+        if (!isDash && Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(moveDirection.magnitude) > 0.5f)
+        {
+            isDash = true;
+            inDashTime = 0;
+        }
     }
 
     //이동
@@ -88,15 +128,11 @@ public class PlayerController : MonoBehaviour
         //이동 방향에 속도 넣기
         direction = direction * stat.Speed;
 
-        // 넉백 중이면 이동 속도 감소 + 넉백 방향 적용
-        if (knockbackDuration > 0.0f)
-        {
-            direction *= 0.2f; // 이동 속도 감소
-            direction += knockback;// 넉백 방향 추가
-        }
-
         //물리 실행
         rigidbody2D.velocity = direction;
+
+        //애니메이션
+        animator.SetBool(MOVE, direction.magnitude > 0.5f);
     }
 
     //캐릭터 좌우 반전
@@ -125,7 +161,7 @@ public class PlayerController : MonoBehaviour
 
         //foreach 문으로 캐스팅 결와 오브젝트를 하나씩 방문
         foreach (RaycastHit2D target in targets)
-        {  //CircleCastAll에 맞은 애들을 하나씩 접근
+        {  
             Vector3 myPos = transform.position;             //플레이어 위치
             Vector3 targetPos = target.transform.position;  //타겟의 위치
             float curDiff = Vector3.Distance(myPos, targetPos); //거리를 구한다.
@@ -145,8 +181,7 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-
-    #region Attack
+    #region Battle
 
     //공격 무기에서 화살 제작
     void Attack()
@@ -156,18 +191,76 @@ public class PlayerController : MonoBehaviour
         //근처에 몬스터가 있을 때
         if (targets.Length > 0 && attackTime > stat.AttackDelay)
         {
-            weaponController.CreateArrow(lookDirection, targetLayer);
+            weaponController.CreateArrow(lookDirection, targetLayer,stat.AttackDelay);
             attackTime = 0;
         }
     }
 
-    //넉백 적용
-    public void ApplyKnockback(Transform other, float power, float duration)
+    //대쉬 기능, 유령화 기능
+    void Dash()
     {
-        knockbackDuration = duration;
-        // 상대 방향을 반대로 밀어냄
-        knockback = -(other.position - transform.position).normalized * power;
+        //스태미나 소모
+        //stat.Stamina--;
+
+        //충돌무시
+        int targetLayerIndex = (int)Mathf.Log(targetLayer.value, 2);
+        Physics2D.IgnoreLayerCollision(this.gameObject.layer, targetLayerIndex, isDash);
+
+        //애니메이션
+        animator.SetBool(DASH, isDash);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        //대쉬 또는 무적시간 중 대미지를 받지 않음
+        if (isDash || onDamage)
+            return;
+
+        //일시 무적
+        onDamage = true;
+        onDamageTime = 0;
+
+        //대미지 계산
+        if (shield > 0)
+        {
+            shield--;
+            Debug.Log("방어막 소모");
+        }
+        else
+        {
+            //stat.Hp -= damage;
+            Debug.Log("체력 소모 " + damage);
+
+            //애니메이션
+            animator.SetBool(DAMAGE, onDamage);
+        }
+    }
+
+    void CheckSuperTime()
+    {
+        //무적 시간 체크
+        inDashTime += Time.deltaTime;
+        onDamageTime += Time.deltaTime;
+
+        //무적 종료
+        if (inDashTime > dashTime)
+        {
+            isDash = false;
+        }
+
+        if(onDamageTime > damageTime)
+        {
+            onDamage = false;
+            animator.SetBool(DAMAGE, onDamage);
+        }
     }
 
     #endregion
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        TakeDamage(2);
+    }
+
+
 }
