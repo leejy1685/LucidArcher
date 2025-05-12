@@ -2,19 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExpBall : ItemManager
+public class HalfHeart : ItemManager
 {
-
     public override void ItemAction(GameObject player)
     {
+        //HP 증가로직
 
         PlayerStatHendler stat = player.GetComponent<PlayerStatHendler>();
-        //경험치 추가 로직
+        if (stat.Hp == stat.MaxHp) 
+        {
+
+            return;
+        }
 
 
-        stat.PlusEXP(1);
-
+        stat.PlusHP(1);
         Destroy(gameObject);
 
     }
+
+
 }

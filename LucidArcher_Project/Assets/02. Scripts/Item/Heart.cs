@@ -9,9 +9,24 @@ public class Heart : ItemManager
         //HP 증가로직
         //if(Player.Hp == Player.MaxHp) return;
         PlayerStatHendler stat = player.GetComponent<PlayerStatHendler>();
+        if (stat.Hp == stat.MaxHp)
+        {
 
-        stat.PlusHP(1);
-        Destroy(gameObject);
+            return;
+        }
+
+        if (stat.MaxHp - stat.Hp == 1)
+        {
+            stat.PlusHP(1);
+            Destroy(gameObject);
+        }
+        else
+        {
+            stat.PlusHP(2);
+            Destroy(gameObject);
+
+        }
+
 
     }
 
