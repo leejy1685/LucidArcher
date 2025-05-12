@@ -31,6 +31,7 @@ public class WeaponStat : MonoBehaviour
 
     }
 
+
     public void UpgradeDamage() // 업그레이드 데미지 10% 증가 최대 4번
     {
         if (UpgradeDamage_Count < 4)
