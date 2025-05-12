@@ -27,4 +27,12 @@ public class ChasingMonster : MonsterBase
         rb.velocity = Vector2.zero;
         animator.SetBool(IsMove, false);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player")) 
+        {
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage(stats.Atk);
+        }
+    }
 }

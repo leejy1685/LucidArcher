@@ -10,7 +10,7 @@ public class MonsterProjectile : MonoBehaviour
 
     [SerializeField] Vector2 targetPosition;
     [SerializeField] Vector2 direction;
-    [SerializeField] float damage;
+    [SerializeField] int damage;
 
     [Header("Required Components")]
     [SerializeField] Rigidbody2D rb;
@@ -61,6 +61,10 @@ public class MonsterProjectile : MonoBehaviour
 
             effect.transform.position = contact.point;
             effect.SetActive(true);
+
+            //대미지 계산
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
+
             RetriveProjectile();
         }
     }
