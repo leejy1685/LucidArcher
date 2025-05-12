@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+// 현재 막힌 부분 : 데미지를 입거나 힐을 받았을 때(이떄는 List 값이 안맞아서 그런거) 하트가 제대로 표시되지 않음
 public class GameUI : BaseUI
 {
+    [SerializeField] private Transform hpTransform;
+    [SerializeField] private List<GameObject> heartPrefabs;
+    [SerializeField] private List<GameObject> createdHeart = new List<GameObject>();
+    [SerializeField] private PlayerStatHendler playerStatHendler;    
+
+    [SerializeField] private bool isPlayerHit;
+    [SerializeField] private bool isHeal;
+
     public Slider Exp;
     public TextMeshProUGUI stage;
 
-    
 
-    public int playerHp = 9;
-
-    [SerializeField] private Transform hpTransform;
-    [SerializeField] private List<GameObject> heartPrefabs;
-    [SerializeField] private List<GameObject> createdHeart;
 
     protected override UIState GetUIState()
     {
@@ -25,7 +27,12 @@ public class GameUI : BaseUI
     private void Start()
     {
         UpdateExpSlider(0);
-        UpdatePlayerHpHeart(playerHp);
+        AddHeartPrefabs();
+    }
+
+    void FixedUpdate()
+    {
+        UpdatePlayerHpHeart();
     }
 
     public void UpdateExpSlider(float percentage)
@@ -33,48 +40,85 @@ public class GameUI : BaseUI
         Exp.value = percentage;
     }
 
-    public void UpdatePlayerHpHeart(int hp) //체력에 따른 하트를 표시해주는 메소드
+    public void UpdatePlayerHpHeart() //체력 변화에 따른 하트를 표시해주는 메소드
     {
-        int lastHeart = (hp / 2) + (hp % 2); // 몇개의 하트가 있는지 and 변화를 줄 하트 위치(맨 끝 하트)
-        int kindOfHeart = hp % 3; // full하트 half하트 enpty하트 셋 중 뭘 보여줄건지
+        PlayerGetDamage();
+        PlayerGetHeal();
+    }
+
+    public void AddHeartPrefabs()
+    {
+        int lastHeart = (playerStatHendler.Hp / 2) + (playerStatHendler.Hp % 2); // 몇개의 하트가 있는지 (맨 끝 하트)
 
         GameObject selectedHeart = heartPrefabs[0];
 
         for (int i = 0; i < lastHeart; i++) //체력 프리펩을 가져와 표시해주는 반복문
         {
-            if (lastHeart % 2 == 0)
+            GameObject heart = Instantiate(selectedHeart, hpTransform); // List createdHeart에 변수를 저장하기 위한 임시 변수 생성
+            heart.transform.localPosition = new Vector3((i) * 75, 0, 0);
+
+            if (playerStatHendler.Hp % 2 == 1 && i == lastHeart - 1)
             {
-                createdHeart[i] = Instantiate(selectedHeart, hpTransform);
-                createdHeart[i].transform.localPosition = new Vector3((i) * 25, 0, 0);
+                Transform full = heart.transform.GetChild(0);
+                Transform half = heart.transform.GetChild(1);
+
+                full.gameObject.SetActive(false);
+                half.gameObject.SetActive(true);
             }
-            
-            else
-            {
-                if (i <= lastHeart - 2) // 마지막 하트 전까지는 Full하트트 생성성
-                {
-                    createdHeart[i] = Instantiate(selectedHeart, hpTransform);
-                    createdHeart[i].transform.localPosition = new Vector3((i) * 75, 0, 0);
-                }
-                else // 마지막 하트에선 Half하트 생성
-                {
-                    createdHeart[i] = Instantiate(selectedHeart, hpTransform);
-                    
-                    Transform full = createdHeart[i].transform.GetChild(0);
-                    Transform half = createdHeart[i].transform.GetChild(1);
 
-                    full.gameObject.SetActive(false);
-                    half.gameObject.SetActive(true);
+            createdHeart.Add(heart);
 
-                    createdHeart[i].transform.localPosition = new Vector3((i) * 75, 0, 0);
-                }
+        }
+    }
 
-            }
+    public void PlayerGetDamage()
+    {
+        if (!isPlayerHit || playerStatHendler.Hp <= 0) return;
+
+        int targetHeart = (playerStatHendler.Hp % 2 == 1) || (playerStatHendler.Hp == 10) ? // 이 부분은 체력이 10이라 고정해두고 짠 코드, 나중에 캐릭터 최대 체력으로 수정
+                          (playerStatHendler.Hp / 2) + (playerStatHendler.Hp % 2) - 1 : (playerStatHendler.Hp / 2) + (playerStatHendler.Hp % 2); // 변화를 줄 하트 위치
+
+        Transform full = createdHeart[targetHeart].transform.GetChild(0);
+        Transform half = createdHeart[targetHeart].transform.GetChild(1);
+        Transform empty = createdHeart[targetHeart].transform.GetChild(2);
+
+        if (playerStatHendler.Hp % 2 == 1) // 플레이어가 데미지를 입었는데 체력이 홀수라면 반칸짜리 하트 표시
+        {
+            half.gameObject.SetActive(true);
+            full.gameObject.SetActive(false);
+            empty.gameObject.SetActive(false);
+        }
+        else // 플레이어가 데미지를 입었는데 체력이 짝수라면 빈 하트 표시 (일단 음수의 경우는 생각 안함)
+        {
+            half.gameObject.SetActive(false);
+            empty.gameObject.SetActive(true);
+            full.gameObject.SetActive(false);
         }
 
     }
 
-    public void RemoveHeartPrefab()
+    public void PlayerGetHeal()
     {
+        if (!isHeal || playerStatHendler.Hp <= 0) return;
+        
+        int targetHeart = (playerStatHendler.Hp / 2) + (playerStatHendler.Hp % 2) - 1; // 변화를 줄 하트 위치
+
+        Transform full = createdHeart[targetHeart].transform.GetChild(0);
+        Transform half = createdHeart[targetHeart].transform.GetChild(1);
+        Transform empty = createdHeart[targetHeart].transform.GetChild(2);
+        
+        if (playerStatHendler.Hp % 2 == 1)
+        {
+            full.gameObject.SetActive(false);
+            empty.gameObject.SetActive(false);
+            half.gameObject.SetActive(true);
+        }
+        else
+        {
+            full.gameObject.SetActive(true);
+            empty.gameObject.SetActive(false);
+            half.gameObject.SetActive(false);
+        }
 
     }
 
