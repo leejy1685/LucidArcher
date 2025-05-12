@@ -77,7 +77,7 @@ public class GameUI : BaseUI
         }
     }
 
-    public void PlayerGetDamage()
+    private void PlayerGetDamage()
     {
         if (!isPlayerHit || playerStatHendler.Hp <= 0) return;
 
@@ -122,7 +122,7 @@ public class GameUI : BaseUI
 
     }
 
-    public void PlayerGetHeal()
+    private void PlayerGetHeal()
     {
         if (!isHeal || playerStatHendler.Hp <= 0) return;
 
