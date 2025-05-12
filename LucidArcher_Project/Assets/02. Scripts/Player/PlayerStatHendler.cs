@@ -118,10 +118,11 @@ public class PlayerStatHendler : MonoBehaviour
     IEnumerator RandomSlowBuff(float speed, float duration)
     {
         Debug.Log("이동속도 감소");
+        float temp = Speed;
         PlusSpeed(-speed);
         yield return new WaitForSeconds(duration);
         Debug.Log("이동속도 돌아옴");
-        PlusSpeed(speed);
+        Speed = temp;
 
 
     }
@@ -134,10 +135,13 @@ public class PlayerStatHendler : MonoBehaviour
     {
 
         Debug.Log("조작 반전");
+        float temp = Speed;
+
         ReverseMove();
+
         yield return new WaitForSeconds(duration);
         Debug.Log("조작 반전해제");
-        ReverseMove();
+        Speed = temp;
 
 
 
