@@ -33,9 +33,23 @@ public class PlayerController : MonoBehaviour
     private float attackTime;
 
     //대쉬기능 (일시 무적)
-    private float dashTime = 0.3f;
-    private float superTime;
-    private bool isSuper;
+    private float dashTime = 1f;
+    private float inDashTime;
+    private bool isDash;
+
+    //애니메이션
+    Animator animator;
+
+    //애니메이션 동작 관리
+    const string MOVE = "IsMove";
+    const string DASH = "IsDash";
+    const string DAMAGE = "OnDamage";
+
+    //대미지 무적 시간
+    private float damageTime = 0.5f;
+    private float onDamageTime;
+    private bool onDamage;
+
 
     private void Awake()
     {
@@ -47,6 +61,7 @@ public class PlayerController : MonoBehaviour
             weaponController = Instantiate(weaponPrefap, weaponPivot);
         }
 
+        animator = characterRenderer.GetComponent<Animator>();
     }
 
 
@@ -69,6 +84,9 @@ public class PlayerController : MonoBehaviour
 
         //대쉬
         Dash();
+
+        //무적 시간 확인
+        CheckSuperTime();
     }
 
     #region move and rotate
@@ -86,10 +104,10 @@ public class PlayerController : MonoBehaviour
             lookDirection = moveDirection;
 
         //대쉬중이 아니고, 이동 중 일 때, 스패이스를 누르면 대쉬
-        if (!isSuper && Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(moveDirection.magnitude) > 0.5f)
+        if (!isDash && Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(moveDirection.magnitude) > 0.5f)
         {
-            isSuper = true;
-            superTime = 0;
+            isDash = true;
+            inDashTime = 0;
         }
     }
 
@@ -101,6 +119,9 @@ public class PlayerController : MonoBehaviour
 
         //물리 실행
         rigidbody2D.velocity = direction;
+
+        //애니메이션
+        animator.SetBool(MOVE, direction.magnitude > 0.5f);
     }
 
     //캐릭터 좌우 반전
@@ -167,27 +188,52 @@ public class PlayerController : MonoBehaviour
 
     void Dash()
     {
-        //무적 시간 체크
-        superTime += Time.deltaTime;
-        if(superTime > dashTime)
-        {   //무적 종료
-            isSuper = false;
-        }
-
         //충돌무시
         int targetLayerIndex = (int)Mathf.Log(targetLayer.value, 2);
-        Physics2D.IgnoreLayerCollision(this.gameObject.layer, targetLayerIndex, isSuper);
+        Physics2D.IgnoreLayerCollision(this.gameObject.layer, targetLayerIndex, isDash);
+
+        //애니메이션
+        animator.SetBool(DASH, isDash);
     }
 
     public void TakeDamage(int damage)
     {
-        //대쉬 중 무적
-        if (isSuper)
+        //대쉬 또는 무적시간 중 대미지를 받지 않음
+        if (isDash || onDamage)
             return;
+
+        //stat.Hp -= damage;
+
+        //일시 무적
+        onDamage = true;
+        onDamageTime = 0;
+
+        //애니메이션
+        animator.SetBool(DAMAGE, onDamage);
+    }
+
+    void CheckSuperTime()
+    {
+        //무적 시간 체크
+        inDashTime += Time.deltaTime;
+        onDamageTime += Time.deltaTime;
+
+        //무적 종료
+        if (inDashTime > dashTime)
+        {
+            isDash = false;
+        }
+
+        if(onDamageTime > damageTime)
+        {
+            onDamage = false;
+            animator.SetBool(DAMAGE, onDamage);
+        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
+        //test
         TakeDamage(1);
     }
 

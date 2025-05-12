@@ -14,9 +14,17 @@ public class RangeWeaponController : MonoBehaviour
     //화살 프리펩
     [SerializeField] ArrowController arrow;
 
+    //무기 애니메이션
+    Animator animator;
+
+    //애니메이션 동작 관리
+    const string ATTACK = "IsAttack";
+    
+
     private void Awake()
     {
         stat = GetComponent<WeaponStat>();
+        animator = weaponRenderer.GetComponent<Animator>();
     }
 
 
@@ -39,12 +47,15 @@ public class RangeWeaponController : MonoBehaviour
         for (int i = 0; i < stat.BulletNum; i++)
         {
             ArrowController go = Instantiate(arrow, shootPosition, quaternion);
-            go.Init(targetLayer,this);
-            go.ShootArrow(lookDirection, stat.BulletSpeed);
+            go.Init(targetLayer,this,shootPosition);
+            go.ShootArrow(lookDirection);
 
             //추가화살 포지션 조절
             shootPosition.y -= 0.2f;
         }
+
+        //애니메이션
+        animator.SetTrigger(ATTACK);
     }
 
 
