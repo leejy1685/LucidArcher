@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 8326639956605407672}
   - component: {fileID: 6723013899438006152}
   - component: {fileID: 7662128237581430521}
+  - component: {fileID: 9204561790456906631}
   m_Layer: 6
   m_Name: BigZombie_Chaser
   m_TagString: Monster
@@ -220,6 +221,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2da39cccfd289e344b2f2f9c6385dd0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9204561790456906631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6577821320862494590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52fdba4b7d38a094f84682a0b97af333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8818271631395283912

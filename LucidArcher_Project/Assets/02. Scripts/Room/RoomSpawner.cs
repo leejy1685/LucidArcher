@@ -30,10 +30,10 @@ public class RoomSpawner : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
+    public void Init()
     {
-        roomCount = 0;
         SpawnRoom(Vector3.zero);
+        roomCount = 0;
     }
 
     // 방 소환
@@ -62,8 +62,6 @@ public class RoomSpawner : MonoBehaviour
                 currentRoom.InitRoom(RoomState.Enemy, initPosition);
                 break;
         }
-
-        Camera.main.gameObject.GetComponent<CameraController>().UpdateCameraLimit(initPosition, currentRoom.MaxX, currentRoom.MaxY);
     }
 
     // 다음 층으로 이동

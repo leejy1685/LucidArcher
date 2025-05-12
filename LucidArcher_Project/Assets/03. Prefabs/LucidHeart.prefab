@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2500977043029475564}
   - component: {fileID: 6209136364428619690}
   - component: {fileID: 5444123188373551631}
-  - component: {fileID: 1772973941729342958}
+  - component: {fileID: 2308829169081706346}
   m_Layer: 0
-  m_Name: SoulHeart
+  m_Name: LucidHeart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.1429453, y: 2.516161, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -123,7 +123,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.13, y: 0.12}
+    oldSize: {x: 0.8125, y: 0.75}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -159,7 +159,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1772973941729342958
+--- !u!114 &2308829169081706346
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,3 +175,4 @@ MonoBehaviour:
   tolerance: 0.05
   pickupDelay: 0.5
   spawnTime: 0
+  Monster: {fileID: 0}

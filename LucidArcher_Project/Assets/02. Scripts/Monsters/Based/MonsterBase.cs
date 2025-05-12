@@ -15,21 +15,41 @@ public abstract class MonsterBase : MonoBehaviour
     [SerializeField] protected SpriteRenderer sprite;
     [SerializeField] protected Animator animator;
     [SerializeField] protected Rigidbody2D rb;
+    private MonsterSpawner monsterSpawner;
 
-    public GameObject detectedEnemy;    // ¸ó½ºÅÍ ÀÔÀå¿¡¼­ enemy, Áï ÇÃ·¹ÀÌ¾î. È¤Àº Çã¼ö¾Æºñ ½ºÅ³À» ¸¸µç´Ù¸é Çã¼ö¾Æºñ, »óÅÂÀÌ»ó ½Ã µ¿Á·
+    public GameObject detectedEnemy;    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½å¿¡ï¿½ï¿½ enemy, ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½. È¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æºï¿½ ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½Æºï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Ì»ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
+
+    //ï¿½Ë¹ï¿½
+    KnockbackApplier knockbackApplier;
 
     protected virtual void Start()
     {
         currentHP = stats.HP;
+
+
+        //ï¿½Ë¹ï¿½ï¿½ï¿½ï¿½ï¿½
+        knockbackApplier = GetComponent<KnockbackApplier>();
+
         if (sightCollider != null)
         {
             sightCollider.radius = stats.SightRange;
         }
+
     }   
+
+
+    public void Init(MonsterSpawner _monsterSpawner)
+    {
+        monsterSpawner = _monsterSpawner;
+        detectedEnemy = GameManager.Instance.player;
+    }
+
 
     public void TakeDamage(float damage)
     {
-        // TODO : HP °è»ê
+
+        // TODO : HP ï¿½ï¿½ï¿½
         float effectiveDamage = Mathf.Max(0.5f, damage - stats.Def); 
         currentHP -= effectiveDamage;
 
@@ -41,7 +61,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     void Die()
     {
-        // TODO
+        monsterSpawner.MonsterCount--;
         gameObject.SetActive(false);
     }
 
@@ -58,7 +78,11 @@ public abstract class MonsterBase : MonoBehaviour
     public void Move(Vector2 direction)
     {
         sprite.flipX = direction.x < 0;
-        rb.velocity = direction * stats.MoveSpeed;
+        direction = direction* stats.MoveSpeed;
+        //ï¿½Ë¹ï¿½ ï¿½ï¿½ï¿½ï¿½
+        direction = knockbackApplier.ApplyKnockback(direction);
+
+        rb.velocity = direction;
     }
 
     private void LateUpdate()
@@ -70,5 +94,6 @@ public abstract class MonsterBase : MonoBehaviour
     {
         if ((transform.position - detectedEnemy.transform.position).magnitude <= stats.Range) return true;
         return false;
+
     }
 }
