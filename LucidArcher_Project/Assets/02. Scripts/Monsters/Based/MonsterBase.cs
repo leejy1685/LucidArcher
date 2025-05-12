@@ -61,8 +61,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     void Die()
     {
-        monsterSpawner.MonsterCount--;
-        gameObject.SetActive(false);
+        monsterSpawner.DestroyMonster(this);
     }
 
     public virtual void OnPlayerDetected(GameObject Player)
@@ -80,7 +79,7 @@ public abstract class MonsterBase : MonoBehaviour
         sprite.flipX = direction.x < 0;
         direction = direction* stats.MoveSpeed;
         //�˹� ����
-        direction = knockbackApplier.ApplyKnockback(direction);
+        //direction = knockbackApplier.ApplyKnockback(direction);
 
         rb.velocity = direction;
     }

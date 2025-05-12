@@ -6,16 +6,14 @@ public class RoomHandler : MonoBehaviour
     // 상수
     private const int X_MAX = 12;
     private const int Y_MAX = 6;
-    private static readonly int IS_GATE_UP = Animator.StringToHash("IsUp");
     private static readonly WaitForSeconds WAIT_HALF_SEC = new WaitForSeconds(0.5f);
     private static readonly WaitForSeconds WAIT_ONE_SEC = new WaitForSeconds(1f);
 
     // 외부 오브젝트
     [Header("GameObjects")]
-    [SerializeField] private GameObject gate;
+    [SerializeField] private GateHandler gate;
     [SerializeField] private GameObject exitDetector;
     [SerializeField] private MonsterSpawner monsterSpawner;
-    [SerializeField] private Animator gateAnimator;
     private GameObject stair;
 
     // 프리팹
@@ -39,9 +37,9 @@ public class RoomHandler : MonoBehaviour
     {
         this.roomState = roomState;
         transform.position = position;
-        float maxX = exitDetector.transform.GetChild(0).localPosition.x;
-        float maxY = exitDetector.transform.GetChild(2).localPosition.y;
-        cameraController.UpdateCameraLimit(position, maxX, maxY);
+
+        cameraController.UpdateCameraLimit(position,
+            exitDetector.transform.GetChild(3).localPosition.x, exitDetector.transform.GetChild(0).localPosition.y);
         monsterSpawner.Init(this);
 
         if (roomState == RoomState.Start)
@@ -62,15 +60,6 @@ public class RoomHandler : MonoBehaviour
 
             stair.SetActive(true);
         }
-
-        ControllGate(true);
-    }
-
-    // 게이트 오브젝트 활성화/비활성화
-    private void ControllGate(bool isOpen)
-    {
-        gate.SetActive(!isOpen);
-        gateAnimator.SetBool(IS_GATE_UP, !isOpen);
     }
 
     // 방에 진입했을 때 이벤트 실행 (적 소환 등)
@@ -83,10 +72,10 @@ public class RoomHandler : MonoBehaviour
     }
     IEnumerator CoroutineExcuteEvent()
     {
-        cameraController.ChangeTarget(gateAnimator.transform.parent);
+        cameraController.ChangeTarget(gate.NearestGate(Camera.main.transform.position), 3f);
         yield return WAIT_ONE_SEC;
 
-        ControllGate(false);
+        gate.ControllGate(true);
         yield return WAIT_ONE_SEC;
 
         cameraController.ChangeTarget();
@@ -108,11 +97,11 @@ public class RoomHandler : MonoBehaviour
     {
         if(roomState == RoomState.Boss)
         {
-            cameraController.ChangeTarget(stair.transform);
+            cameraController.ChangeTarget(stair.transform, 3f);
         }
         else
         {
-            cameraController.ChangeTarget(gateAnimator.transform.parent);
+            cameraController.ChangeTarget(gate.NearestGate(Camera.main.transform.position), 3f);
         }
         yield return WAIT_ONE_SEC;
 
@@ -122,7 +111,7 @@ public class RoomHandler : MonoBehaviour
         }
         else
         {
-            ControllGate(true);
+            gate.ControllGate(false);
         }
         yield return WAIT_ONE_SEC;
 

@@ -80,10 +80,16 @@ public class CameraController : MonoBehaviour
     }
 
     // 카메라 타겟 변경
-    public void ChangeTarget(Transform _target)
+    public void ChangeTarget(Transform _target, float orthographicSize, float duration)
     {
         target = _target;
-        ZoomIn(3f, 1f);
+        ZoomIn(orthographicSize, duration);
+        hasLimit = false;
+    }
+    public void ChangeTarget(Transform _target, float orthographicSize)
+    {
+        target = _target;
+        ZoomIn(orthographicSize, 1f);
         hasLimit = false;
     }
     public void ChangeTarget()

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BottomGate
+  m_Controller: {fileID: 9100000, guid: e29e2631e93220845bcd591d604d163a, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: d67dca07b39078546a477b811288b260, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d67dca07b39078546a477b811288b260, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: bd92f95b22cbc5e43b21bd8d9d9ec4fb, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: bd92f95b22cbc5e43b21bd8d9d9ec4fb, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f8a5b46a20d3131499021048974ce437, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8df9bc44b892e1c4da784a540ff7aeb9, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 3e91c877c00522349bb6d8d523b0721b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3e91c877c00522349bb6d8d523b0721b, type: 2}

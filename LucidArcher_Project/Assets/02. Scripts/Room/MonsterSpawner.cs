@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour
@@ -12,26 +11,13 @@ public class MonsterSpawner : MonoBehaviour
     [SerializeField] private GameObject[] monsterPrefabs;
 
     // 변수
-    private int monsterCount = 0;
-    public int MonsterCount
-    {
-        get { return monsterCount; }
-        set
-        {
-            if (value <= 0)
-            {
-                room.EndEvent();
-                monsterCount = 0;
-            }
-            else monsterCount = value;
-        }
-    }
+    public int monsterCount = 0;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            DestroyMonster();
+            DestroyAllMonster();
         }
     }
 
@@ -44,15 +30,15 @@ public class MonsterSpawner : MonoBehaviour
     // 몬스터 소환
     public void SpawnMosnters()
     {
-        monsterCount = Random.Range(4, 9);
-
-        for (int i = 0; i < monsterCount; i++)
+        for (int i = 0; i < Random.Range(4, 9); i++)
         {
             GameObject monster = Instantiate(monsterPrefabs[Random.Range(0, monsterPrefabs.Length)], transform);
             monster.GetComponent<MonsterBase>().Init(this);
             monster.transform.localPosition = RandomPosition();
             monsters.Add(monster.GetComponent<MonsterBase>());
         }
+
+        UpdateMonsterCount();
     }
 
     // 랜덤 포지션 반환
@@ -66,12 +52,35 @@ public class MonsterSpawner : MonoBehaviour
         return new Vector3(x, y, 0);
     }
 
-    // 테스트용 : 몬스터 삭제
-    private void DestroyMonster()
+    // 몬스터 수 업데이트
+    private void UpdateMonsterCount()
     {
-        if (MonsterCount == 0) return;
+        monsterCount = monsters.Count;
 
-        MonsterCount--;
-        monsters[MonsterCount].gameObject.SetActive(false);
+        if(monsterCount == 0)
+        {
+            room.EndEvent();
+        }
+    }
+
+    // 몬스터 죽었을 때, 몬스터 제거
+    public void DestroyMonster(MonsterBase monster)
+    {
+        monsters.Remove(monster);
+        monster.gameObject.SetActive(false);
+        
+        UpdateMonsterCount();
+    }
+
+    // 테스트용 : 몬스터 삭제
+    private void DestroyAllMonster()
+    {
+        foreach(MonsterBase monster in monsters)
+        {
+            monster.gameObject.SetActive(false);
+        }
+        monsters.Clear();
+
+        UpdateMonsterCount();
     }
 }

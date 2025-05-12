@@ -216,9 +216,9 @@ GameObject:
   - component: {fileID: 1975967280816393189}
   - component: {fileID: 3655425381042361710}
   - component: {fileID: -6866788060554943843}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: IceZombie_ChaseRanger
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
