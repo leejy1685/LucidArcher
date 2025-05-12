@@ -167,7 +167,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 6506292189099730145}
   itemPrefabs:
-  - {fileID: 5007712317613568595, guid: 839edcfed6dcd614aa61116520ec99f0, type: 3}
   - {fileID: 4559769651083176745, guid: 64f0392bf350a9a4f8ffd8e58b19f5a2, type: 3}
   - {fileID: 2981918888953190148, guid: 9f179a0f92c29094d929bbfa7b9db215, type: 3}
   - {fileID: 7605991790370870153, guid: a307a25ea86611c4b8f31004d61e3abc, type: 3}
