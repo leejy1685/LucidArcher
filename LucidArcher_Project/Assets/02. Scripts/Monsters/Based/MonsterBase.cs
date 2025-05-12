@@ -12,9 +12,9 @@ public abstract class MonsterBase : MonoBehaviour
 
     [Header("Base")]
     [SerializeField] protected CircleCollider2D sightCollider;
-    [SerializeField] protected SpriteRenderer sprite;
+    [SerializeField] public SpriteRenderer sprite;
     [SerializeField] protected Animator animator;
-    [SerializeField] protected Rigidbody2D rb;
+    [SerializeField] public Rigidbody2D rb;
     private MonsterSpawner monsterSpawner;
 
     public GameObject detectedEnemy;    // ���� ���忡�� enemy, �� �÷��̾�. Ȥ�� ����ƺ� ��ų�� ����ٸ� ����ƺ�, �����̻� �� ����
@@ -59,7 +59,7 @@ public abstract class MonsterBase : MonoBehaviour
         if (currentHP <= 0) Die();
     }
 
-    void Die()
+    protected virtual void Die()
     {
         monsterSpawner.MonsterCount--;
         gameObject.SetActive(false);
@@ -95,5 +95,9 @@ public abstract class MonsterBase : MonoBehaviour
         if ((transform.position - detectedEnemy.transform.position).magnitude <= stats.Range) return true;
         return false;
 
+    }
+    public Vector2 GetDirectionTowardEnemy()
+    {
+        return (detectedEnemy.transform.position - transform.position).normalized;
     }
 }
