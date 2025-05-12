@@ -9,8 +9,10 @@ public class PlayerStatHendler : MonoBehaviour
     [Range(1, 20)][SerializeField] private float basespeed = 5f;
     //public float Speed { get { return basespeed; } set { basespeed = value; } }
 
-    private float speedModifier = 0f;
-    private bool isReversed = false;
+    private float speedModifier = 0f; //상태이상 (슬로우 , 반전)에 의한 속도 변화량
+    public bool isReversed = false; // 반전 여부
+
+    //현재 적용된 속도 계산 (기본속도 + 보정값) * (반전여부에 따라 양수 음수)
     public float Speed => (basespeed + speedModifier) * (isReversed ? -1 : 1f);
 
     //체력
@@ -50,7 +52,7 @@ public class PlayerStatHendler : MonoBehaviour
 
     //최대 경험치
     public int MaxEXP => Level * 20;
-    //최대체력 몇 번 증가시켰는지 확인하기 위한 변수
+    //업그레이드 몇 번 했는지 확인하기 위한 변수들
     public int UpgradeMaxHp_Count = 0;
 
     public int UpgradeAttackDelay_Count = 0;
@@ -164,7 +166,8 @@ public class PlayerStatHendler : MonoBehaviour
 
 
     }
-    public void RandSpeed(float speed, float duration)
+    //이동속도 감소 디버프
+    public void RandSpeed(float speed, float duration) 
     {
 
         StartCoroutine(RandomSlowBuff(speed, duration));
@@ -173,10 +176,10 @@ public class PlayerStatHendler : MonoBehaviour
     IEnumerator RandomSlowBuff(float speed, float duration)
     {
         Debug.Log("이동속도 감소");
-        speedModifier -= speed;
+        speedModifier -= speed; //속도 감소
 
         yield return new WaitForSeconds(duration);
-        speedModifier += speed;
+        speedModifier += speed; //속도 복구
         Debug.Log("이동속도 돌아옴");
 
 
