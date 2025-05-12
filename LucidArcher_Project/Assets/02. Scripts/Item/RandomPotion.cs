@@ -36,17 +36,18 @@ public class RandomPotion : ItemManager
                 break;
             case 3:
                 //상태이상 (슬로우)
-                
 
+                Debug.Log("이동 속도 감소 (슬로우)");
                 Playerstat.RandSpeed(7f, 7f);
 
-                
+
+
                 break;
 
             case 4:
                 //상태이상 (이동반전)
 
-
+                Debug.Log("조작 반전");
                 Playerstat.Reverse(7f);
 
 

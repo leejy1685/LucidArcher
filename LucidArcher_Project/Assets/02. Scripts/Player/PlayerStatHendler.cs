@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class PlayerStatHendler : MonoBehaviour
 {
-    //이동 속도
-    [Range(1, 20)][SerializeField] private float speed;
-    public float Speed { get { return speed; } set { speed = value; } }
+
+    //기본 이동 속도
+    [Range(1, 20)][SerializeField] private float basespeed = 5f;
+    //public float Speed { get { return basespeed; } set { basespeed = value; } }
+
+    private float speedModifier = 0f;
+    private bool isReversed = false;
+    public float Speed => (basespeed + speedModifier) * (isReversed ? -1 : 1f);
+
     //체력
     [Range(1, 10)][SerializeField] private int hp = 6;
     public int Hp { get { return hp; } set { hp = value; } }
@@ -24,7 +30,13 @@ public class PlayerStatHendler : MonoBehaviour
 
     //최대 스태미너
     public float Maxstamina = 3;
-    public float Stamina { get { return stamina; } set { stamina = value; } }
+    public float Stamina
+    {
+        get => stamina;
+        set => stamina = Mathf.Clamp(value, 0, 3);
+
+
+    }
     // 공격 딜레이
     [Range(0.1f, 1f)][SerializeField] private float attackDelay;
     public float AttackDelay { get { return attackDelay; } }
@@ -41,12 +53,21 @@ public class PlayerStatHendler : MonoBehaviour
     //최대체력 몇 번 증가시켰는지 확인하기 위한 변수
     public int UpgradeMaxHp_Count = 0;
 
+
+
+
+
+
+
     public void SetHP(int input)
     {
         Debug.Log($"HP{input}증가");
 
         Hp += input;
     }
+
+
+    
 
     public void UpgradeMaxHP() //최대체력 증가 최대 4번까지 증가시 하트 한칸 증가
     {
@@ -75,15 +96,15 @@ public class PlayerStatHendler : MonoBehaviour
     public void PlusSpeed(float input) //스피드 증가
     {
         Debug.Log($"스피드{input} 증가");
-        Speed += input;
+        basespeed += input;
     }
 
-    public void ReverseMove() //조작 반전
-    {
+    //public void ReverseMove() //조작 반전
+    //{
 
-        Speed *= -1;
+    //    basespeed *= -1;
 
-    }
+    //}
     public void PlusLucidPower(float input) //특수 게이지 증가
     {
         Debug.Log($"루시드 파워 {input}증가");
@@ -118,11 +139,13 @@ public class PlayerStatHendler : MonoBehaviour
     IEnumerator RandomSlowBuff(float speed, float duration)
     {
         Debug.Log("이동속도 감소");
-        float temp = Speed;
-        PlusSpeed(-speed);
+        speedModifier -= speed;
+
         yield return new WaitForSeconds(duration);
+        speedModifier += speed;
         Debug.Log("이동속도 돌아옴");
-        Speed = temp;
+
+
 
 
     }
@@ -135,14 +158,14 @@ public class PlayerStatHendler : MonoBehaviour
     {
 
         Debug.Log("조작 반전");
-        //float temp = Speed;
+  
 
-        ReverseMove();
+        isReversed = true;
 
         yield return new WaitForSeconds(duration);
         Debug.Log("조작 반전해제");
-        ReverseMove();
-        //Speed = temp;
+        isReversed = false;
+    
 
 
 
