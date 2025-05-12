@@ -20,7 +20,7 @@ public class MarbleWhale : MonsterBase
     [SerializeField] Location actArea;
     [SerializeField] List<MonoBehaviour> patternComponents;
     List<IEnemyPattern> patterns;
-    float spriteInitialX;
+    float spriteOffsetX;
 
     IEnemyPattern currentPattern;
 
@@ -38,7 +38,7 @@ public class MarbleWhale : MonsterBase
     {
         base.Start();
         EnterIdleState();
-        spriteInitialX = sprite.gameObject.transform.localPosition.x;
+        spriteOffsetX = sprite.gameObject.transform.localPosition.x;
     }
     // Update is called once per frame
     void Update()
@@ -132,7 +132,7 @@ public class MarbleWhale : MonsterBase
     {
         sprite.flipX = moveDirection.x < 0 ? false : true;
         Vector3 spritePos = sprite.gameObject.transform.localPosition;
-        spritePos.x = moveDirection.x < 0 ? spriteInitialX : -spriteInitialX;
+        spritePos.x = moveDirection.x < 0 ? spriteOffsetX : -spriteOffsetX;
         sprite.gameObject.transform.localPosition = spritePos;
     }
 
