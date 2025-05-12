@@ -15,11 +15,12 @@ public abstract class MonsterBase : MonoBehaviour
     [SerializeField] protected SpriteRenderer sprite;
     [SerializeField] protected Animator animator;
     [SerializeField] protected Rigidbody2D rb;
+    private MonsterSpawner monsterSpawner;
 
-    public GameObject detectedEnemy;    // ¸ó½ºÅÍ ÀÔÀå¿¡¼­ enemy, Áï ÇÃ·¹ÀÌ¾î. È¤Àº Çã¼ö¾Æºñ ½ºÅ³À» ¸¸µç´Ù¸é Çã¼ö¾Æºñ, »óÅÂÀÌ»ó ½Ã µ¿Á·
+    public GameObject detectedEnemy;    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½å¿¡ï¿½ï¿½ enemy, ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½. È¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æºï¿½ ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½Æºï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Ì»ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 
-    //³Ë¹é
+    //ï¿½Ë¹ï¿½
     KnockbackApplier knockbackApplier;
 
     protected virtual void Start()
@@ -27,20 +28,28 @@ public abstract class MonsterBase : MonoBehaviour
         currentHP = stats.HP;
         if(sightCollider != null) sightCollider.radius = stats.SightRange;
 
-        //³Ë¹éÁ¤º¸
+        //ï¿½Ë¹ï¿½ï¿½ï¿½ï¿½ï¿½
         knockbackApplier = GetComponent<KnockbackApplier>();
     }   
+}
+
+    public void Init(MonsterSpawner _monsterSpawner)
+    {
+        monsterSpawner = _monsterSpawner;
+    }
+
 
     public void TakeDamage(float damage)
     {
-        // TODO : HP °è»ê
+        // TODO : HP ï¿½ï¿½ï¿½
 
         if (currentHP <= 0) Die();
     }
 
     void Die()
     {
-        // TODO
+        monsterSpawner.MonsterCount--;
+        gameObject.SetActive(false);
     }
 
     public virtual void OnPlayerDetected(GameObject Player)
@@ -58,10 +67,9 @@ public abstract class MonsterBase : MonoBehaviour
         sprite.flipX = direction.x < 0;
 
         direction = direction* stats.MoveSpeed;
-        //³Ë¹é Àû¿ë
+        //ï¿½Ë¹ï¿½ ï¿½ï¿½ï¿½ï¿½
         direction = knockbackApplier.ApplyKnockback(direction);
 
         rb.velocity = direction;
     }
-
 }
