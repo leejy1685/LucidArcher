@@ -26,23 +26,36 @@ public abstract class MonsterBase : MonoBehaviour
     protected virtual void Start()
     {
         currentHP = stats.HP;
-        if(sightCollider != null) sightCollider.radius = stats.SightRange;
+
 
         //�˹�����
         knockbackApplier = GetComponent<KnockbackApplier>();
+
+        if (sightCollider != null)
+        {
+            sightCollider.radius = stats.SightRange;
+        }
+
     }   
 
 
     public void Init(MonsterSpawner _monsterSpawner)
     {
         monsterSpawner = _monsterSpawner;
+        detectedEnemy = GameManager.Instance.player;
     }
 
 
     public void TakeDamage(float damage)
     {
-        // TODO : HP ���
 
+        // TODO : HP ���
+        float effectiveDamage = Mathf.Max(0.5f, damage - stats.Def); 
+        currentHP -= effectiveDamage;
+
+        float damagedDensity = Mathf.Min(effectiveDamage / 8, 1);
+        sprite.color = Color.white - new Color(0, 1, 1, 0) * damagedDensity;
+        
         if (currentHP <= 0) Die();
     }
 
@@ -65,11 +78,22 @@ public abstract class MonsterBase : MonoBehaviour
     public void Move(Vector2 direction)
     {
         sprite.flipX = direction.x < 0;
-
         direction = direction* stats.MoveSpeed;
         //�˹� ����
         direction = knockbackApplier.ApplyKnockback(direction);
 
         rb.velocity = direction;
+    }
+
+    private void LateUpdate()
+    {
+        sprite.color = Color.Lerp(sprite.color, Color.white, 0.01f);
+    }
+
+    protected bool IsEnemyInRange()
+    {
+        if ((transform.position - detectedEnemy.transform.position).magnitude <= stats.Range) return true;
+        return false;
+
     }
 }

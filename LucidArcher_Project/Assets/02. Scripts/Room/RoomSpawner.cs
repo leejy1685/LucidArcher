@@ -23,17 +23,11 @@ public class RoomSpawner : MonoBehaviour
     // 변수
     private RoomHandler previousRoom;
     private RoomHandler currentRoom;
-    private int roomCount;
+    private int roomCount = 0;
 
     private void Awake()
     {
         Instance = this;
-    }
-
-    private void Start()
-    {
-        roomCount = 0;
-        SpawnRoom(Vector3.zero);
     }
 
     // 방 소환

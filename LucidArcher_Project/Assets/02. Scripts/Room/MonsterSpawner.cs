@@ -49,6 +49,7 @@ public class MonsterSpawner : MonoBehaviour
         for (int i = 0; i < monsterCount; i++)
         {
             GameObject monster = Instantiate(monsterPrefabs[Random.Range(0, monsterPrefabs.Length)], transform);
+            monster.GetComponent<MonsterBase>().Init(this);
             monster.transform.localPosition = RandomPosition();
             monsters.Add(monster.GetComponent<MonsterBase>());
         }
