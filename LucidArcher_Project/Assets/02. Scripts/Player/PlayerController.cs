@@ -228,7 +228,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            //stat.Hp -= damage;
+            stat.SetHP(-damage);
             Debug.Log("체력 소모 " + damage);
 
             //애니메이션

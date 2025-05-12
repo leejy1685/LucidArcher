@@ -16,7 +16,7 @@ public class HalfHeart : ItemManager
         }
 
 
-        stat.PlusHP(1);
+        stat.SetHP(1);
         Destroy(gameObject);
 
     }

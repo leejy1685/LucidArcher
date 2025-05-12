@@ -17,12 +17,12 @@ public class Heart : ItemManager
 
         if (stat.MaxHp - stat.Hp == 1)
         {
-            stat.PlusHP(1);
+            stat.SetHP(1);
             Destroy(gameObject);
         }
         else
         {
-            stat.PlusHP(2);
+            stat.SetHP(2);
             Destroy(gameObject);
 
         }

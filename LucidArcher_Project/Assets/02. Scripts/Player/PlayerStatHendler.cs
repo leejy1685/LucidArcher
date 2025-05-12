@@ -41,7 +41,7 @@ public class PlayerStatHendler : MonoBehaviour
     //최대체력 몇 번 증가시켰는지 확인하기 위한 변수
     public int UpgradeMaxHp_Count = 0;
 
-    public void PlusHP(int input)
+    public void SetHP(int input)
     {
         Debug.Log($"HP{input}증가");
 

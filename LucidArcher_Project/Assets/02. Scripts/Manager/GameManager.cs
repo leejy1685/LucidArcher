@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField] RoomSpawner roomSpawner;
+    [SerializeField] UIManager UIManager;
     public GameObject player;
 
     private void Awake()
@@ -17,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        roomSpawner.SpawnRoom(Vector3.zero);
+        roomSpawner.Init();
     }
 
 }

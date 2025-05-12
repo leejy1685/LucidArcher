@@ -19,8 +19,8 @@ public class MonsterData : ScriptableObject
     public float MoveSpeed => moveSpeed;
 
     [SerializeField]
-    private float atk;
-    public float Atk => atk;
+    private int atk;
+    public int Atk => atk;
 
     [SerializeField]
     private float atkDelay;

@@ -9,7 +9,7 @@ public class RandomPotion : ItemManager
     {
         // 랜덤 로직
         PlayerStatHendler Playerstat = player.GetComponent<PlayerStatHendler>();
-        WeaponStat weaponstat = player.GetComponent<WeaponStat>();
+        WeaponStat weaponstat = player.GetComponentInChildren<WeaponStat>();
 
 
         int random = Random.Range(0, 5);
@@ -20,7 +20,7 @@ public class RandomPotion : ItemManager
             case 0:
                 //체력회복
                 Debug.Log("체력 1회복");
-                Playerstat.PlusHP(1);
+                Playerstat.SetHP(1);
                 break;
 
             case 1:
@@ -32,7 +32,7 @@ public class RandomPotion : ItemManager
             case 2:
                 //데미지
                 Debug.Log("체력 1감소");
-                Playerstat.PlusHP(-1);
+                Playerstat.SetHP(-1);
                 break;
             case 3:
                 //상태이상 (슬로우)
