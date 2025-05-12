@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour
@@ -11,7 +12,7 @@ public class MonsterSpawner : MonoBehaviour
     [SerializeField] private GameObject[] monsterPrefabs;
 
     // 변수
-    private int monsterCount = 1;
+    private int monsterCount = 0;
     public int MonsterCount
     {
         get { return monsterCount; }
@@ -19,8 +20,8 @@ public class MonsterSpawner : MonoBehaviour
         {
             if (value <= 0)
             {
-                monsterCount = 0;
                 room.EndEvent();
+                monsterCount = 0;
             }
             else monsterCount = value;
         }
@@ -28,20 +29,23 @@ public class MonsterSpawner : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Z))
-            DestroyAllMonsters();
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            DestroyMonster();
+        }
     }
 
     // 몬스터 스포너 초기화
-    public void Init(RoomHandler _room, int _monsterCount)
+    public void Init(RoomHandler _room)
     {
         room = _room;
-        monsterCount = _monsterCount;
     }
 
     // 몬스터 소환
     public void SpawnMosnters()
     {
+        monsterCount = Random.Range(4, 9);
+
         for (int i = 0; i < monsterCount; i++)
         {
             GameObject monster = Instantiate(monsterPrefabs[Random.Range(0, monsterPrefabs.Length)], transform);
@@ -61,15 +65,12 @@ public class MonsterSpawner : MonoBehaviour
         return new Vector3(x, y, 0);
     }
 
-    // 테스트용 : 모든 몬스터 삭제
-    private void DestroyAllMonsters()
+    // 테스트용 : 몬스터 삭제
+    private void DestroyMonster()
     {
-        if (monsterCount == 0) return;
+        if (MonsterCount == 0) return;
 
-        foreach(MonsterBase monster in monsters)
-        {
-            monster.gameObject.SetActive(false);
-        }
-        MonsterCount = 0;
+        MonsterCount--;
+        monsters[MonsterCount].gameObject.SetActive(false);
     }
 }

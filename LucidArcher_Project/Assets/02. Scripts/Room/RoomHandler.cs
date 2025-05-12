@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class RoomHandler : MonoBehaviour
@@ -5,12 +6,16 @@ public class RoomHandler : MonoBehaviour
     // 상수
     private const int X_MAX = 12;
     private const int Y_MAX = 6;
+    private static readonly int IS_GATE_UP = Animator.StringToHash("IsUp");
+    private static readonly WaitForSeconds WAIT_HALF_SEC = new WaitForSeconds(0.5f);
+    private static readonly WaitForSeconds WAIT_ONE_SEC = new WaitForSeconds(1f);
 
     // 외부 오브젝트
     [Header("GameObjects")]
     [SerializeField] private GameObject gate;
     [SerializeField] private GameObject exitDetector;
     [SerializeField] private MonsterSpawner monsterSpawner;
+    [SerializeField] private Animator gateAnimator;
     private GameObject stair;
 
     // 프리팹
@@ -22,17 +27,22 @@ public class RoomHandler : MonoBehaviour
     private RoomState roomState;
     private bool isExcuted = false;
 
-    public float MaxX { get; private set; }
-    public float MaxY { get; private set; }
+    private CameraController cameraController;
+
+    private void Awake()
+    {
+        cameraController = Camera.main.gameObject.GetComponent<CameraController>();
+    }
 
     // 방의 위치와 상태 초기화
     public void InitRoom(RoomState roomState, Vector3 position)
     {
         this.roomState = roomState;
         transform.position = position;
-        MaxX = exitDetector.transform.GetChild(0).localPosition.x;
-        MaxY = exitDetector.transform.GetChild(2).localPosition.y;
-        monsterSpawner.Init(this, Random.Range(4, 9));
+        float maxX = exitDetector.transform.GetChild(0).localPosition.x;
+        float maxY = exitDetector.transform.GetChild(2).localPosition.y;
+        cameraController.UpdateCameraLimit(position, maxX, maxY);
+        monsterSpawner.Init(this);
 
         if (roomState == RoomState.Start)
         {
@@ -60,35 +70,67 @@ public class RoomHandler : MonoBehaviour
     private void ControllGate(bool isOpen)
     {
         gate.SetActive(!isOpen);
+        gateAnimator.SetBool(IS_GATE_UP, !isOpen);
     }
 
     // 방에 진입했을 때 이벤트 실행 (적 소환 등)
     private void ExcuteEvent()
     {
         isExcuted = true;
-
-        monsterSpawner.SpawnMosnters();
-
         exitDetector.SetActive(true);
-        ControllGate(false);
+
+        StartCoroutine(CoroutineExcuteEvent());
     }
+    IEnumerator CoroutineExcuteEvent()
+    {
+        cameraController.ChangeTarget(gateAnimator.transform.parent);
+        yield return WAIT_ONE_SEC;
+
+        ControllGate(false);
+        yield return WAIT_ONE_SEC;
+
+        cameraController.ChangeTarget();
+        yield return WAIT_HALF_SEC;
+
+        // 이벤트 실행
+        monsterSpawner.SpawnMosnters();
+    }
+
 
     // 이벤트 종료 후 경험치, 아이템 등 획득 / 보스 방이면 계단도 보이게
     public void EndEvent()
     {
         if (roomState == RoomState.Start) return;
 
-        // 경험치, 아이템 등 획득
-        SpawnChest();
-
-        if (roomState != RoomState.Boss)
+        StartCoroutine(CoroutineEndEvent());
+    }
+    IEnumerator CoroutineEndEvent()
+    {
+        if(roomState == RoomState.Boss)
         {
-            ControllGate(true);
+            cameraController.ChangeTarget(stair.transform);
         }
         else
         {
+            cameraController.ChangeTarget(gateAnimator.transform.parent);
+        }
+        yield return WAIT_ONE_SEC;
+
+        if (roomState == RoomState.Boss)
+        {
             stair.GetComponent<StairHandler>().MoveFrontTile();
         }
+        else
+        {
+            ControllGate(true);
+        }
+        yield return WAIT_ONE_SEC;
+
+        cameraController.ChangeTarget();
+        yield return WAIT_HALF_SEC;
+
+        // 경험치, 아이템 등 획득
+        SpawnChest();
     }
 
     // 방 파괴

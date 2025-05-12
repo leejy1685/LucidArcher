@@ -15,6 +15,7 @@ public abstract class MonsterBase : MonoBehaviour
     [SerializeField] protected SpriteRenderer sprite;
     [SerializeField] protected Animator animator;
     [SerializeField] protected Rigidbody2D rb;
+    private MonsterSpawner monsterSpawner;
 
     public GameObject detectedEnemy;    // 몬스터 입장에서 enemy, 즉 플레이어. 혹은 허수아비 스킬을 만든다면 허수아비, 상태이상 시 동족
 
@@ -22,7 +23,12 @@ public abstract class MonsterBase : MonoBehaviour
     {
         currentHP = stats.HP;
         if(sightCollider != null) sightCollider.radius = stats.SightRange;
-    }   
+    }
+
+    public void Init(MonsterSpawner _monsterSpawner)
+    {
+        monsterSpawner = _monsterSpawner;
+    }
 
     public void TakeDamage(float damage)
     {
@@ -33,7 +39,8 @@ public abstract class MonsterBase : MonoBehaviour
 
     void Die()
     {
-        // TODO
+        monsterSpawner.MonsterCount--;
+        gameObject.SetActive(false);
     }
 
     public virtual void OnPlayerDetected(GameObject Player)
@@ -51,5 +58,4 @@ public abstract class MonsterBase : MonoBehaviour
         sprite.flipX = direction.x < 0;
         rb.velocity = direction * stats.MoveSpeed;
     }
-
 }
