@@ -17,13 +17,20 @@ public class WeaponStat : MonoBehaviour
     [SerializeField] float knockbackPower = 1f;
     public float KnockbackPower { get { return knockbackPower; } }
 
-    public void PlusDamage(float input)
+    public void PlusDamage(float input) //공격력증가
     {
 
         Damage += input;
 
     }
 
+
+    public void PlusBulletNum()
+    {
+
+
+        BulletNum++;
+    }
     public void RandBuff(float damage, float duration)
     {
 

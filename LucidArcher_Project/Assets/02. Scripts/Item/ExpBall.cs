@@ -10,7 +10,7 @@ public class ExpBall : ItemManager
 
         PlayerStatHendler stat = player.GetComponent<PlayerStatHendler>();
         //경험치 추가 로직
-        //player.Exp ++
+        stat.PlusEXP(1);
 
         Destroy(gameObject);
 
