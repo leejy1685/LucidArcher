@@ -99,9 +99,9 @@ public class PlayerStatHendler : MonoBehaviour
     }
     public void LevelUP() //레벨업
     {
-        while (EXP >= 20)
+        while (EXP >= MaxEXP)
         {
-            EXP -= 20;
+            EXP -= MaxEXP;
             Level++;
             Debug.Log($"레벨업 현재 레벨:{level}");
 
