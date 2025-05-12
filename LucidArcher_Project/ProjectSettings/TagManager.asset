@@ -13,9 +13,9 @@ TagManager:
   - Water
   - UI
   - Enemy
-  - 
-  - 
-  - 
+  - Projectile
+  - Player
+  - Maps
   - 
   - 
   - 
@@ -44,4 +44,7 @@ TagManager:
     locked: 0
   - name: GroundObjects
     uniqueID: 3877138715
+    locked: 0
+  - name: Effects
+    uniqueID: 3658297187
     locked: 0

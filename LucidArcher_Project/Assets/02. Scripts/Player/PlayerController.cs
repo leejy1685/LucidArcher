@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     private float attackTime;
 
     //대쉬기능 (일시 무적)
-    private float dashTime = 1f;
+    private float dashTime = 0.5f;
     private float inDashTime;
     private bool isDash;
 

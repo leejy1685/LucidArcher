@@ -18,6 +18,9 @@ public class ArrowController : MonoBehaviour
     Vector2 shootPosition;
     float distance = 0;
 
+    //¸Ê Layer
+    [SerializeField] LayerMask mapLayer;
+
     public void Init(LayerMask targetLayer,RangeWeaponController rangeWeaponController,Vector2 shootPosition)
     {
         //ÀÌµ¿ ±¸Çö
@@ -56,6 +59,13 @@ public class ArrowController : MonoBehaviour
             collision.GetComponent<KnockbackApplier>().Knockback(transform, weaponStat.KnockbackPower, weaponStat.KnockbackDuration);
             collision.GetComponent<MonsterBase>().TakeDamage(weaponStat.Damage);
 
+            //ÆÄ±«
+            Destroy(gameObject);
+        }
+
+        //¸Ê ¶Ç´Â Àå¾Ö¹°°ú Ãæµ¹
+        if((mapLayer | 1 << collision.gameObject.layer) == mapLayer)
+        {
             //ÆÄ±«
             Destroy(gameObject);
         }
