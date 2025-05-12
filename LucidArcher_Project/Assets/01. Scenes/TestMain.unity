@@ -2280,15 +2280,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterRenderer: {fileID: 578500290}
   weaponPivot: {fileID: 102186045}
-  speed: 5
-  HP: 6
-  MP: 10
   targetLayer:
     serializedVersion: 2
     m_Bits: 64
   radius: 10
   weaponPrefap: {fileID: 3677935211016202402, guid: be3f0a510feb27b478aeb836c51b7c4a, type: 3}
-  attackDelay: 1
+  shield: 0
 --- !u!50 &956528152
 Rigidbody2D:
   serializedVersion: 4
@@ -3350,7 +3347,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
