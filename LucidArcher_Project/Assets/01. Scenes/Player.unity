@@ -448,6 +448,7 @@ MonoBehaviour:
     m_Bits: 64
   radius: 20
   weaponPrefap: {fileID: 3677935211016202402, guid: be3f0a510feb27b478aeb836c51b7c4a, type: 3}
+  shield: 3
 --- !u!114 &594159351
 MonoBehaviour:
   m_ObjectHideFlags: 0

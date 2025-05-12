@@ -50,6 +50,14 @@ public class PlayerController : MonoBehaviour
     private float onDamageTime;
     private bool onDamage;
 
+    //방어막
+    [SerializeField] int shield;
+    public int Shield
+    {
+        get => shield;
+        set => shield = Mathf.Clamp(value, 0, 3);
+    }
+
 
     private void Awake()
     {
@@ -173,7 +181,6 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-
     #region Battle
 
     //공격 무기에서 화살 제작
@@ -209,15 +216,24 @@ public class PlayerController : MonoBehaviour
         if (isDash || onDamage)
             return;
 
-        //대미지 계산
-        //stat.Hp -= damage;
-
         //일시 무적
         onDamage = true;
         onDamageTime = 0;
 
-        //애니메이션
-        animator.SetBool(DAMAGE, onDamage);
+        //대미지 계산
+        if (shield > 0)
+        {
+            shield--;
+            Debug.Log("방어막 소모");
+        }
+        else
+        {
+            //stat.Hp -= damage;
+            Debug.Log("체력 소모 " + damage);
+
+            //애니메이션
+            animator.SetBool(DAMAGE, onDamage);
+        }
     }
 
     void CheckSuperTime()
@@ -240,4 +256,11 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        TakeDamage(2);
+    }
+
+
 }
