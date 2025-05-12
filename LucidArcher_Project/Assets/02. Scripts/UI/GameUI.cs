@@ -6,10 +6,15 @@ using UnityEngine.UI;
 // 현재 막힌 부분 : 데미지를 입거나 힐을 받았을 때(이떄는 List 값이 안맞아서 그런거) 하트가 제대로 표시되지 않음
 public class GameUI : BaseUI
 {
+    [SerializeField] private PlayerStatHendler playerStatHendler;
+    // [SerializeField] private WeaponStat weaponStat;
     [SerializeField] private Transform hpTransform;
     [SerializeField] private List<GameObject> heartPrefabs;
     [SerializeField] private List<GameObject> createdHeart = new List<GameObject>();
-    [SerializeField] private PlayerStatHendler playerStatHendler;    
+    [SerializeField] private Slider staminaSlider;
+    // [SerializeField] private TextMeshProUGUI playerDamageText;
+    [SerializeField] private TextMeshProUGUI playerAttackDelayText;
+    [SerializeField] private TextMeshProUGUI playerSpeedText;
 
     [SerializeField] private bool isPlayerHit;
     [SerializeField] private bool isHeal;
@@ -33,6 +38,8 @@ public class GameUI : BaseUI
     void FixedUpdate()
     {
         UpdatePlayerHpHeart();
+        UpdateStaminaSlider();
+        UpdatePlayerStatus();
     }
 
     public void UpdateExpSlider(float percentage)
@@ -122,8 +129,20 @@ public class GameUI : BaseUI
 
     }
 
+    public void UpdateStaminaSlider()
+    {
+        staminaSlider.value = playerStatHendler.Stamina / 3;
+    }
+
     public void UpdateStageText(int stage)
     {
         this.stage.text = stage.ToString();
+    }
+
+    public void UpdatePlayerStatus()
+    {
+        // playerDamageText.text = weaponStat.Damage.ToString();
+        playerAttackDelayText.text = playerStatHendler.AttackDelay.ToString();
+        playerSpeedText.text = playerStatHendler.Speed.ToString();
     }
 }
