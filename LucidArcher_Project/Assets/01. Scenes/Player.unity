@@ -137,11 +137,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4549528886388178905, guid: 5b579c7eec46d8146a3c099518b7ef4b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.8
+      value: 1.17
       objectReference: {fileID: 0}
     - target: {fileID: 4549528886388178905, guid: 5b579c7eec46d8146a3c099518b7ef4b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.04
+      value: -0.24
       objectReference: {fileID: 0}
     - target: {fileID: 4549528886388178905, guid: 5b579c7eec46d8146a3c099518b7ef4b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -463,8 +463,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   hp: 6
+  maxhp: 6
+  lucidhp: 0
+  level: 1
   stamina: 3
+  Maxstamina: 3
   attackDelay: 1
+  lucidPower: 0
+  exp: 0
+  UpgradeMaxHp_Count: 0
 --- !u!1 &1155642019
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,8 +42,8 @@ public class RangeWeaponController : MonoBehaviour
 
         //발사되는 포지션
         Vector2 shootPosition = transform.position;
-
         shootPosition.y += (stat.BulletNum - 1) * 0.1f; 
+
         //발사
         for (int i = 0; i < stat.BulletNum; i++)
         {

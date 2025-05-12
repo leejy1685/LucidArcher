@@ -17,7 +17,9 @@ public class WeaponStat : MonoBehaviour
     [SerializeField] float knockbackPower = 1f;
     public float KnockbackPower { get { return knockbackPower; } }
 
-
+    //���� ��Ÿ�
+    [SerializeField] float range = 10f;
+    public float Range { get { return range; } }
 
     public int UpgradeDamage_Count = 0;
     public int UpgradeBulletNum_Count = 0;
@@ -78,9 +80,7 @@ public class WeaponStat : MonoBehaviour
 
     }
 
-    //���� ��Ÿ�
-    [SerializeField] float range = 10f;
-    public float Range { get { return range; } }
+
 
 
 }

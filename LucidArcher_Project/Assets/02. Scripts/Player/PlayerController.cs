@@ -188,8 +188,8 @@ public class PlayerController : MonoBehaviour
     {
         //공격 속도 계산
         attackTime += Time.deltaTime;
-        //근처에 몬스터가 있을 때
-        if (targets.Length > 0 && attackTime > stat.AttackDelay)
+        //근처에 몬스터가 있고 몬스터를 보고 있을 때
+        if (targets.Length > 0 && lookDirection.magnitude > 0.5f && attackTime > stat.AttackDelay )
         {
             weaponController.CreateArrow(lookDirection, targetLayer,stat.AttackDelay);
             attackTime = 0;
@@ -257,10 +257,6 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        TakeDamage(2);
-    }
 
 
 }

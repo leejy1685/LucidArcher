@@ -32,8 +32,8 @@ public class RoomSpawner : MonoBehaviour
 
     public void Init()
     {
-        SpawnRoom(Vector3.zero);
         roomCount = 0;
+        SpawnRoom(Vector3.zero);
     }
 
     // 방 소환
