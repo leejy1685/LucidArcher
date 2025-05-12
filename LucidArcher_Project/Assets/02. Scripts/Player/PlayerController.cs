@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform weaponPivot;
 
     //이동방향 보는 방향
-    private Vector2 moveDirection;
-    private Vector2 lookDirection;
+    private Vector2 moveDirection = Vector2.zero;
+    private Vector2 lookDirection = Vector2.zero;
 
     //몬스터 인식
     public LayerMask targetLayer;

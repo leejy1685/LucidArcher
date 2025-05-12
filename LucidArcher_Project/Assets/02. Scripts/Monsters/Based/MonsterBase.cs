@@ -31,7 +31,7 @@ public abstract class MonsterBase : MonoBehaviour
         //�˹�����
         knockbackApplier = GetComponent<KnockbackApplier>();
     }   
-}
+
 
     public void Init(MonsterSpawner _monsterSpawner)
     {
