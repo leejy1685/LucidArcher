@@ -33,8 +33,9 @@ public class RangeWeaponController : MonoBehaviour
         weaponRenderer.flipY = isLeft;
     }
 
-    public void CreateArrow(Vector2 lookDirection,LayerMask targetLayer)
+    public void CreateArrow(Vector2 lookDirection,LayerMask targetLayer,float attackSpeed)
     {
+
         //각도 계산
         Quaternion quaternion = transform.rotation;
         quaternion = quaternion * Quaternion.Euler(0, 0, -90);

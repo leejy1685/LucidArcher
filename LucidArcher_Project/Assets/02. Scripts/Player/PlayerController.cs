@@ -191,7 +191,7 @@ public class PlayerController : MonoBehaviour
         //근처에 몬스터가 있을 때
         if (targets.Length > 0 && attackTime > stat.AttackDelay)
         {
-            weaponController.CreateArrow(lookDirection, targetLayer);
+            weaponController.CreateArrow(lookDirection, targetLayer,stat.AttackDelay);
             attackTime = 0;
         }
     }
