@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-// 현재 막힌 부분 : 데미지를 입거나 힐을 받았을 때(이떄는 List 값이 안맞아서 그런거) 하트가 제대로 표시되지 않음
+
 public class GameUI : BaseUI
 {
     [SerializeField] private PlayerStatHendler playerStatHendler;
@@ -12,14 +12,13 @@ public class GameUI : BaseUI
     [SerializeField] private List<GameObject> heartPrefabs;
     [SerializeField] private List<GameObject> createdHeart = new List<GameObject>();
     [SerializeField] private Slider staminaSlider;
+    [SerializeField] private Slider Exp;
     // [SerializeField] private TextMeshProUGUI playerDamageText;
     [SerializeField] private TextMeshProUGUI playerAttackDelayText;
     [SerializeField] private TextMeshProUGUI playerSpeedText;
 
     [SerializeField] private bool isPlayerHit;
     [SerializeField] private bool isHeal;
-
-    public Slider Exp;
     public TextMeshProUGUI stage;
 
 
@@ -91,10 +90,29 @@ public class GameUI : BaseUI
 
         if (playerStatHendler.Hp % 2 == 1) // 플레이어가 데미지를 입었는데 체력이 홀수라면 반칸짜리 하트 표시
         {
+            if (playerStatHendler.Hp <= 7)
+            {
+                Transform nextHeartFull = createdHeart[targetHeart + 1].transform.GetChild(0);
+                Transform nextHeartHalf = createdHeart[targetHeart + 1].transform.GetChild(1);
+                Transform nextHeartEmpty = createdHeart[targetHeart + 1].transform.GetChild(2);
+
+                nextHeartEmpty.gameObject.SetActive(true);
+                nextHeartFull.gameObject.SetActive(false);
+                nextHeartHalf.gameObject.SetActive(false);
+            }
+
             half.gameObject.SetActive(true);
             full.gameObject.SetActive(false);
             empty.gameObject.SetActive(false);
         }
+
+        else if (playerStatHendler.Hp == 10)
+        {
+            half.gameObject.SetActive(false);
+            full.gameObject.SetActive(true);
+            empty.gameObject.SetActive(false);
+        }
+
         else // 플레이어가 데미지를 입었는데 체력이 짝수라면 빈 하트 표시 (일단 음수의 경우는 생각 안함)
         {
             half.gameObject.SetActive(false);
@@ -107,15 +125,25 @@ public class GameUI : BaseUI
     public void PlayerGetHeal()
     {
         if (!isHeal || playerStatHendler.Hp <= 0) return;
-        
+
         int targetHeart = (playerStatHendler.Hp / 2) + (playerStatHendler.Hp % 2) - 1; // 변화를 줄 하트 위치
 
         Transform full = createdHeart[targetHeart].transform.GetChild(0);
         Transform half = createdHeart[targetHeart].transform.GetChild(1);
         Transform empty = createdHeart[targetHeart].transform.GetChild(2);
-        
+
         if (playerStatHendler.Hp % 2 == 1)
         {
+            if (playerStatHendler.Hp >= 3)
+            {
+                Transform lastHeartFull = createdHeart[targetHeart - 1].transform.GetChild(0);
+                Transform lastHeartHalf = createdHeart[targetHeart - 1].transform.GetChild(1);
+                Transform lastHeartEmpty = createdHeart[targetHeart - 1].transform.GetChild(2);
+
+                lastHeartFull.gameObject.SetActive(true);
+                lastHeartHalf.gameObject.SetActive(false);
+                lastHeartEmpty.gameObject.SetActive(false);
+            }
             full.gameObject.SetActive(false);
             empty.gameObject.SetActive(false);
             half.gameObject.SetActive(true);
