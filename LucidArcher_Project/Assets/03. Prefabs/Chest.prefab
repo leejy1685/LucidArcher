@@ -151,7 +151,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0
 --- !u!114 &8829675812990974914
 MonoBehaviour:
@@ -167,10 +167,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 6506292189099730145}
   itemPrefabs:
-  - {fileID: 5007712317613568595, guid: 839edcfed6dcd614aa61116520ec99f0, type: 3}
   - {fileID: 4559769651083176745, guid: 64f0392bf350a9a4f8ffd8e58b19f5a2, type: 3}
   - {fileID: 2981918888953190148, guid: 9f179a0f92c29094d929bbfa7b9db215, type: 3}
   - {fileID: 7605991790370870153, guid: a307a25ea86611c4b8f31004d61e3abc, type: 3}
   - {fileID: 8242717484124984106, guid: f3063ba538b6e9f47bd5422189b0dc79, type: 3}
   - {fileID: 6086593203953786474, guid: ee0c13f709576194c909af16f8868a2c, type: 3}
+  - {fileID: 731397867598662296, guid: f08c9ef674917d740ad27ef1dc2edf2f, type: 3}
   dropForce: 3

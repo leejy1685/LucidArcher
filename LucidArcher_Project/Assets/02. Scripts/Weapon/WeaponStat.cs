@@ -4,16 +4,83 @@ using UnityEngine;
 
 public class WeaponStat : MonoBehaviour
 {
-    [SerializeField] int bulletNum;    //È­»ì ¼ö
-    public int BulletNum { get { return bulletNum; } }
-    [SerializeField] float damage;    //´ë¹ÌÁö
-    public float Damage { get { return damage; } }
-    [SerializeField] float bulletSpeed; //È­»ì¼Óµµ
-    public float BulletSpeed { get { return bulletSpeed; } }
+    [SerializeField] int bulletNum;    //È­ï¿½ï¿½ ï¿½ï¿½
+    public int BulletNum { get { return bulletNum; }set { damage = value; } }
+    [SerializeField] float damage;    //ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float Damage { get { return damage; } set { damage = value; } }
+    [SerializeField] float bulletSpeed; //È­ï¿½ï¿½Óµï¿½
+    public float BulletSpeed { get { return bulletSpeed; } set { bulletSpeed = value; } }
 
-    //³Ë¹é ½Ã°£°ú ÆÄ¿ö
+    //ï¿½Ë¹ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Ä¿ï¿½
     [SerializeField] float knockbackDuration = 0.5f;
     public float KnockbackDuration { get { return knockbackDuration; } }
     [SerializeField] float knockbackPower = 1f;
     public float KnockbackPower { get { return knockbackPower; } }
+
+
+
+    public int UpgradeDamage_Count = 0;
+    public int UpgradeBulletNum_Count = 0;
+    public void PlusDamage(float input) //ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½ï¿½ï¿½
+    {
+
+        Damage += input;
+
+    }
+
+    public void UpgradeDamage() //ï¿½ï¿½ï¿½Ý·ï¿½ ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½ 10%ï¿½ï¿½
+    {
+        if (UpgradeDamage_Count < 4)
+        {
+            PlusDamage(Damage * 0.1f);
+            UpgradeDamage_Count++;
+        }
+        else
+        {
+
+            return;
+        }
+
+    }
+
+
+    public void UpgradeBulletNum() //È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    {
+        if (UpgradeBulletNum_Count < 4)
+        {
+            BulletNum++;
+            UpgradeBulletNum_Count++;
+
+        }
+        else
+        {
+
+            return;
+        }
+
+    }
+    public void RandBuff(float damage, float duration)
+    {
+
+        StartCoroutine(RandomDamageBuff(damage,duration));
+
+    }
+    IEnumerator RandomDamageBuff( float damage, float duration)
+    {
+        Debug.Log($"{Damage}ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 7ï¿½Êµï¿½ï¿½ï¿½ 10% ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ {Damage * 1.1f}ï¿½ï¿½ ï¿½Æ½ï¿½ï¿½Ï´ï¿½. ");
+        float temp = Damage * 0.1f; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½Ï°ï¿½ ï¿½ÈµÇ±ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½
+        PlusDamage(damage);
+        
+        yield return new WaitForSeconds(duration);
+
+        PlusDamage(-temp);
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½{Damage}ï¿½ï¿½ï¿½ï¿½ ï¿½Æ½ï¿½ï¿½Ï´ï¿½. ");
+
+    }
+
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½
+    [SerializeField] float range = 10f;
+    public float Range { get { return range; } }
+
+
 }

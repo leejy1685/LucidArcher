@@ -62,8 +62,6 @@ public class RoomSpawner : MonoBehaviour
                 currentRoom.InitRoom(RoomState.Enemy, initPosition);
                 break;
         }
-
-        Camera.main.gameObject.GetComponent<CameraController>().UpdateCameraLimit(initPosition, currentRoom.MaxX, currentRoom.MaxY);
     }
 
     // 다음 층으로 이동

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1167638097125561021}
   - component: {fileID: 2077735589458939433}
   - component: {fileID: 1516717841782206391}
-  - component: {fileID: -6624503273043706045}
   m_Layer: 0
   m_Name: Heart
   m_TagString: Untagged
@@ -31,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -104,6 +103,7 @@ MonoBehaviour:
   tolerance: 0.05
   pickupDelay: 0.5
   spawnTime: 0
+  Monster: {fileID: 0}
 --- !u!61 &2077735589458939433
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -140,7 +140,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.13, y: 0.12}
+    oldSize: {x: 0.8125, y: 0.75}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -176,19 +176,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-6624503273043706045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2981918888953190148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52990d19fefded7499227066a5060a4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemY: 0
-  tolerance: 0.05
-  pickupDelay: 0.5
-  spawnTime: 0
