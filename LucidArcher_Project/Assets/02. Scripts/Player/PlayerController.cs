@@ -50,14 +50,6 @@ public class PlayerController : MonoBehaviour
     private float onDamageTime;
     private bool onDamage;
 
-    //방어막
-    [SerializeField] int shield;
-    public int Shield
-    {
-        get => shield;
-        set => shield = Mathf.Clamp(value, 0, 3);
-    }
-
 
     private void Awake()
     {
@@ -115,8 +107,12 @@ public class PlayerController : MonoBehaviour
             lookDirection = moveDirection;
 
         //대쉬중이 아니고, 이동 중 일 때, 스패이스를 누르면 대쉬
-        if (!isDash && Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(moveDirection.magnitude) > 0.5f)
+        if (!isDash && Input.GetKeyDown(KeyCode.J) && Mathf.Abs(moveDirection.magnitude) > 0.5f)
         {
+            //스태미나 소모
+            stat.Stamina--;
+
+            //일시 무적
             isDash = true;
             inDashTime = 0;
         }
@@ -199,8 +195,8 @@ public class PlayerController : MonoBehaviour
     //대쉬 기능, 유령화 기능
     void Dash()
     {
-        //스태미나 소모
-        //stat.Stamina--;
+        //스태미나 회복
+        stat.Stamina += Time.deltaTime / 3;
 
         //충돌무시
         int targetLayerIndex = (int)Mathf.Log(targetLayer.value, 2);
@@ -221,9 +217,9 @@ public class PlayerController : MonoBehaviour
         onDamageTime = 0;
 
         //대미지 계산
-        if (shield > 0)
+        if (stat.LucidHp > 0)
         {
-            shield--;
+            stat.PlusLucidHP(-1);
             Debug.Log("방어막 소모");
         }
         else

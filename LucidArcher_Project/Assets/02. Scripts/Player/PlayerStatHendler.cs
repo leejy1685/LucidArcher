@@ -24,7 +24,13 @@ public class PlayerStatHendler : MonoBehaviour
 
     //최대 스태미너
     public float Maxstamina = 3;
-    public float Stamina { get { return stamina; } set { stamina = value; } }
+    public float Stamina
+    {
+        get => stamina;
+        set => stamina = Mathf.Clamp(value, 0, 3);
+    }
+
+
     // 공격 딜레이
     [Range(0.1f, 1f)][SerializeField] private float attackDelay;
     public float AttackDelay { get { return attackDelay; } }
