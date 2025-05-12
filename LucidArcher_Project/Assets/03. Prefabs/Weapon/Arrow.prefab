@@ -173,4 +173,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1536

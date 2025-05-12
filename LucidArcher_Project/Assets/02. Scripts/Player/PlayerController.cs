@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     const string MOVE = "IsMove";
     const string DASH = "IsDash";
     const string DAMAGE = "OnDamage";
+    const string DIE = "IsDie";
 
     //대미지 무적 시간
     private float damageTime = 0.5f;
@@ -73,6 +74,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //게임 정지 시 조작 금지
+        if (!GameManager.Instance.IsPlaying)
+            return;
+
         // 원형 레이캐스트로 몬스터 탐색
         targets = Physics2D.CircleCastAll(transform.position, radius, Vector2.zero, 0, targetLayer);
 
@@ -88,6 +93,9 @@ public class PlayerController : MonoBehaviour
 
         //무적 시간 확인
         CheckSuperTime();
+
+        //사망처리
+        PlayerDie();
     }
 
     #region move and rotate
@@ -104,7 +112,7 @@ public class PlayerController : MonoBehaviour
         if(targets.Length > 0 ) 
             lookDirection = NearestMonster().position - transform.position;
         else
-            lookDirection = moveDirection;
+            lookDirection = moveDirection * stat.Speed;
 
         //대쉬중이 아니고, 이동 중 일 때, 스패이스를 누르면 대쉬
         if (!isDash && Input.GetKeyDown(KeyCode.J) && Mathf.Abs(moveDirection.magnitude) > 0.5f)
@@ -248,6 +256,16 @@ public class PlayerController : MonoBehaviour
         {
             onDamage = false;
             animator.SetBool(DAMAGE, onDamage);
+        }
+    }
+
+    //플레이어 사망처리
+    void PlayerDie()
+    {
+        if(stat.Hp <= 0)
+        {
+            animator.SetBool(DIE, true);
+            GameManager.Instance.GameOver();
         }
     }
 
