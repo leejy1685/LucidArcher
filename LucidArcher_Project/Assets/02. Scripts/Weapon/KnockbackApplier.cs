@@ -9,7 +9,8 @@ public class KnockbackApplier : MonoBehaviour
     Vector2 knockback;
 
     private void Update()
-    {
+    {   
+        //넉백 시간 체크
         knockbackDuration -= Time.deltaTime;
     }
 

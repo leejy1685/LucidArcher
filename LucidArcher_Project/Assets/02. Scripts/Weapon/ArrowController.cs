@@ -42,14 +42,13 @@ public class ArrowController : MonoBehaviour
     //화살 날리기
     public void ShootArrow(Vector2 lookDirection)
     {
+        //방향에 속도 넣기
         Vector2 velocity = lookDirection.normalized * weaponStat.BulletSpeed;
         rigidbody2D.velocity = velocity;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-
         //타겟과 충돌
         if ((target | 1 << collision.gameObject.layer) == target)
         {

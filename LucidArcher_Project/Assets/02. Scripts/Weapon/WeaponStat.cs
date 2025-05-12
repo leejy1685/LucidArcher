@@ -17,6 +17,7 @@ public class WeaponStat : MonoBehaviour
     [SerializeField] float knockbackPower = 1f;
     public float KnockbackPower { get { return knockbackPower; } }
 
+    //무기 사거리
     [SerializeField] float range = 10f;
     public float Range { get { return range; } }
 

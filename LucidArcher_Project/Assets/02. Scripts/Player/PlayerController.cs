@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     RaycastHit2D[] targets;
 
     //인식 거리
-    [SerializeField] float radius = 30f;
+    [SerializeField] float radius;
 
     //무기
     [SerializeField] private RangeWeaponController weaponPrefap;
@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //캐릭터 조작
         HandleAction();
     }
 
@@ -94,10 +95,12 @@ public class PlayerController : MonoBehaviour
     //캐릭터 조작
     void HandleAction()
     {
+        //상하좌우 입력
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         moveDirection = new Vector2(horizontal, vertical).normalized;
 
+        //주변에 몬스터가 있을 때
         if(targets.Length > 0 ) 
             lookDirection = NearestMonster().position - transform.position;
         else
@@ -150,7 +153,7 @@ public class PlayerController : MonoBehaviour
 
         //foreach 문으로 캐스팅 결와 오브젝트를 하나씩 방문
         foreach (RaycastHit2D target in targets)
-        {  //CircleCastAll에 맞은 애들을 하나씩 접근
+        {  
             Vector3 myPos = transform.position;             //플레이어 위치
             Vector3 targetPos = target.transform.position;  //타겟의 위치
             float curDiff = Vector3.Distance(myPos, targetPos); //거리를 구한다.
@@ -186,8 +189,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //대쉬 기능, 유령화 기능
     void Dash()
     {
+        //스태미나 소모
+        //stat.Stamina--;
+
         //충돌무시
         int targetLayerIndex = (int)Mathf.Log(targetLayer.value, 2);
         Physics2D.IgnoreLayerCollision(this.gameObject.layer, targetLayerIndex, isDash);
@@ -202,6 +209,7 @@ public class PlayerController : MonoBehaviour
         if (isDash || onDamage)
             return;
 
+        //대미지 계산
         //stat.Hp -= damage;
 
         //일시 무적
@@ -229,12 +237,6 @@ public class PlayerController : MonoBehaviour
             onDamage = false;
             animator.SetBool(DAMAGE, onDamage);
         }
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        //test
-        TakeDamage(1);
     }
 
     #endregion

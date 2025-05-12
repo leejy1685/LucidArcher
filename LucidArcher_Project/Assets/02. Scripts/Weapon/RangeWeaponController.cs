@@ -27,7 +27,7 @@ public class RangeWeaponController : MonoBehaviour
         animator = weaponRenderer.GetComponent<Animator>();
     }
 
-
+    //무기 좌우 반전
     public void Rotate(bool isLeft)
     {
         weaponRenderer.flipY = isLeft;
