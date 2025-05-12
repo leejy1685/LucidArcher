@@ -15,6 +15,7 @@ public class RoomHandler : MonoBehaviour
     [SerializeField] private GameObject exitDetector;
     [SerializeField] private MonsterSpawner monsterSpawner;
     private GameObject stair;
+    private GameObject player;
 
     // 프리팹
     [Header("Prefabs")]
@@ -33,7 +34,7 @@ public class RoomHandler : MonoBehaviour
     }
 
     // 방의 위치와 상태 초기화
-    public void InitRoom(RoomState roomState, Vector3 position)
+    public void InitRoom(RoomState roomState, Vector3 position, GameObject _player)
     {
         this.roomState = roomState;
         transform.position = position;
@@ -41,6 +42,7 @@ public class RoomHandler : MonoBehaviour
         cameraController.UpdateCameraLimit(position,
             exitDetector.transform.GetChild(3).localPosition.x, exitDetector.transform.GetChild(0).localPosition.y);
         monsterSpawner.Init(this);
+        player = _player;
 
         if (roomState == RoomState.Start)
         {
@@ -72,7 +74,7 @@ public class RoomHandler : MonoBehaviour
     }
     IEnumerator CoroutineExcuteEvent()
     {
-        cameraController.ChangeTarget(gate.NearestGate(Camera.main.transform.position), 3f);
+        cameraController.ChangeTarget(gate.NearestGate(player.transform.position), 3f);
         yield return WAIT_ONE_SEC;
 
         gate.ControllGate(true);
@@ -101,7 +103,7 @@ public class RoomHandler : MonoBehaviour
         }
         else
         {
-            cameraController.ChangeTarget(gate.NearestGate(Camera.main.transform.position), 3f);
+            cameraController.ChangeTarget(gate.NearestGate(player.transform.position), 3f);
         }
         yield return WAIT_ONE_SEC;
 

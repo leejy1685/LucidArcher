@@ -335,6 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b982305210444c4bb24cbd33c2f0fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1532355559}
   startRoom: {fileID: 758765729358020310, guid: 786d63dd9d635e143a050cb745ce95df, type: 3}
   bossRoom: {fileID: 758765729358020310, guid: 786d63dd9d635e143a050cb745ce95df, type: 3}
   rooms:
