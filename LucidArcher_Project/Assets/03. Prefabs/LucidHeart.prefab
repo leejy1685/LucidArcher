@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2500977043029475564}
   - component: {fileID: 6209136364428619690}
   - component: {fileID: 5444123188373551631}
-  - component: {fileID: 1772973941729342958}
+  - component: {fileID: 2308829169081706346}
   m_Layer: 0
   m_Name: LucidHeart
   m_TagString: Untagged
@@ -159,7 +159,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1772973941729342958
+--- !u!114 &2308829169081706346
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

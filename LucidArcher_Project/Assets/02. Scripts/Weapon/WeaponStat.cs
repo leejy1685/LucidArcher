@@ -33,12 +33,13 @@ public class WeaponStat : MonoBehaviour
     IEnumerator RandomDamageBuff( float damage, float duration)
     {
         Debug.Log($"{Damage}데미지에서 7초동안 10% 증가해서 {Damage * 1.1f}이 됐습니다. ");
-
+        float temp = Damage * 0.1f; //데미지 이상하게 안되기 위해서
         PlusDamage(damage);
+        
         yield return new WaitForSeconds(duration);
-        Debug.Log($"물약 효과가 종료되어 공격력이 원래 수치인{Damage}으로 됐습니다. ");
 
-        PlusDamage(-damage);
+        PlusDamage(-temp);
+        Debug.Log($"물약 효과가 종료되어 공격력이 원래 수치인{Damage}으로 됐습니다. ");
 
     }
 }
