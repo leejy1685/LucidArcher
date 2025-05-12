@@ -34,7 +34,6 @@ public abstract class MonsterBase : MonoBehaviour
         currentHP -= effectiveDamage;
 
         float damagedDensity = Mathf.Min(effectiveDamage / 8, 1);
-        Debug.Log(damagedDensity);
         sprite.color = Color.white - new Color(0, 1, 1, 0) * damagedDensity;
         
         if (currentHP <= 0) Die();
