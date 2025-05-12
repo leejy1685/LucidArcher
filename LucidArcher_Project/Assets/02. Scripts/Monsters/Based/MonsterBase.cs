@@ -42,6 +42,7 @@ public abstract class MonsterBase : MonoBehaviour
     public void Init(MonsterSpawner _monsterSpawner)
     {
         monsterSpawner = _monsterSpawner;
+        detectedEnemy = GameManager.Instance.player;
     }
 
 
