@@ -23,6 +23,7 @@ public abstract class MonsterBase : MonoBehaviour
     //�˹�
     KnockbackApplier knockbackApplier;
 
+    public event Action<float> OnTakeDamage;
     protected virtual void Start()
     {
         currentHP = stats.HP;
@@ -52,11 +53,14 @@ public abstract class MonsterBase : MonoBehaviour
         // TODO : HP ���
         float effectiveDamage = Mathf.Max(0.5f, damage - stats.Def); 
         currentHP -= effectiveDamage;
+        if (currentHP < 0) { currentHP = 0; }
 
         float damagedDensity = Mathf.Min(effectiveDamage / 8, 1);
         sprite.color = Color.white - new Color(0, 1, 1, 0) * damagedDensity;
         
         if (currentHP <= 0) Die();
+
+        OnTakeDamage?.Invoke(effectiveDamage);
     }
 
     protected virtual void Die()
@@ -99,5 +103,10 @@ public abstract class MonsterBase : MonoBehaviour
     public Vector2 GetDirectionTowardEnemy()
     {
         return (detectedEnemy.transform.position - transform.position).normalized;
+    }
+
+    public float GetDistanceToEnemy()
+    {
+        return (detectedEnemy.transform.position - transform.position).magnitude;
     }
 }

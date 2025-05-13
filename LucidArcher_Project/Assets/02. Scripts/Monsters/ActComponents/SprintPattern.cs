@@ -6,7 +6,7 @@ using UnityEngine.U2D;
 
 public class SprintPattern : MonoBehaviour, IEnemyPattern
 {
-    public MonsterBase monster;
+    MonsterBase monster;
     float standByTime = 1.5f;
 
     public MonsterBase Monster { get; set; }
