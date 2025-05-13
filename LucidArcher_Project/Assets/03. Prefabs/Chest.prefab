@@ -173,4 +173,5 @@ MonoBehaviour:
   - {fileID: 8242717484124984106, guid: f3063ba538b6e9f47bd5422189b0dc79, type: 3}
   - {fileID: 6086593203953786474, guid: ee0c13f709576194c909af16f8868a2c, type: 3}
   - {fileID: 731397867598662296, guid: f08c9ef674917d740ad27ef1dc2edf2f, type: 3}
+  chestsound: {fileID: 8300000, guid: 650aa4b66082a624c963a0001b8029c1, type: 3}
   dropForce: 3
