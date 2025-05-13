@@ -1973,12 +1973,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 95313406691658a499bc5e424d1159b7, type: 3}
   - {fileID: 21300000, guid: 06c549241c1e95b40b4bea4a23742aa8, type: 3}
   - {fileID: 21300000, guid: eafdfa0111082de42b238790841a415a, type: 3}
+  - {fileID: 21300000, guid: a7a03a9029f5ce04aa590f5777b4eacc, type: 3}
   staminaSlider: {fileID: 1394442723}
   Exp: {fileID: 2105245935}
   playerAttackDelayText: {fileID: 1091816747}
   playerSpeedText: {fileID: 1652313858}
-  isPlayerHit: 0
-  isHeal: 0
+  hasAdditonalMaxHp: 0
+  hasAddionalLucidHp: 0
   stage: {fileID: 699536883}
 --- !u!1 &1091816745
 GameObject:

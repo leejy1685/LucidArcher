@@ -8,7 +8,8 @@ public enum HeartType
 {
     Empty,
     Half,
-    Full
+    Full,
+    Shield
 }
 
 
@@ -27,6 +28,7 @@ public class GameUI : BaseUI
     [SerializeField] private TextMeshProUGUI playerSpeedText;
 
     [SerializeField] private bool hasAdditonalMaxHp = false;
+    [SerializeField] private bool hasAddionalLucidHp = false;
 
     public bool HasAdditionalMaxHp {get {return hasAdditonalMaxHp;} set {hasAdditonalMaxHp = value;} }
 
@@ -47,12 +49,7 @@ public class GameUI : BaseUI
 
     void FixedUpdate()
     {
-        if (playerStatHendler.MaxHp > 6 && playerStatHendler.MaxHp % 2 == 1 && hasAdditonalMaxHp)
-        {
-            AdditionalHeartPrefabs();
-            hasAdditonalMaxHp = false;
-        }
-
+        ControlHeart();
         HeartChargeDegree();
         UpdateStaminaSlider();
         UpdatePlayerStatus();
@@ -66,13 +63,16 @@ public class GameUI : BaseUI
 
     public void InitHeartPrefabs()
     {
-        int maxHp = playerStatHendler.MaxHp;
+        createdHearts.Clear();
 
-        int MaxHeart = (maxHp / 2) + (maxHp % 2); // 몇개의 하트가 있는지 (맨 끝 하트)
+        int maxHp = playerStatHendler.MaxHp;
+        int shieldHp = playerStatHendler.LucidHp;
+
+        int heartCount = (maxHp / 2) + (maxHp % 2) + shieldHp; // 몇개의 하트가 있는지 (맨 끝 하트)
 
         GameObject selectedHeart = heartPrefabs[0];
 
-        for (int i = 0; i < MaxHeart; i++) //체력 프리펩을 가져와 표시해주는 반복문
+        for (int i = 0; i < heartCount; i++) //하트 프리펩을 가져와 표시해주는 반복문
         {
             GameObject heart = Instantiate(selectedHeart, hpTransform); // List createdHeart에 변수를 저장하기 위한 임시 변수 생성
             heart.transform.localPosition = new Vector3((i) * 75 - 300, 0, 0);
@@ -81,7 +81,24 @@ public class GameUI : BaseUI
         }
     }
 
-    public void AdditionalHeartPrefabs() // 추가 체력에 따른 하트 프리펩 생성
+    public void ControlHeart() // 추가되는 하트를 통제하는 메서드
+    {
+        if (playerStatHendler.MaxHp > 6 && playerStatHendler.MaxHp % 2 == 1 && hasAdditonalMaxHp)
+        {
+            AdditionalRedHeartPrefabs();
+            hasAdditonalMaxHp = false;
+        }
+
+        if (playerStatHendler.LucidHp > 0 && playerStatHendler.LucidHp <= 3 && hasAddionalLucidHp)
+        {
+            AdditionalShieldHeartPrefabs();
+            hasAddionalLucidHp = false;
+        }
+        DestroyShieldHeart();
+        Relocation();
+    }
+
+    public void AdditionalRedHeartPrefabs() // 추가 체력에 따른 붉은 하트 프리펩 생성
     {
         int maxHp = playerStatHendler.MaxHp;
 
@@ -96,6 +113,37 @@ public class GameUI : BaseUI
         Image heartSR = GetHeartImageComponent(addHeartPos);
         SetHeartSprite(heartSR, HeartType.Empty);
     }
+
+        public void AdditionalShieldHeartPrefabs() // 추가 체력에 따른 쉴드 하트 프리펩 생성
+    {
+        int maxHp = playerStatHendler.MaxHp;
+        int shieldHp = playerStatHendler.LucidHp;
+
+        int addHeartPos = maxHp / 2 + shieldHp - 1;
+
+        GameObject selectedHeart = heartPrefabs[0];
+        GameObject heart = Instantiate(selectedHeart, hpTransform);
+        heart.transform.localPosition = new Vector3((addHeartPos) * 75 - 300, 0, 0);
+
+        createdHearts.Add(heart);
+
+        Image heartSR = GetHeartImageComponent(addHeartPos);
+        SetHeartSprite(heartSR, HeartType.Empty);
+    }
+
+    public void DestroyShieldHeart()
+    {
+        int maxHp = playerStatHendler.MaxHp;
+        int shieldHeartCount = createdHearts.Count - (maxHp / 2 + maxHp % 2);
+
+        if (playerStatHendler.LucidHp < shieldHeartCount)
+        {
+            GameObject lastHeart = createdHearts[createdHearts.Count - 1];
+            createdHearts.RemoveAt(createdHearts.Count - 1);
+            Destroy(lastHeart);
+        }
+    }
+
     private void HeartChargeDegree() // 하트 채워짐 정도
     {
         int hp = playerStatHendler.Hp;
@@ -120,6 +168,20 @@ public class GameUI : BaseUI
                 SetHeartSprite(heartSR, HeartType.Empty);
             }
         }
+
+        ShowShieldHeart();
+    }
+
+    public void ShowShieldHeart() // 실드 하트 보여주는 메서드
+    {
+        int redHeartCount = playerStatHendler.MaxHp / 2 + playerStatHendler.MaxHp % 2 - 1;
+        int shieldHeartCount = playerStatHendler.LucidHp;
+
+        for (int i = redHeartCount + 1; i < createdHearts.Count; i++)
+        {
+            Image heartSR = GetHeartImageComponent(i);
+            SetHeartSprite(heartSR, HeartType.Shield);
+        }
     }
 
     private void SetHeartSprite(Image img, HeartType type) // 하트 이미지 준비
@@ -135,6 +197,9 @@ public class GameUI : BaseUI
             case HeartType.Empty:
                 img.sprite = heartSprites[0];
                 break;
+            case HeartType.Shield:
+                img.sprite = heartSprites[3];
+                break;
         }
     }
 
@@ -149,6 +214,14 @@ public class GameUI : BaseUI
         }
 
         return img;
+    }
+
+    public void Relocation() // 쉴드 하트가 붉은 하트 뒤로 가도록 재정렬해주는 메서드
+    {
+        for (int i = 0; i < createdHearts.Count; i++)
+        {
+            createdHearts[i].transform.localPosition = new Vector3((i)*75 - 300, 0, 0);
+        }
     }
 
 
