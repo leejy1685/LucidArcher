@@ -210,6 +210,7 @@ MonoBehaviour:
   animator: {fileID: 3933419230226117675}
   rb: {fileID: 8326639956605407672}
   detectedEnemy: {fileID: 0}
+  damageClip: {fileID: 8300000, guid: 28be550f02e7a934286dceaaa7c9beef, type: 3}
   chaseComponent: {fileID: 7662128237581430521}
 --- !u!114 &7662128237581430521
 MonoBehaviour:

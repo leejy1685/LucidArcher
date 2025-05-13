@@ -130,6 +130,7 @@ MonoBehaviour:
   animator: {fileID: 9087954037496320214}
   rb: {fileID: 2146777137423770489}
   detectedEnemy: {fileID: 0}
+  damageClip: {fileID: 8300000, guid: 93df0a44100f61947ab6991603b3045d, type: 3}
   patrolComponent: {fileID: 938748919534926041}
 --- !u!114 &938748919534926041
 MonoBehaviour:

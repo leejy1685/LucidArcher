@@ -32,6 +32,10 @@ public class RoomHandler : MonoBehaviour
     //게임 매니저에서 사용
     public MonsterSpawner MonsterSpawner { get { return monsterSpawner; } }
 
+    //소리 추가
+    [SerializeField] private AudioClip openSound;
+    [SerializeField] private AudioClip closeSound;
+
     private void Awake()
     {
         cameraController = Camera.main.gameObject.GetComponent<CameraController>();
@@ -90,9 +94,14 @@ public class RoomHandler : MonoBehaviour
         yield return WAIT_ONE_SEC;
 
         ControllGate(false);
+
+        //문 닫는 소리
+        SoundManager.PlayClip(closeSound);
         yield return WAIT_ONE_SEC;
 
         cameraController.ChangeTarget();
+        //전투 브금
+        SoundManager.instance.StartBattle();
         yield return WAIT_HALF_SEC;
 
         // 이벤트 실행
@@ -117,6 +126,8 @@ public class RoomHandler : MonoBehaviour
         {
             cameraController.ChangeTarget(gateAnimator.transform.parent);
         }
+        //전투 종료 브금
+        SoundManager.instance.EndBattle();
         yield return WAIT_ONE_SEC;
 
         if (roomState == RoomState.Boss)
@@ -127,6 +138,9 @@ public class RoomHandler : MonoBehaviour
         {
             ControllGate(true);
         }
+        //문 여는 소리
+        SoundManager.PlayClip(openSound);
+
         yield return WAIT_ONE_SEC;
 
         cameraController.ChangeTarget();

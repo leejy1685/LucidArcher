@@ -19,6 +19,9 @@ public class RangeWeaponController : MonoBehaviour
 
     //애니메이션 동작 관리
     const string ATTACK = "IsAttack";
+
+    //화살 발사 소리
+    [SerializeField] private AudioClip atackSoundClip;
     
 
     private void Awake()
@@ -56,6 +59,9 @@ public class RangeWeaponController : MonoBehaviour
 
         //애니메이션
         animator.SetTrigger(ATTACK);
+
+        //소리 재생
+        SoundManager.PlayClip(atackSoundClip);
     }
 
 

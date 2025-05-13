@@ -331,6 +331,7 @@ MonoBehaviour:
   animator: {fileID: 7282359747224320290}
   rb: {fileID: 2293454207743024038}
   detectedEnemy: {fileID: 0}
+  damageClip: {fileID: 8300000, guid: d08420e85c31fd94ba9ee1efffc69e45, type: 3}
   chaseComponent: {fileID: 1975967280816393189}
   shotComponent: {fileID: 3655425381042361710}
   motionTime: 0.5

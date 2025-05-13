@@ -56,7 +56,13 @@ public class PlayerController : MonoBehaviour
     private bool powerUp;
     public bool PowerUp { get { return powerUp; } }
 
+    //장애물 레이어
+    [SerializeField]LayerMask obstacle;
 
+    //소리 추가
+    [SerializeField] private AudioClip damageClip;
+    [SerializeField] private AudioClip shildClip;
+    [SerializeField] private AudioClip dashClip;
 
     private void Awake()
     {
@@ -108,6 +114,13 @@ public class PlayerController : MonoBehaviour
         PlayerDie();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if ((obstacle | 1 << collision.gameObject.layer) == obstacle)
+            TakeDamage(1);
+    }
+
+
     #region move and rotate
 
     //캐릭터 조작
@@ -133,6 +146,9 @@ public class PlayerController : MonoBehaviour
             //일시 무적
             isDash = true;
             inDashTime = 0;
+
+            //소리 추가
+            SoundManager.PlayClip(dashClip);
         }
     }
 
@@ -259,15 +275,19 @@ public class PlayerController : MonoBehaviour
         if (Stat.LucidHp > 0)
         {
             Stat.PlusLucidHP(-1);
-            Debug.Log("방어막 소모");
+
+            //소리 실행
+            SoundManager.PlayClip(shildClip);
         }
         else
         {
             Stat.SetHP(-damage);
-            Debug.Log("체력 소모 " + damage);
 
             //애니메이션
             animator.SetBool(DAMAGE, onDamage);
+
+            //소리 실행
+            SoundManager.PlayClip(damageClip);
         }
     }
 

@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponRenderer: {fileID: 8724346132587301213}
   arrow: {fileID: -2732247655681259535, guid: 559cda13bf40fb0468439693d3bb2c7b, type: 3}
+  atackSoundClip: {fileID: 8300000, guid: a713c1cb229a9e94e858052709a8f82f, type: 3}
 --- !u!114 &-1471012593068958616
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -27,13 +27,11 @@ public class GameManager : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
-
-        StartGame();
     }
 
     void Start()
-    {
-        roomSpawner.Init();
+    {   
+        StartGame();
     }
 
     private void Update()
@@ -44,6 +42,13 @@ public class GameManager : MonoBehaviour
     //게임 시작 및 데이터 초기화
     public void StartGame()
     {
+        //맵 생성
+        roomSpawner.Init();
+
+        //bgm 실행
+        SoundManager.instance.EndBattle();
+
+        //플레이 중
         isPlaying = true;
         Time.timeScale = 1;
     }
@@ -51,6 +56,10 @@ public class GameManager : MonoBehaviour
     //게임 사망 UI 띄우기
     public void GameOver()
     {
+        //bgm 실행
+        SoundManager.instance.EndBattle();
+
+        //플레이 종료
         isPlaying = false;
         TimeControll();
         UIManager.SetGameOver();

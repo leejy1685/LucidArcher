@@ -23,6 +23,9 @@ public abstract class MonsterBase : MonoBehaviour
     //넉백 적용
     KnockbackApplier knockbackApplier;
 
+    //소리 추가
+    [SerializeField] private AudioClip damageClip;
+
     protected virtual void Start()
     {
         currentHP = stats.HP;
@@ -56,6 +59,9 @@ public abstract class MonsterBase : MonoBehaviour
         sprite.color = Color.white - new Color(0, 1, 1, 0) * damagedDensity;
         
         if (currentHP <= 0) Die();
+
+        //소리 추가
+        SoundManager.PlayClip(damageClip);
     }
 
     void Die()
