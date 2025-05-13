@@ -27,8 +27,6 @@ public class HoleDetector : MonoBehaviour
 
         while(timer < 1f)
         {
-            if (!target) yield break;
-
             target.position = originPosition;
             target.localScale = Vector3.Lerp(originScale, Vector3.zero, timer);
             timer += Time.deltaTime;
