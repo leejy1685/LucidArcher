@@ -22,6 +22,8 @@ public class RoomSpawner : MonoBehaviour
     private RoomHandler currentRoom;
     private int roomCount;
 
+    //게임 매니저에서 사용
+    public RoomHandler CurrentRoom { get { return currentRoom; } }
 
 
     public void Init()

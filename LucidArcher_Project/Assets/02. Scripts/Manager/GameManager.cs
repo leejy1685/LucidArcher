@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     //룸 매니저
     [SerializeField] RoomSpawner roomSpawner;
+    MonsterSpawner monsterSpawner;
 
     //UI 매니저
     [SerializeField] UIManager UIManager;
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour
     public void CreateRoom(Vector2 position)
     {
         roomSpawner.SpawnRoom(position);
+        monsterSpawner = roomSpawner.CurrentRoom.MonsterSpawner;
     }
 
     //다음 층으로 이동
@@ -59,4 +61,20 @@ public class GameManager : MonoBehaviour
     {
         roomSpawner.MoveNextFloor(position);
     }
+
+    //경험치 흡수
+    public void AbsorbExp(ExpBall exp)
+    {
+        if(monsterSpawner.MonsterCount == 0)
+        {
+            //날아가야하는 방향 계산
+            Vector3 expPosition = exp.transform.position;
+            Vector2 direction = (player.transform.position - expPosition).normalized * 10f;
+
+            //속도에 부여
+            exp.GetComponent<Rigidbody2D>().velocity = direction;
+
+        }
+    }
+
 }

@@ -29,6 +29,9 @@ public class RoomHandler : MonoBehaviour
 
     private CameraController cameraController;
 
+    //게임 매니저에서 사용
+    public MonsterSpawner MonsterSpawner { get { return monsterSpawner; } }
+
     private void Awake()
     {
         cameraController = Camera.main.gameObject.GetComponent<CameraController>();
