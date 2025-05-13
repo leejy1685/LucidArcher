@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class ArrowController : MonoBehaviour
 {
+    //플레이어 컨트롤러
+    PlayerController playerController;
+
     //무기 성능
     WeaponStat weaponStat;
 
@@ -21,8 +25,10 @@ public class ArrowController : MonoBehaviour
     //맵 Layer
     [SerializeField] LayerMask mapLayer;
 
-    public void Init(LayerMask targetLayer,RangeWeaponController rangeWeaponController,Vector2 shootPosition)
+    public void Init(PlayerController playerController, LayerMask targetLayer,RangeWeaponController rangeWeaponController,Vector2 shootPosition)
     {
+        this.playerController = playerController;
+
         //이동 구현
         rigidbody2D = GetComponent<Rigidbody2D>();
 
@@ -52,24 +58,8 @@ public class ArrowController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //타겟과 충돌
-        if ((target | 1 << collision.gameObject.layer) == target)
-        {
-            //넉백 적용
-            collision.GetComponent<KnockbackApplier>().Knockback(transform, weaponStat.KnockbackPower, weaponStat.KnockbackDuration);
-            collision.GetComponent<MonsterBase>().TakeDamage(weaponStat.Damage);
-
-            //파괴
-            Destroy(gameObject);
-        }
-
-        //맵 또는 장애물과 충돌
-        if((mapLayer | 1 << collision.gameObject.layer) == mapLayer)
-        {
-            //파괴
-            Destroy(gameObject);
-        }
-
+        AttackEnemy(collision);
+        ConflictMap(collision);
     }
 
     //사거리 기능
@@ -81,6 +71,40 @@ public class ArrowController : MonoBehaviour
         //사거리 보다 멀리 가면 파괴
         if (distance > weaponStat.Range)
         {
+            Destroy(gameObject);
+        }
+    }
+
+    private void AttackEnemy(Collider2D collision)
+    {
+        //타겟과 충돌
+        if ((target | 1 << collision.gameObject.layer) == target)
+        {
+            //넉백 적용
+            collision.GetComponent<KnockbackApplier>().Knockback(transform, weaponStat.KnockbackPower, weaponStat.KnockbackDuration);
+
+            //대미지 적용
+            if (playerController.PowerUp)
+            {   //캐릭터 강화 상태
+                weaponStat.Damage *= 2;
+            }
+            else
+            {   //루시드 게이지 업
+                playerController.Stat.PlusLucidPower(5);
+            }
+            collision.GetComponent<MonsterBase>().TakeDamage(weaponStat.Damage);
+
+            //파괴
+            Destroy(gameObject);
+        }
+    }
+
+    private void ConflictMap(Collider2D collision)
+    {
+        //맵 또는 장애물과 충돌
+        if ((mapLayer | 1 << collision.gameObject.layer) == mapLayer)
+        {
+            //파괴
             Destroy(gameObject);
         }
     }

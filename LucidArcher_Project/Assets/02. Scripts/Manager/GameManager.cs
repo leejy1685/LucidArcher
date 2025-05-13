@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] UIManager UIManager;
 
     //플레이어
-    public GameObject player;
+    [SerializeField] PlayerController player;
     
     //게임 실행 중
     private bool isPlaying;
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
 
-        isPlaying = true;
+        StartGame();
     }
 
     void Start()
@@ -33,10 +33,18 @@ public class GameManager : MonoBehaviour
         roomSpawner.Init();
     }
 
+    //게임 시작 및 데이터 초기화
+    public void StartGame()
+    {
+        isPlaying = true;
+        Time.timeScale = 1;
+    }
+
+    //게임 사망 UI 띄우기
     public void GameOver()
     {
         isPlaying = false;
+        Time.timeScale = 0;
         UIManager.SetGameOver();
-    } 
-
+    }
 }

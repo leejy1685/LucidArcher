@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomSpawner: {fileID: 1695760968}
   UIManager: {fileID: 427226615}
-  player: {fileID: 2062939437}
+  player: {fileID: 2062939439}
 --- !u!4 &18465624
 Transform:
   m_ObjectHideFlags: 0
@@ -4066,7 +4066,6 @@ MonoBehaviour:
     m_Bits: 64
   radius: 20
   weaponPrefap: {fileID: 3677935211016202402, guid: be3f0a510feb27b478aeb836c51b7c4a, type: 3}
-  shield: 3
 --- !u!50 &2062939440
 Rigidbody2D:
   serializedVersion: 4

@@ -7,7 +7,8 @@ using static UnityEngine.GraphicsBuffer;
 public class PlayerController : MonoBehaviour
 {
     //Player스텟
-    PlayerStatHendler stat;
+    public PlayerStatHendler Stat { get; set; }
+
 
     //캐릭터 이동
     private Rigidbody2D rigidbody2D;
@@ -51,10 +52,15 @@ public class PlayerController : MonoBehaviour
     private float onDamageTime;
     private bool onDamage;
 
+    //루시드 파워
+    private bool powerUp;
+    public bool PowerUp { get { return powerUp; } }
+    private float tempAttackDelay;
+
 
     private void Awake()
     {
-        stat = GetComponent<PlayerStatHendler>();
+        Stat = GetComponent<PlayerStatHendler>();
         rigidbody2D = GetComponent<Rigidbody2D>();
 
         if (weaponPrefap != null)
@@ -63,6 +69,10 @@ public class PlayerController : MonoBehaviour
         }
 
         animator = characterRenderer.GetComponent<Animator>();
+
+        isDash = false;
+        onDamage = false;
+        powerUp = false;
     }
 
 
@@ -92,7 +102,7 @@ public class PlayerController : MonoBehaviour
         Dash();
 
         //무적 시간 확인
-        CheckSuperTime();
+        CheckExtraTime();
 
         //사망처리
         PlayerDie();
@@ -109,16 +119,16 @@ public class PlayerController : MonoBehaviour
         moveDirection = new Vector2(horizontal, vertical).normalized;
 
         //주변에 몬스터가 있을 때
-        if(targets.Length > 0 ) 
+        if(targets?.Length > 0 ) 
             lookDirection = NearestMonster().position - transform.position;
         else
-            lookDirection = moveDirection * stat.Speed;
+            lookDirection = moveDirection * Stat.Speed;
 
         //대쉬중이 아니고, 이동 중 일 때, 스패이스를 누르면 대쉬
         if (!isDash && Input.GetKeyDown(KeyCode.J) && Mathf.Abs(moveDirection.magnitude) > 0.5f)
         {
             //스태미나 소모
-            stat.Stamina--;
+            Stat.Stamina--;
 
             //일시 무적
             isDash = true;
@@ -130,7 +140,7 @@ public class PlayerController : MonoBehaviour
     void Movement(Vector2 direction)
     {
         //이동 방향에 속도 넣기
-        direction = direction * stat.Speed;
+        direction = direction * Stat.Speed;
 
         //물리 실행
         rigidbody2D.velocity = direction;
@@ -192,11 +202,25 @@ public class PlayerController : MonoBehaviour
     {
         //공격 속도 계산
         attackTime += Time.deltaTime;
+
         //근처에 몬스터가 있고 몬스터를 보고 있을 때
-        if (targets.Length > 0 && lookDirection.magnitude > 0.5f && attackTime > stat.AttackDelay )
+        if (targets.Length > 0 && lookDirection.magnitude > 0.5f)
         {
-            weaponController.CreateArrow(lookDirection, targetLayer,stat.AttackDelay);
-            attackTime = 0;
+            //강화 상태 공격(공속 2배)
+            if(powerUp && attackTime > Stat.AttackDelay / 2)
+            {
+                weaponController.CreateArrow(this, lookDirection, targetLayer);
+                attackTime = 0;
+            }
+            //일반 공격 속도
+            else if (attackTime > Stat.AttackDelay)
+            {
+                //루시드 파워업(공격 강화)
+                lucidPowerUp();
+
+                weaponController.CreateArrow(this, lookDirection, targetLayer);
+                attackTime = 0;
+            }
         }
     }
 
@@ -204,7 +228,7 @@ public class PlayerController : MonoBehaviour
     void Dash()
     {
         //스태미나 회복
-        stat.Stamina += Time.deltaTime / 3;
+        Stat.Stamina += Time.deltaTime / 3;
 
         //충돌무시
         int targetLayerIndex = (int)Mathf.Log(targetLayer.value, 2);
@@ -225,14 +249,14 @@ public class PlayerController : MonoBehaviour
         onDamageTime = 0;
 
         //대미지 계산
-        if (stat.LucidHp > 0)
+        if (Stat.LucidHp > 0)
         {
-            stat.PlusLucidHP(-1);
+            Stat.PlusLucidHP(-1);
             Debug.Log("방어막 소모");
         }
         else
         {
-            stat.SetHP(-damage);
+            Stat.SetHP(-damage);
             Debug.Log("체력 소모 " + damage);
 
             //애니메이션
@@ -240,11 +264,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void CheckSuperTime()
+    void CheckExtraTime()
     {
         //무적 시간 체크
         inDashTime += Time.deltaTime;
         onDamageTime += Time.deltaTime;
+
+        //파워업 시간 체크
+        if (powerUp)
+        {
+            Stat.LucidPower -= Time.deltaTime * 10;
+        }
 
         //무적 종료
         if (inDashTime > dashTime)
@@ -257,12 +287,28 @@ public class PlayerController : MonoBehaviour
             onDamage = false;
             animator.SetBool(DAMAGE, onDamage);
         }
+
+        //파워업 시간 종료
+        if(Stat.LucidPower <= 0)
+        {
+            powerUp = false;
+        }
+    }
+
+
+    //특수 기술
+    void lucidPowerUp()
+    {
+        if(Stat.LucidPower > 100 && !powerUp)
+        {
+            powerUp = true;
+        }
     }
 
     //플레이어 사망처리
     void PlayerDie()
     {
-        if(stat.Hp <= 0)
+        if(Stat.Hp <= 0)
         {
             animator.SetBool(DIE, true);
             GameManager.Instance.GameOver();

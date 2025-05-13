@@ -33,9 +33,8 @@ public class RangeWeaponController : MonoBehaviour
         weaponRenderer.flipY = isLeft;
     }
 
-    public void CreateArrow(Vector2 lookDirection,LayerMask targetLayer,float attackSpeed)
+    public void CreateArrow(PlayerController player,Vector2 lookDirection,LayerMask targetLayer)
     {
-
         //각도 계산
         Quaternion quaternion = transform.rotation;
         quaternion = quaternion * Quaternion.Euler(0, 0, -90);
@@ -48,7 +47,7 @@ public class RangeWeaponController : MonoBehaviour
         for (int i = 0; i < stat.BulletNum; i++)
         {
             ArrowController go = Instantiate(arrow, shootPosition, quaternion);
-            go.Init(targetLayer,this,shootPosition);
+            go.Init(player,targetLayer, this,shootPosition);
             go.ShootArrow(lookDirection);
 
             //추가화살 포지션 조절

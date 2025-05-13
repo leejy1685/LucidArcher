@@ -6,7 +6,7 @@ public class PlayerStatHendler : MonoBehaviour
 {
     //이동 속도
     [Range(1, 20)][SerializeField] private float speed;
-    public float Speed { get { return speed; } set { speed = value; } }
+     public float Speed { get { return speed; } set { speed = value; } }
     //체력
     [Range(1, 10)][SerializeField] private int hp = 6;
     public int Hp { get { return hp; } set { hp = value; } }
@@ -33,7 +33,10 @@ public class PlayerStatHendler : MonoBehaviour
 
     // 공격 딜레이
     [Range(0.1f, 1f)][SerializeField] private float attackDelay;
-    public float AttackDelay { get { return attackDelay; } }
+    public float AttackDelay { 
+        get => attackDelay;
+        set => attackDelay = Mathf.Clamp(value, 0.1f, 1f);
+    }
 
     //특수게이지
     [Range(0f, 100f)][SerializeField] private float lucidPower = 0f;
@@ -149,8 +152,6 @@ public class PlayerStatHendler : MonoBehaviour
         Debug.Log("조작 반전해제");
         ReverseMove();
         //Speed = temp;
-
-
 
     }
 
