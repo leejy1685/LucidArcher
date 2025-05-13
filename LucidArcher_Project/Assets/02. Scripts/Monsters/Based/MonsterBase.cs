@@ -17,10 +17,10 @@ public abstract class MonsterBase : MonoBehaviour
     [SerializeField] protected Rigidbody2D rb;
     private MonsterSpawner monsterSpawner;
 
-    public GameObject detectedEnemy;    // ���� ���忡�� enemy, �� �÷��̾�. Ȥ�� ����ƺ� ��ų�� ����ٸ� ����ƺ�, �����̻� �� ����
+    public GameObject detectedEnemy;    // 쫒아가는 적, 여기서는 플레이어
 
 
-    //�˹�
+    //넉백 적용
     KnockbackApplier knockbackApplier;
 
     protected virtual void Start()
@@ -28,7 +28,7 @@ public abstract class MonsterBase : MonoBehaviour
         currentHP = stats.HP;
 
 
-        //�˹�����
+        //넉백 컴포넌트
         knockbackApplier = GetComponent<KnockbackApplier>();
 
         if (sightCollider != null)
@@ -48,7 +48,7 @@ public abstract class MonsterBase : MonoBehaviour
     public void TakeDamage(float damage)
     {
 
-        // TODO : HP ���
+        // TODO : HP 소모 계산
         float effectiveDamage = Mathf.Max(0.5f, damage - stats.Def); 
         currentHP -= effectiveDamage;
 
@@ -78,7 +78,7 @@ public abstract class MonsterBase : MonoBehaviour
     {
         sprite.flipX = direction.x < 0;
         direction = direction* stats.MoveSpeed;
-        //�˹� ����
+        //넉백 적용
         direction = knockbackApplier.ApplyKnockback(direction);
 
         rb.velocity = direction;

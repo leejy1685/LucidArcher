@@ -47,4 +47,16 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         UIManager.SetGameOver();
     }
+
+    //새로운 방 만들기
+    public void CreateRoom(Vector2 position)
+    {
+        roomSpawner.SpawnRoom(position);
+    }
+
+    //다음 층으로 이동
+    public void NextFloor(Vector2 position)
+    {
+        roomSpawner.MoveNextFloor(position);
+    }
 }

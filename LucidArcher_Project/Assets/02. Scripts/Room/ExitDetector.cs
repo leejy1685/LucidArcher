@@ -8,7 +8,7 @@ public class ExitDetector : MonoBehaviour
     {
         if (!isSpawn && collision.CompareTag("Player"))
         {
-            RoomSpawner.Instance.SpawnRoom(transform.position + transform.localPosition);
+            GameManager.Instance.CreateRoom(transform.position + transform.localPosition);
             isSpawn = true;
         }
     }

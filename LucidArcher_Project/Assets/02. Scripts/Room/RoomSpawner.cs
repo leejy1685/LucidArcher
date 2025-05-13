@@ -9,9 +9,6 @@ public enum RoomState
 
 public class RoomSpawner : MonoBehaviour
 {
-    // 싱글톤
-    public static RoomSpawner Instance { get; private set; }
-
     // 상수
     private const int MAX_ROOM = 6;
 
@@ -25,10 +22,7 @@ public class RoomSpawner : MonoBehaviour
     private RoomHandler currentRoom;
     private int roomCount;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
+
 
     public void Init()
     {

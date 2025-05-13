@@ -86,13 +86,13 @@ public class ArrowController : MonoBehaviour
             //대미지 적용
             if (playerController.PowerUp)
             {   //캐릭터 강화 상태
-                weaponStat.Damage *= 2;
+                collision.GetComponent<MonsterBase>().TakeDamage(weaponStat.Damage*2);
             }
             else
             {   //루시드 게이지 업
                 playerController.Stat.PlusLucidPower(5);
+                collision.GetComponent<MonsterBase>().TakeDamage(weaponStat.Damage);
             }
-            collision.GetComponent<MonsterBase>().TakeDamage(weaponStat.Damage);
 
             //파괴
             Destroy(gameObject);
