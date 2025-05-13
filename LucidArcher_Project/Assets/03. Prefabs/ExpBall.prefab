@@ -80,6 +80,7 @@ GameObject:
   - component: {fileID: 4799623961531550619}
   - component: {fileID: 8165593213237484943}
   - component: {fileID: 4097262753773577239}
+  - component: {fileID: 4380282203634154393}
   m_Layer: 0
   m_Name: ExpBall
   m_TagString: Untagged
@@ -235,6 +236,18 @@ MonoBehaviour:
   pickupDelay: 0.5
   spawnTime: 0
   Monster: {fileID: 0}
+--- !u!114 &4380282203634154393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4559769651083176745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31ccded00c865764b9535427c4e0c101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5706542365691619904
 GameObject:
   m_ObjectHideFlags: 0

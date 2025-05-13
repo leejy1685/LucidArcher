@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 8879535179522916435}
   - component: {fileID: 4131248973104568787}
   - component: {fileID: 2889912493520833425}
+  - component: {fileID: -3114857477861207191}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -205,12 +206,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterRenderer: {fileID: 2592106008662430337}
   weaponPivot: {fileID: 0}
-  speed: 5
-  HP: 6
-  MP: 10
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
   radius: 10
   weaponPrefap: {fileID: 0}
-  attackDelay: 1
+  shield: 0
+--- !u!114 &-3114857477861207191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8002470363301247701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31ccded00c865764b9535427c4e0c101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
