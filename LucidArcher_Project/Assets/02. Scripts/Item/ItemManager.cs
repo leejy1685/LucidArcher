@@ -62,7 +62,7 @@ public abstract class ItemManager : MonoBehaviour
                 return;
 
             }
-            AudioSource.PlayClipAtPoint(pickupSound, transform.position);
+            AudioSource.PlayClipAtPoint(pickupSound, transform.position); //사운드 재생
             ItemAction(other.gameObject); //아이템 고유 효과 발동
             
         }
