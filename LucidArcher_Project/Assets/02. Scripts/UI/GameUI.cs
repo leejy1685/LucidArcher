@@ -43,14 +43,14 @@ public class GameUI : BaseUI
 
     private void Start()
     {
-        UpdateExpSlider(0);
         InitHeartPrefabs();
     }
 
     void FixedUpdate()
     {
         ControlHeart();
-        HeartChargeDegree();
+
+        UpdateExpSlider((float)playerStatHendler.EXP / (float)playerStatHendler.MaxEXP);
         UpdateStaminaSlider();
         UpdatePlayerStatus();
     }
@@ -96,6 +96,7 @@ public class GameUI : BaseUI
         }
         DestroyShieldHeart();
         Relocation();
+        HeartChargeDegree();
     }
 
     public void AdditionalRedHeartPrefabs() // 추가 체력에 따른 붉은 하트 프리펩 생성
