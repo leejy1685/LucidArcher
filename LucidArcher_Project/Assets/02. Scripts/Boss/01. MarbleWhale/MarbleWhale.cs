@@ -27,15 +27,24 @@ public class MarbleWhale : MonsterBase
     int nonPatternCount;
     private void Awake()
     {
-        patterns = patternComponents.OfType<IEnemyPattern>().ToList();
-        foreach (IEnemyPattern pattern in patterns)
-        {
-            pattern.Init(this);
-        }
+        patterns = patternComponents.OfType<IEnemyPattern>().ToList();      
     }
 
     protected override void Start()
     {
+        foreach (IEnemyPattern pattern in patterns)
+        {
+            pattern.Init(this);
+
+            // 패턴이 요구하는 세부 사항은 일단 이렇게 해둘게요. 
+            // 개선 아이디어는 패턴 수만큼 필드 그냥 만들어서(어차피 보스 패턴은 셀 수 있을 만큼)
+            // 인스펙터에서 리스트 아닌 걸로 받고 여기서 개별 초기화 후에 묶는 거
+            if (pattern is AirStrikePattern airStrike)
+            {
+                airStrike.SetLocation(actArea);
+            }
+        }
+
         base.Start();
         EnterIdleState();
         spriteOffsetX = sprite.gameObject.transform.localPosition.x;
@@ -49,7 +58,7 @@ public class MarbleWhale : MonsterBase
                 HandleIdleState();
                 break;
             case State.Move:
-                HandleMoveState();  // 정황상 여기도 할 거 없음..
+                HandleMoveState();  
                 break;
             //case State.InPattern:
             //    HandlePatternState();

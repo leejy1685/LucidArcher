@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class FountainPattern : MonoBehaviour, IEnemyPattern
 {
-    MonsterBase monster;
+    public MonsterBase Monster { get; set; }
     public GameObject projectilePrefab;
     public int projectilePoolSize;
     private Queue<MonsterProjectile> projectilePool;
@@ -15,11 +15,11 @@ public class FountainPattern : MonoBehaviour, IEnemyPattern
     [SerializeField] int shotCount;
     [SerializeField] float shotIntervalTime;
 
-    public MonsterBase Monster { get; set; }
+    
 
     public void Init(MonsterBase _monster)
     {
-        monster = _monster;
+        Monster = _monster;
         projectilePool = new Queue<MonsterProjectile>();
 
         for (int i = 0; i < projectilePoolSize; i++)
@@ -53,18 +53,19 @@ public class FountainPattern : MonoBehaviour, IEnemyPattern
         {
             MonsterProjectile projectile = projectilePool.Dequeue();
 
+            
             // 1. 각도 계산 (도 단위)
             float angleDeg = (360f / emitterCountPerShot) * i + angleOffset;
             float angleRad = angleDeg * Mathf.Deg2Rad;
-
-            Debug.Log(angleDeg);
             // 2. 방향 벡터 계산 (단위 벡터)
             Vector2 direction = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)).normalized;
-            projectile.Init(monster, projectilePool, transform.position, (Vector2)transform.position + direction);           
+            projectile.Init(Monster, projectilePool, transform.position, (Vector2)transform.position + direction);
 
             projectile.transform.rotation = Quaternion.Euler(0, 0, angleDeg);
 
             projectile.gameObject.SetActive(true);
+
+            
         }
     }
 }

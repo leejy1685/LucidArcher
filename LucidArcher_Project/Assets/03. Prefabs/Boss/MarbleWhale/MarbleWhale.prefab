@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1229307485
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -1868056925, guid: 86ced2935995a434fa341f242ce92569, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 117813554257435877}
   - component: {fileID: 7628412820587481632}
   - component: {fileID: 4732273907406862622}
+  - component: {fileID: 6658304184268156025}
   m_Layer: 6
   m_Name: MarbleWhale
   m_TagString: Boss
@@ -268,6 +269,7 @@ MonoBehaviour:
   state: 0
   actArea: {fileID: 0}
   patternComponents:
+  - {fileID: 6658304184268156025}
   - {fileID: 117813554257435877}
   - {fileID: 7628412820587481632}
   - {fileID: 4732273907406862622}
@@ -312,9 +314,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd60957128d2f04c8d5a8e5a195ee2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveObject: {fileID: 0}
-  castingTime: 0
-  attackThickness: 0
+  waveObject: {fileID: 6764254870887602104}
+  castingTime: 1
+  attackThickness: 1
+--- !u!114 &6658304184268156025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2213215337557860722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8513f875344e73b4591c7c08f64b5e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombPrefab: {fileID: 3570871191652383465, guid: f80be7d2fa614ad44ac8d3eac410d800, type: 3}
+  bombPoolSize: 50
+  castingTime: 3
+  shotCount: 50
 --- !u!1 &6764254870887602104
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,7 +361,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 30, y: 30, z: 30}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4918043592836485948}
@@ -387,7 +405,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -417828581
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -56,23 +56,28 @@ public class MonsterProjectile : MonoBehaviour
         //}
         if (collision.gameObject.CompareTag("Player"))
         {
-            ContactPoint2D contact = collision.contacts[0];
-            effect.transform.parent = null;    // 나중에 필요하면 하이어라키에 나돌지 않게 게임매니저를 통해 특정 오브젝트로 옮겨도 좋음
-            effect.transform.localScale = Vector3.one;
-
-            effect.transform.position = contact.point;
-            effect.SetActive(true);
-
-            //대미지 계산
             collision.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
-
-            RetriveProjectile();
+            ContactPoint2D contact = collision.contacts[0];
+            ExplodeProjectile(contact);
         }
 
         if (collision.gameObject.CompareTag("Boundary"))
         {
-            RetriveProjectile();
+            ContactPoint2D contact = collision.contacts[0];
+            ExplodeProjectile(contact);
         }
+    }
+
+    private void ExplodeProjectile(ContactPoint2D contact)
+    {
+        effect.transform.parent = null;    // 나중에 필요하면 하이어라키에 나돌지 않게 게임매니저를 통해 특정 오브젝트로 옮겨도 좋음
+        effect.transform.localScale = Vector3.one;
+
+        effect.transform.position = contact.point;
+        effect.SetActive(true);
+
+        //대미지 계산
+        RetriveProjectile();
     }
 
     void RetriveProjectile()

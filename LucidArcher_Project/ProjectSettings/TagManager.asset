@@ -44,6 +44,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: FloorFX
+    uniqueID: 2805247083
+    locked: 0
   - name: GroundObjects
     uniqueID: 3877138715
     locked: 0
