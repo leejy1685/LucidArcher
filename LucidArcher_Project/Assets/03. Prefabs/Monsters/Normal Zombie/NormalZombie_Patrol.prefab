@@ -141,6 +141,8 @@ MonoBehaviour:
   - {fileID: 4559769651083176745, guid: 64f0392bf350a9a4f8ffd8e58b19f5a2, type: 3}
   - {fileID: 4559769651083176745, guid: 64f0392bf350a9a4f8ffd8e58b19f5a2, type: 3}
   - {fileID: 4559769651083176745, guid: 64f0392bf350a9a4f8ffd8e58b19f5a2, type: 3}
+  - {fileID: 8242717484124984106, guid: f3063ba538b6e9f47bd5422189b0dc79, type: 3}
+  - {fileID: 8242717484124984106, guid: f3063ba538b6e9f47bd5422189b0dc79, type: 3}
   dropForce: 2
   patrolComponent: {fileID: 938748919534926041}
 --- !u!114 &938748919534926041
