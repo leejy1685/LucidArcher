@@ -25,6 +25,9 @@ public class ArrowController : MonoBehaviour
     //맵 Layer
     [SerializeField] LayerMask mapLayer;
 
+    //파티클 시스템
+    [SerializeField] ParticleSystem impact;
+
     public void Init(PlayerController playerController, LayerMask targetLayer,RangeWeaponController rangeWeaponController,Vector2 shootPosition)
     {
         this.playerController = playerController;
@@ -107,6 +110,13 @@ public class ArrowController : MonoBehaviour
             //파괴
             Destroy(gameObject);
         }
+    }
+
+    //화살 파괴시 파티클 시스템 실행
+    private void OnDestroy()
+    {
+        GameObject go = Instantiate(impact.gameObject,transform.position,Quaternion.identity);
+        Destroy(go, 1f);
     }
 
 }

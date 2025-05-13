@@ -174,3 +174,4 @@ MonoBehaviour:
   mapLayer:
     serializedVersion: 2
     m_Bits: 1536
+  impact: {fileID: 3787733804681294788, guid: 599a410a2c5df1345a8e7289f588fc0d, type: 3}
