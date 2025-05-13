@@ -20,6 +20,7 @@ public class GateHandler : MonoBehaviour
         }
     }
 
+    // target 한테 가장 가까운 게이트 반환
     public Transform NearestGate(Vector3 target) 
     {
         Transform gate = gateAnimator[0].gameObject.transform;

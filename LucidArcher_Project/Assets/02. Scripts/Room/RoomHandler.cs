@@ -34,7 +34,7 @@ public class RoomHandler : MonoBehaviour
         cameraController = Camera.main.gameObject.GetComponent<CameraController>();
     }
 
-    // 방의 위치와 상태 초기화
+    // 방의 위치와 상태 등 초기화
     public void InitRoom(RoomState roomState, Vector3 position, GameObject _player)
     {
         this.roomState = roomState;

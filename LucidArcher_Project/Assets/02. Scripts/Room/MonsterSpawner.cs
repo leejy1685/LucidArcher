@@ -28,7 +28,7 @@ public class MonsterSpawner : MonoBehaviour
         room = _room;
     }
 
-    // 몬스터 소환
+    // 몬스터 랜덤 소환
     public void SpawnMosnters()
     {
         isSpawn = true;
