@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
 
         //플레이 종료
         isPlaying = false;
-        TimeControll();
+        Time.timeScale = 0;
         UIManager.SetGameOver();
     }
 
@@ -96,17 +96,22 @@ public class GameManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            TimeControll();
+            SoundOptionUIKey();
         }
     }
 
-    //시간 조작 기능
-    private void TimeControll()
+    public void SoundOptionUIKey()
     {
-        if(Time.timeScale == 0) 
+        if (Time.timeScale == 0)
+        {
             Time.timeScale = 1;
+            UIManager.ChangeState(UIState.Game);
+        }
         else
+        {
             Time.timeScale = 0;
+            UIManager.ChangeState(UIState.SoundObtionUI);
+        }
     }
 
 }

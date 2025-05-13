@@ -18,7 +18,7 @@ public class StartUI : BaseUI
 
     public void OnClickRobbyButton()
     {
-        uIManager.ChangeState(UIState.Robby);
+        uiManager.ChangeState(UIState.Robby);
     }
 
     public void OnClickExitButton()

@@ -6,9 +6,9 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
 
-    [SerializeField][Range(0f, 1f)] private float soundEffectVolume;// 효과음 볼륨
+    [SerializeField][Range(0f, 1f)] public float SoundEffectVolume;// 효과음 볼륨
     [SerializeField][Range(0f, 1f)] private float soundEffectPitchVariance;// 효과음 피치 랜덤성
-    [SerializeField][Range(0f, 1f)] private float musicVolume;// 배경 음악 볼륨
+    [SerializeField][Range(0f, 1f)] public float MusicVolume;// 배경 음악 볼륨
 
     private AudioSource musicAudioSource;// 배경 음악용 AudioSource
     public AudioClip defalutBGM;// 기본 배경 음악 클립
@@ -21,8 +21,13 @@ public class SoundManager : MonoBehaviour
 
         // 배경음 재생용 AudioSource 설정
         musicAudioSource = GetComponent<AudioSource>();
-        musicAudioSource.volume = musicVolume;
+        musicAudioSource.volume = MusicVolume;
         musicAudioSource.loop = true;
+    }
+
+    private void FixedUpdate()
+    {
+        musicAudioSource.volume = MusicVolume;
     }
 
     //전투 시작
@@ -52,6 +57,6 @@ public class SoundManager : MonoBehaviour
         // SoundSource 프리팹 인스턴스 생성 후 재생
         SoundSource obj = Instantiate(instance.soundSourcePrefab);
         SoundSource soundSource = obj.GetComponent<SoundSource>();
-        soundSource.Play(clip, instance.soundEffectVolume, instance.soundEffectPitchVariance);
+        soundSource.Play(clip, instance.SoundEffectVolume, instance.soundEffectPitchVariance);
     }
 }

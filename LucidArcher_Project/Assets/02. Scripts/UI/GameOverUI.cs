@@ -30,6 +30,6 @@ public class GameOverUI : BaseUI
 
     public void OnClickRobbyButton()
     {
-        uIManager.ChangeState(UIState.Robby);
+        uiManager.ChangeState(UIState.Robby);
     }
 }

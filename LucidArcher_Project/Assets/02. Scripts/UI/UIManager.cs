@@ -7,7 +7,8 @@ public enum UIState
     Start,
     Robby,
     Game,
-    GameOver
+    GameOver,
+    SoundObtionUI
 }
 
 public class UIManager : MonoBehaviour
@@ -16,6 +17,7 @@ public class UIManager : MonoBehaviour
     private GameOverUI gameOverUI;
     private RobbyUI robbyUI;
     private StartUI startUI;
+    private SoundObtionUI soundObtionUI;
 
     private UIState currentState;
 
@@ -29,6 +31,8 @@ public class UIManager : MonoBehaviour
         robbyUI.InIt(this);
         startUI = GetComponentInChildren<StartUI>(true);
         startUI.InIt(this);
+        soundObtionUI = GetComponentInChildren<SoundObtionUI>(true);
+        soundObtionUI.InIt(this);
 
         ChangeState(UIState.Start);
     }
@@ -60,7 +64,9 @@ public class UIManager : MonoBehaviour
         gameOverUI.SetActive(currentState);
         robbyUI.SetActive(currentState);
         startUI.SetActive(currentState);
-        
+        soundObtionUI.SetActive(currentState);
+
+
     }
 
 

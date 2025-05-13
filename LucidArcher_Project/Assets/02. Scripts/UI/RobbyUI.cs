@@ -18,12 +18,12 @@ public class RobbyUI : BaseUI
 
     public void OnClickGameStartButton()
     {
-        uIManager.ChangeState(UIState.Game);
+        uiManager.ChangeState(UIState.Game);
     }
 
     public void OnClickStartUIButton()
     {
-        uIManager.ChangeState(UIState.Start);
+        uiManager.ChangeState(UIState.Start);
     }
 
     protected override UIState GetUIState()
