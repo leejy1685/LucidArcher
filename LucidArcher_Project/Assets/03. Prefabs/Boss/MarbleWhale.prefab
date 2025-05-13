@@ -283,7 +283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c70d4e2dae54f104a8e683bd2a137528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monster: {fileID: 0}
 --- !u!114 &7628412820587481632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bce6acc2f98af146904a3277c2e4026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 72280032168499960, guid: 19fae19a09ee5404da73d2407fdd1b03, type: 3}
+  projectilePrefab: {fileID: 72280032168499960, guid: 1daf0968dae468542aa959172f7ecba6, type: 3}
   projectilePoolSize: 100
   emitterCountPerShot: 18
   shotCount: 5
@@ -314,6 +313,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveObject: {fileID: 0}
+  castingTime: 0
+  attackThickness: 0
 --- !u!1 &6764254870887602104
 GameObject:
   m_ObjectHideFlags: 0

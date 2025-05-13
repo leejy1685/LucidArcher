@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MarbleWhale
   m_EditorClassIdentifier: 
   monsterName: Marble Whale
-  hp: 500
+  hp: 5000
   moveSpeed: 2
   atk: 1
   atkDelay: 0
