@@ -135,19 +135,17 @@ public class PlayerStatHendler : MonoBehaviour
     {
 
         Debug.Log("조작 반전");
-        float temp = Speed;
+        //float temp = Speed;
 
         ReverseMove();
 
         yield return new WaitForSeconds(duration);
         Debug.Log("조작 반전해제");
-        Speed = temp;
+        ReverseMove();
+        //Speed = temp;
 
 
 
     }
-
-
-
 
 }
