@@ -53,7 +53,8 @@ public class ArrowController : MonoBehaviour
         if ((target | 1 << collision.gameObject.layer) == target)
         {
             //³Ë¹é Àû¿ë
-            collision.GetComponent<KnockbackApplier>().Knockback(transform, weaponStat.KnockbackPower, weaponStat.KnockbackDuration);
+            if(!collision.gameObject.CompareTag("Boss"))
+                collision.GetComponent<KnockbackApplier>().Knockback(transform, weaponStat.KnockbackPower, weaponStat.KnockbackDuration);
             collision.GetComponent<MonsterBase>().TakeDamage(weaponStat.Damage);
 
             //ÆÄ±«

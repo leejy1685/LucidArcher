@@ -14,8 +14,8 @@ public class BossBase : MonoBehaviour
     public float DEF => def;
 
     [Header("Components")]
-    [SerializeField] protected SpriteRenderer sprite;
-    [SerializeField] protected Rigidbody2D rb;
+    public SpriteRenderer sprite;
+    public Rigidbody2D rb;
 
     public GameObject detectedEnemy;
 
@@ -39,5 +39,10 @@ public class BossBase : MonoBehaviour
     {
         // TODO
         gameObject.SetActive(false);
+    }
+
+    public Vector2 GetDirectionTowardEnemy()
+    {
+        return (detectedEnemy.transform.position - transform.position).normalized;
     }
 }

@@ -1,25 +1,44 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class MarbleWhale : BossBase
+public class MarbleWhale : MonsterBase
 {
     public enum State
     {
         Idle,
         Move,
-        SprintAttack,
-        FallingBubbleAttack
+        InPattern
     }
+
+    readonly int IsDie = Animator.StringToHash("IsDie"); 
 
     [SerializeField] State state;
     Vector2 moveDirection;
     [SerializeField] Location actArea;
+    [SerializeField] List<MonoBehaviour> patternComponents;
+    List<IEnemyPattern> patterns;
+    float spriteOffsetX;
 
-    private void Start()
+    IEnemyPattern currentPattern;
+
+    int nonPatternCount;
+    private void Awake()
     {
+        patterns = patternComponents.OfType<IEnemyPattern>().ToList();
+        foreach (IEnemyPattern pattern in patterns)
+        {
+            pattern.Init(this);
+        }
+    }
+
+    protected override void Start()
+    {
+        base.Start();
         EnterIdleState();
+        spriteOffsetX = sprite.gameObject.transform.localPosition.x;
     }
     // Update is called once per frame
     void Update()
@@ -27,67 +46,104 @@ public class MarbleWhale : BossBase
         switch (state)
         {
             case State.Idle:
-                // 할 거 없음. 다음 행동 선택할 코루틴 돌아가는 중
+                HandleIdleState();
                 break;
             case State.Move:
                 HandleMoveState();  // 정황상 여기도 할 거 없음..
                 break;
-            case State.SprintAttack:
-                HandleSprintAttackState();
-                break;
-            case State.FallingBubbleAttack:
-                HandleFallingBubbleAttackState();
-                break;
+            //case State.InPattern:
+            //    HandlePatternState();
+            //    break;
         }
     }
 
-    private void HandleFallingBubbleAttackState()
+    private void HandleIdleState()
     {
-        throw new NotImplementedException();
-    }
-
-    private void HandleSprintAttackState()
-    {
-        throw new NotImplementedException();
+        rb.velocity = Vector2.zero;
     }
 
     private void HandleMoveState()
     {
-        
+        rb.velocity = moveDirection * 2f;
     }
     
-
+    protected override void Die()
+    {
+        animator.SetTrigger(IsDie);
+    }
     IEnumerator EnterRandomPattern(float currentPatternDuration)
     {
+        
         yield return new WaitForSeconds(currentPatternDuration);
-        int rand = UnityEngine.Random.Range(0, 2);
+        if (nonPatternCount == 3)
+        {
+            EnterInPatternState();
+            yield break;
+        }
+        nonPatternCount++;
+        int rand = UnityEngine.Random.Range(0, 3);
 
         switch (rand)
         {
             case 0:
-                EnterIdleState();
+                if (state == State.Idle) EnterMoveState();
+                else EnterIdleState();
                 break;
             case 1:
                 EnterMoveState();
+                break;
+            case 2:
+                EnterInPatternState();
                 break;
         }
     }
     void EnterIdleState()
     {
+        currentPattern = null;
         state = State.Idle;
         moveDirection = Vector2.zero;
-        rb.velocity = Vector2.zero;
-        float stateTimeRange = UnityEngine.Random.Range(1.5f, 3f);
+        
+        float stateTimeRange = UnityEngine.Random.Range(1f, 2f);
         StartCoroutine(EnterRandomPattern(stateTimeRange));
     }
     private void EnterMoveState()
     {
         state = State.Move;
         moveDirection = new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)).normalized;
-        rb.velocity = moveDirection * 1.2f;
-
-        sprite.flipX = moveDirection.x < 0 ? false : true;
+        FlipSpriteIfNeed();
+        
         float stateTimeRange = UnityEngine.Random.Range(1.5f, 3f);
         StartCoroutine(EnterRandomPattern(stateTimeRange));
+    }
+
+    private void EnterInPatternState()
+    {
+        nonPatternCount = 0;
+        rb.velocity = Vector2.zero;
+        state = State.InPattern;
+        moveDirection = GetDirectionTowardEnemy();
+        FlipSpriteIfNeed();
+
+        currentPattern = patterns[UnityEngine.Random.Range(0, patterns.Count)];
+        currentPattern.Execute(EnterIdleState);
+    }
+
+    private void FlipSpriteIfNeed()
+    {
+        sprite.flipX = moveDirection.x < 0 ? false : true;
+        Vector3 spritePos = sprite.gameObject.transform.localPosition;
+        spritePos.x = moveDirection.x < 0 ? spriteOffsetX : -spriteOffsetX;
+        sprite.gameObject.transform.localPosition = spritePos;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Boundary"))
+        {
+            if(currentPattern is SprintPattern)
+            {
+                rb.velocity = Vector2.zero;
+            }
+        }
     }
 }

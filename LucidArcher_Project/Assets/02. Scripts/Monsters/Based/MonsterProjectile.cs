@@ -26,7 +26,7 @@ public class MonsterProjectile : MonoBehaviour
     internal void Init(MonsterBase _owner, Queue<MonsterProjectile> projectilePool, Vector2 launchPosition, Vector2 _targetPosition)
     {
         owner = _owner;
-        damage = owner.stats.Atk;
+        
         basePool = projectilePool;
         transform.position = launchPosition;
         //transform.parent = null;    // 나중에 필요하면 게임매니저나 게임매니저의 하위 매니저를 통해 하이어라키에서 부모 지정해서 정리
@@ -34,6 +34,7 @@ public class MonsterProjectile : MonoBehaviour
         direction = (targetPosition - launchPosition).normalized;
         lifeRemained = lifeTime;
         effect.SetActive(false);
+        Debug.DrawLine(launchPosition, targetPosition, Color.red, 2f);
     }
 
     private void Update()
@@ -65,6 +66,11 @@ public class MonsterProjectile : MonoBehaviour
             //대미지 계산
             collision.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
 
+            RetriveProjectile();
+        }
+
+        if (collision.gameObject.CompareTag("Boundary"))
+        {
             RetriveProjectile();
         }
     }

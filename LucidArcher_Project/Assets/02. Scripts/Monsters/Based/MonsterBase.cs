@@ -13,9 +13,9 @@ public abstract class MonsterBase : MonoBehaviour
 
     [Header("Base")]
     [SerializeField] protected CircleCollider2D sightCollider;
-    [SerializeField] protected SpriteRenderer sprite;
+    [SerializeField] public SpriteRenderer sprite;
     [SerializeField] protected Animator animator;
-    [SerializeField] protected Rigidbody2D rb;
+    [SerializeField] public Rigidbody2D rb;
     private MonsterSpawner monsterSpawner;
 
     public GameObject detectedEnemy;    // ���� ���忡�� enemy, �� �÷��̾�. Ȥ�� ����ƺ� ��ų�� ����ٸ� ����ƺ�, �����̻� �� ����
@@ -24,11 +24,15 @@ public abstract class MonsterBase : MonoBehaviour
     //�˹�
     KnockbackApplier knockbackApplier;
 
+<<<<<<< HEAD
     public GameObject[] itemPrefabs; //아이템 목록 담을 리스트
 
 
     public float dropForce = 2f; //아이템 튀어오를때 힘
 
+=======
+    public event Action<float> OnTakeDamage;
+>>>>>>> origin/Seunghwa_Monster
     protected virtual void Start()
     {
         currentHP = stats.HP;
@@ -58,14 +62,17 @@ public abstract class MonsterBase : MonoBehaviour
         // TODO : HP ���
         float effectiveDamage = Mathf.Max(0.5f, damage - stats.Def); 
         currentHP -= effectiveDamage;
+        if (currentHP < 0) { currentHP = 0; }
 
         float damagedDensity = Mathf.Min(effectiveDamage / 8, 1);
         sprite.color = Color.white - new Color(0, 1, 1, 0) * damagedDensity;
         
         if (currentHP <= 0) Die();
+
+        OnTakeDamage?.Invoke(effectiveDamage);
     }
 
-    void Die()
+    protected virtual void Die()
     {
         monsterSpawner.MonsterCount--;
         DropItems();
@@ -103,6 +110,7 @@ public abstract class MonsterBase : MonoBehaviour
         return false;
 
     }
+<<<<<<< HEAD
 
     void DropItems()
     {
@@ -135,5 +143,15 @@ public abstract class MonsterBase : MonoBehaviour
         }
 
 
+=======
+    public Vector2 GetDirectionTowardEnemy()
+    {
+        return (detectedEnemy.transform.position - transform.position).normalized;
+    }
+
+    public float GetDistanceToEnemy()
+    {
+        return (detectedEnemy.transform.position - transform.position).magnitude;
+>>>>>>> origin/Seunghwa_Monster
     }
 }
