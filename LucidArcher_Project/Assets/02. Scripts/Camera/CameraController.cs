@@ -5,6 +5,7 @@ public class CameraController : MonoBehaviour
 {
     // 외부 오브젝트
     [SerializeField] private Transform initialTarget;
+    private float initialCameraSize;
     private Transform target;
 
     // 변수
@@ -13,42 +14,46 @@ public class CameraController : MonoBehaviour
     private Vector3 roomPosition;
     private float maxX;
     private float maxY;
-
-    private bool hasLimit = true;
+    private float smoothDegree;
 
     private void Awake()
     {
-        cameraHalfHeight = Camera.main.orthographicSize;
-        cameraHalfWidth = cameraHalfHeight * Camera.main.aspect;
-
-        target = initialTarget;
+        initialCameraSize = Camera.main.orthographicSize;
+        UpdateCameraSize(initialCameraSize);
+        SetOriginTarget();
     }
 
     private void Update()
     {
-        SmoothMoveToTarget(target.position, hasLimit);
+        SmoothMoveToTarget(target.position);
+    }
+
+    // 카메라 타켓 초기화
+    public void SetOriginTarget()
+    {
+        target = initialTarget;
+        smoothDegree = 0.01f;
+    }
+
+    // 카메라 사이즈 업데이트
+    private void UpdateCameraSize(float cameraSize)
+    {
+        cameraHalfHeight = cameraSize;
+        cameraHalfWidth = cameraHalfHeight * Camera.main.aspect;
     }
 
     // 부드러운 카메라 이동
-    private void SmoothMoveToTarget(Vector3 _targetPosition, bool hasLimit)
+    private void SmoothMoveToTarget(Vector3 _targetPosition)
     {
-        Vector3 targetPosition;
-        if (hasLimit)
-        {
-            float cameraX = CheckPositionLimit(_targetPosition.x, true);
-            float cameraY = CheckPositionLimit(_targetPosition.y, false);
+        float cameraX = CheckPositionLimit(_targetPosition.x, true);
+        float cameraY = CheckPositionLimit(_targetPosition.y, false);
 
-            targetPosition = new Vector3(cameraX, cameraY, -10);
-        }
-        else
-        {
-            targetPosition = new Vector3(_targetPosition.x, _targetPosition.y, -10);
-        }
+        Vector3 limitedPosition = new Vector3(cameraX, cameraY, -10);
 
-        transform.position = Vector3.Lerp(transform.position, targetPosition, 0.01f);
-        if ((transform.position - targetPosition).magnitude < 0.01f)
+        transform.position = Vector3.Lerp(transform.position, limitedPosition, smoothDegree);
+        if ((transform.position - limitedPosition).magnitude < 0.01f)
         {
-            transform.position = targetPosition;
+            transform.position = limitedPosition;
         }
     }
 
@@ -57,7 +62,7 @@ public class CameraController : MonoBehaviour
     {
         float limitedValue = value;
         float center = isX ? roomPosition.x : roomPosition.y;
-        float max = isX ? maxX : maxY;
+        float max = isX ? maxX - cameraHalfWidth : maxY - cameraHalfHeight;
 
         if (limitedValue > center + max)
         {
@@ -72,51 +77,39 @@ public class CameraController : MonoBehaviour
     }
 
     // 카메라 제한 범위 업데이트
-    public void UpdateCameraLimit(Vector3 _roomPosition, float _maxX, float _maxY)
+    public void UpdateRoomLimit(Vector3 _roomPosition, float _maxX, float _maxY)
     {
         roomPosition = _roomPosition;
-        maxX = _maxX - cameraHalfWidth;
-        maxY = _maxY - cameraHalfHeight;
+        maxX = _maxX;
+        maxY = _maxY;
     }
 
     // 카메라 타겟 변경
-    public void ChangeTarget(Transform _target, float orthographicSize, float duration)
+    public void SetTarget(Transform _target, float _smoothDegree = 0.01f)
     {
         target = _target;
-        ZoomIn(orthographicSize, duration);
-        hasLimit = false;
-    }
-    public void ChangeTarget(Transform _target, float orthographicSize)
-    {
-        target = _target;
-        ZoomIn(orthographicSize, 1f);
-        hasLimit = false;
-    }
-    public void ChangeTarget()
-    {
-        target = initialTarget;
-        ZoomOut(3f, 1f);
-        hasLimit = true;
+        smoothDegree = _smoothDegree;
     }
 
-    // 줌인 효과
-    private void ZoomIn(float size, float duration)
+    // 타겟 Zoom-IN
+    public IEnumerator ZoomInTarget(float zoomSize, float duration)
     {
-        StartCoroutine(Zoom(cameraHalfHeight, size, duration));
+        yield return Zoom(initialCameraSize, zoomSize, duration);
     }
 
-    // 줌아웃 효과
-    private void ZoomOut(float size, float duration)
+    // 타겟 Zoom-Out
+    public IEnumerator ZoomOutTarget(float zoomSize, float duration)
     {
-        StartCoroutine(Zoom(size, cameraHalfHeight, duration));
+        yield return Zoom(zoomSize, initialCameraSize, duration);
     }
 
     // 줌 효과 시 사용되는 코루틴
     IEnumerator Zoom(float startSize, float endSize, float duration)
     {
         float timer = 0f;
+        UpdateCameraSize(endSize);
 
-        while(timer < duration)
+        while (timer < duration)
         {
             Camera.main.orthographicSize = Mathf.Lerp(startSize, endSize, timer / duration);
             timer += Time.deltaTime;

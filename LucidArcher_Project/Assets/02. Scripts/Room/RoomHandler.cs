@@ -6,7 +6,8 @@ public class RoomHandler : MonoBehaviour
     // 상수
     private const int X_MAX = 12;
     private const int Y_MAX = 6;
-    private static readonly WaitForSeconds WAIT_HALF_SEC = new WaitForSeconds(0.5f);
+    private const float ZOOM_SIZE = 3f;
+    private const float ZOOM_DURATION = 0.5f;
     private static readonly WaitForSeconds WAIT_ONE_SEC = new WaitForSeconds(1f);
 
     // 외부 오브젝트
@@ -38,20 +39,13 @@ public class RoomHandler : MonoBehaviour
     {
         this.roomState = roomState;
         transform.position = position;
-
-        cameraController.UpdateCameraLimit(position,
-            exitDetector.transform.GetChild(3).localPosition.x, exitDetector.transform.GetChild(0).localPosition.y);
         monsterSpawner.Init(this);
-        player = _player;
+        player = _player; // 일단 테스트 용
 
-        if (roomState == RoomState.Start)
-        {
-            exitDetector.SetActive(true);
-        }
-        else
-        {
-            exitDetector.SetActive(false);
-        }
+        cameraController.UpdateRoomLimit(position,
+            exitDetector.transform.GetChild(3).localPosition.x, exitDetector.transform.GetChild(0).localPosition.y);
+
+        exitDetector.SetActive(roomState == RoomState.Start);
 
         if(roomState == RoomState.Boss)
         {
@@ -65,63 +59,43 @@ public class RoomHandler : MonoBehaviour
     }
 
     // 방에 진입했을 때 이벤트 실행 (적 소환 등)
-    private void ExcuteEvent()
+    private IEnumerator ExcuteEvent()
     {
         isExcuted = true;
         exitDetector.SetActive(true);
 
-        StartCoroutine(CoroutineExcuteEvent());
-    }
-    IEnumerator CoroutineExcuteEvent()
-    {
-        cameraController.ChangeTarget(gate.NearestGate(player.transform.position), 3f);
-        yield return WAIT_ONE_SEC;
+        cameraController.SetTarget(gate.NearestGate(player.transform.position));
+        yield return cameraController.ZoomInTarget(ZOOM_SIZE, ZOOM_DURATION);
 
         gate.ControllGate(true);
         yield return WAIT_ONE_SEC;
 
-        cameraController.ChangeTarget();
-        yield return WAIT_HALF_SEC;
+        cameraController.SetOriginTarget();
+        yield return cameraController.ZoomOutTarget(ZOOM_SIZE, ZOOM_DURATION);
 
         // 이벤트 실행
         monsterSpawner.SpawnMosnters();
     }
 
-
     // 이벤트 종료 후 경험치, 아이템 등 획득 / 보스 방이면 계단도 보이게
-    public void EndEvent()
+    public IEnumerator EndEvent()
     {
-        if (roomState == RoomState.Start) return;
+        Transform target = roomState == RoomState.Boss ? stair.transform : gate.NearestGate(player.transform.position);
 
-        StartCoroutine(CoroutineEndEvent());
-    }
-    IEnumerator CoroutineEndEvent()
-    {
-        if(roomState == RoomState.Boss)
-        {
-            cameraController.ChangeTarget(stair.transform, 3f);
-        }
-        else
-        {
-            cameraController.ChangeTarget(gate.NearestGate(player.transform.position), 3f);
-        }
-        yield return WAIT_ONE_SEC;
+        cameraController.SetTarget(target);
+        yield return cameraController.ZoomInTarget(ZOOM_SIZE, ZOOM_DURATION);
 
         if (roomState == RoomState.Boss)
-        {
             stair.GetComponent<StairHandler>().MoveFrontTile();
-        }
         else
-        {
             gate.ControllGate(false);
-        }
         yield return WAIT_ONE_SEC;
 
-        cameraController.ChangeTarget();
-        yield return WAIT_HALF_SEC;
+        cameraController.SetOriginTarget();
+        yield return cameraController.ZoomOutTarget(ZOOM_SIZE, ZOOM_DURATION);
 
         // 경험치, 아이템 등 획득
-        SpawnChest();
+        if (Random.Range(1, 101) > 50) SpawnChest();
     }
 
     // 방 파괴
@@ -137,7 +111,7 @@ public class RoomHandler : MonoBehaviour
         {
             if(roomState == RoomState.Start) return;
 
-            ExcuteEvent();
+            StartCoroutine(ExcuteEvent());
         }
     }
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum RoomState
@@ -17,6 +18,8 @@ public class RoomSpawner : MonoBehaviour
 
     // 외부 오브젝트
     [SerializeField] private GameObject player;
+    [SerializeField] private CameraController cameraController;
+    [SerializeField] private UIManager uiManager;
 
     // 프리팹
     [SerializeField] RoomHandler startRoom;
@@ -68,12 +71,21 @@ public class RoomSpawner : MonoBehaviour
     }
 
     // 다음 층으로 이동
-    public void MoveNextFloor(Vector3 initPosition)
+    public IEnumerator MoveNextFloor(Transform initTransform)
     {
-        DestroyAllRoom();
+        Vector3 initPosition = initTransform.position;
+        
+        cameraController.SetTarget(initTransform);
+        uiManager.FadeOut();
+        yield return cameraController.ZoomInTarget(1f, 1f);
 
+        cameraController.SetOriginTarget();
+        DestroyAllRoom();
         roomCount = 0;
         SpawnRoom(initPosition);
+
+        uiManager.FadeIn();
+        StartCoroutine(cameraController.ZoomOutTarget(1f, 1f));
     }
 
     // 모든 방 파괴

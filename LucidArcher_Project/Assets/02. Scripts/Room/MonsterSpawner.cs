@@ -11,11 +11,12 @@ public class MonsterSpawner : MonoBehaviour
     [SerializeField] private GameObject[] monsterPrefabs;
 
     // 변수
-    public int monsterCount = 0;
+    private bool isSpawn = false;
+    private int monsterCount;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z) && isSpawn)
         {
             DestroyAllMonster();
         }
@@ -30,6 +31,8 @@ public class MonsterSpawner : MonoBehaviour
     // 몬스터 소환
     public void SpawnMosnters()
     {
+        isSpawn = true;
+
         for (int i = 0; i < Random.Range(4, 9); i++)
         {
             GameObject monster = Instantiate(monsterPrefabs[Random.Range(0, monsterPrefabs.Length)], transform);
@@ -59,7 +62,8 @@ public class MonsterSpawner : MonoBehaviour
 
         if(monsterCount == 0)
         {
-            room.EndEvent();
+            isSpawn = false;
+            StartCoroutine(room.EndEvent());
         }
     }
 
