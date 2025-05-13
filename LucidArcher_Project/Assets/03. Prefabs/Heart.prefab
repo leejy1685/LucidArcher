@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52990d19fefded7499227066a5060a4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSound: {fileID: 0}
   itemY: 0
   tolerance: 0.05
   pickupDelay: 0.5

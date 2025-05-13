@@ -7,21 +7,21 @@ public abstract class ItemManager : MonoBehaviour
 
 
 
-    //private string itemName; //¾ÆÀÌÅÛ ÀÌ¸§ÀÎµ¥ ¾µ Áø ¾ÆÁ÷ ¸ğ¸§ ¾ÆÀÌÅÛ ¼³¸í ÇÊ¿äÇÒ ¶§ ¾µ ¼öµµ?
-
-    public float itemY; //µå¶øµÉ ¾ÆÀÌÅÛÀÌ ¸ØÃç¾ß ÇÒ ÁÂÇ¥
-    public float tolerance = 0.05f; //¿ÀÂ÷¹üÀ§
+    //private string itemName; //ì•„ì´í…œ ì´ë¦„ì¸ë° ì“¸ ì§„ ì•„ì§ ëª¨ë¦„ ì•„ì´í…œ ì„¤ëª… í•„ìš”í•  ë•Œ ì“¸ ìˆ˜ë„?
+    public AudioClip pickupSound; //ì•„ì´í…œ í”½ì—… íš¨ê³¼ìŒ
+    public float itemY; //ë“œëë  ì•„ì´í…œì´ ë©ˆì¶°ì•¼ í•  ì¢Œí‘œ
+    public float tolerance = 0.05f; //ì˜¤ì°¨ë²”ìœ„
     private Rigidbody2D rb;
 
-    public float pickupDelay = 0.5f; // ¾ÆÀÌÅÛ ¹Ù·Î ¸Ô¾îÁö¸é ¾ÈµÇ´Ï µô·¹ÀÌ
-    public float spawnTime; // ¾ÆÀÌÅÛ »ı¼ºµÈ ½Ã°£ º¯¼ö
+    public float pickupDelay = 0.5f; // ì•„ì´í…œ ë°”ë¡œ ë¨¹ì–´ì§€ë©´ ì•ˆë˜ë‹ˆ ë”œë ˆì´
+    public float spawnTime; // ì•„ì´í…œ ìƒì„±ëœ ì‹œê°„ ë³€ìˆ˜
 
-    private float gravityDelay = 0.3f; // ¾ÆÀÌÅÛ ½ºÆùµÇÀÚ¸¶ÀÚ Áß·Â 0µÇ´Â °Å ¹æÁö µô·¹ÀÌ
+    private float gravityDelay = 0.3f; // ì•„ì´í…œ ìŠ¤í°ë˜ìë§ˆì ì¤‘ë ¥ 0ë˜ëŠ” ê±° ë°©ì§€ ë”œë ˆì´
 
-    public GameObject Monster; //¸ó½ºÅÍ °ÔÀÓ ¿ÀºêÁ§Æ®
+    public GameObject Monster; //ëª¬ìŠ¤í„° ê²Œì„ ì˜¤ë¸Œì íŠ¸
     private void Start()
     {
-        spawnTime = Time.time;  //¾ÆÀÌÅÛ »ı¼º½Ã ½Ã°£ ±â·Ï
+        spawnTime = Time.time;  //ì•„ì´í…œ ìƒì„±ì‹œ ì‹œê°„ ê¸°ë¡
 
         rb = GetComponent<Rigidbody2D>();
     }
@@ -35,11 +35,11 @@ public abstract class ItemManager : MonoBehaviour
             return;
         }
 
-        if((transform.position.y - itemY) < tolerance) //¿ÀÂ÷º¸´Ù ³·À»°æ¿ì
+        if((transform.position.y - itemY) < tolerance) //ì˜¤ì°¨ë³´ë‹¤ ë‚®ì„ê²½ìš°
         {
 
             rb.gravityScale = 0; 
-            rb.velocity = Vector2.zero; //¸ØÃã
+            rb.velocity = Vector2.zero; //ë©ˆì¶¤
             this.enabled = false;
 
         }
@@ -47,7 +47,7 @@ public abstract class ItemManager : MonoBehaviour
         
     }
 
-    public abstract void ItemAction(GameObject player);  //ÀÚ½Ä Å¬·¡½º¿¡¼­ ±¸Çö µÉ ¸Ş¼­µå
+    public abstract void ItemAction(GameObject player);  //ìì‹ í´ë˜ìŠ¤ì—ì„œ êµ¬í˜„ ë  ë©”ì„œë“œ
 
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -57,12 +57,13 @@ public abstract class ItemManager : MonoBehaviour
         if (other.CompareTag("Player"))
         {
 
-            if (Time.time - spawnTime < pickupDelay)  // ½ºÆùµÇ°í ºÎµúÈù ½Ã°£ÀÌ pickupDelayº¸´Ù ºü¸£¸é ¾È¸Ô¾îÁü
+            if (Time.time - spawnTime < pickupDelay)  // ìŠ¤í°ë˜ê³  ë¶€ë”ªíŒ ì‹œê°„ì´ pickupDelayë³´ë‹¤ ë¹ ë¥´ë©´ ì•ˆë¨¹ì–´ì§
             { 
                 return;
 
             }
-            ItemAction(other.gameObject); //¾ÆÀÌÅÛ °íÀ¯ È¿°ú ¹ßµ¿
+            AudioSource.PlayClipAtPoint(pickupSound, transform.position);
+            ItemAction(other.gameObject); //ì•„ì´í…œ ê³ ìœ  íš¨ê³¼ ë°œë™
             
         }
     }
