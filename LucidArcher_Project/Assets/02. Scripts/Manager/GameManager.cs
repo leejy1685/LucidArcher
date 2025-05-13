@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class GameManager : MonoBehaviour
 {
@@ -34,6 +36,11 @@ public class GameManager : MonoBehaviour
         roomSpawner.Init();
     }
 
+    private void Update()
+    {
+        ManagerHendler();
+    }
+
     //게임 시작 및 데이터 초기화
     public void StartGame()
     {
@@ -45,7 +52,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         isPlaying = false;
-        Time.timeScale = 0;
+        TimeControll();
         UIManager.SetGameOver();
     }
 
@@ -65,16 +72,32 @@ public class GameManager : MonoBehaviour
     //경험치 흡수
     public void AbsorbExp(ExpBall exp)
     {
-        if(monsterSpawner.MonsterCount == 0)
+        //방의 몬스터가 없으면 이동
+        if (monsterSpawner.MonsterCount == 0)
         {
-            //날아가야하는 방향 계산
-            Vector3 expPosition = exp.transform.position;
-            Vector2 direction = (player.transform.position - expPosition).normalized * 10f;
-
-            //속도에 부여
-            exp.GetComponent<Rigidbody2D>().velocity = direction;
-
+            exp.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            exp.GetComponent<Rigidbody2D>().gravityScale = 0;
+            exp.transform.position = Vector3.Lerp(exp.transform.position, player.transform.position, Time.deltaTime*3);
         }
+
+    }
+
+    //캐릭터 조작외 조작
+    private void ManagerHendler()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            TimeControll();
+        }
+    }
+
+    //시간 조작 기능
+    private void TimeControll()
+    {
+        if(Time.timeScale == 0) 
+            Time.timeScale = 1;
+        else
+            Time.timeScale = 0;
     }
 
 }

@@ -7,8 +7,8 @@ using static UnityEngine.GraphicsBuffer;
 public class PlayerController : MonoBehaviour
 {
     //Player스텟
-    public PlayerStatHendler Stat { get; set; }
-
+    private PlayerStatHendler stat;
+    public PlayerStatHendler Stat { get { return stat; } }
 
     //캐릭터 이동
     private Rigidbody2D rigidbody2D;
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        Stat = GetComponent<PlayerStatHendler>();
+        stat = GetComponent<PlayerStatHendler>();
         rigidbody2D = GetComponent<Rigidbody2D>();
 
         if (weaponPrefap != null)
