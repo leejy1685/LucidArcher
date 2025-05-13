@@ -26,8 +26,10 @@ public class GameUI : BaseUI
     [SerializeField] private TextMeshProUGUI playerAttackDelayText;
     [SerializeField] private TextMeshProUGUI playerSpeedText;
 
-    [SerializeField] private bool isPlayerHit;
-    [SerializeField] private bool isHeal;
+    [SerializeField] private bool hasAdditonalMaxHp = false;
+
+    public bool HasAdditionalMaxHp {get {return hasAdditonalMaxHp;} set {hasAdditonalMaxHp = value;} }
+
     public TextMeshProUGUI stage;
 
 
@@ -40,11 +42,17 @@ public class GameUI : BaseUI
     private void Start()
     {
         UpdateExpSlider(0);
-        AddHeartPrefabs();
+        InitHeartPrefabs();
     }
 
     void FixedUpdate()
     {
+        if (playerStatHendler.MaxHp > 6 && playerStatHendler.MaxHp % 2 == 1 && hasAdditonalMaxHp)
+        {
+            AdditionalHeartPrefabs();
+            hasAdditonalMaxHp = false;
+        }
+
         HeartChargeDegree();
         UpdateStaminaSlider();
         UpdatePlayerStatus();
@@ -56,7 +64,7 @@ public class GameUI : BaseUI
     }
 
 
-    public void AddHeartPrefabs()
+    public void InitHeartPrefabs()
     {
         int maxHp = playerStatHendler.MaxHp;
 
@@ -69,28 +77,33 @@ public class GameUI : BaseUI
             GameObject heart = Instantiate(selectedHeart, hpTransform); // List createdHeart에 변수를 저장하기 위한 임시 변수 생성
             heart.transform.localPosition = new Vector3((i) * 75 - 300, 0, 0);
 
-            if (maxHp % 2 == 1 && i == MaxHeart - 1)
-            {
-                Transform full = heart.transform.GetChild(0);
-                Transform half = heart.transform.GetChild(1);
-
-                full.gameObject.SetActive(false);
-                half.gameObject.SetActive(true);
-            }
-
             createdHearts.Add(heart);
         }
     }
 
-    private void HeartChargeDegree()
+    public void AdditionalHeartPrefabs() // 추가 체력에 따른 하트 프리펩 생성
     {
-        int maxHeartCount = playerStatHendler.MaxHp / 2;
+        int maxHp = playerStatHendler.MaxHp;
+
+        int addHeartPos = maxHp / 2;
+
+        GameObject selectedHeart = heartPrefabs[0];
+        GameObject heart = Instantiate(selectedHeart, hpTransform);
+        heart.transform.localPosition = new Vector3((addHeartPos) * 75 - 300, 0, 0);
+
+        createdHearts.Add(heart);
+
+        Image heartSR = GetHeartImageComponent(addHeartPos);
+        SetHeartSprite(heartSR, HeartType.Empty);
+    }
+    private void HeartChargeDegree() // 하트 채워짐 정도
+    {
         int hp = playerStatHendler.Hp;
 
         int fullHeartCount = hp / 2;
         bool hasHalfHeart = hp % 2 == 1;
 
-        for (int i = 0; i < maxHeartCount; i++)
+        for (int i = 0; i < createdHearts.Count; i++)
         {
             Image heartSR = GetHeartImageComponent(i);
 
@@ -109,7 +122,7 @@ public class GameUI : BaseUI
         }
     }
 
-    private void SetHeartSprite(Image img, HeartType type)
+    private void SetHeartSprite(Image img, HeartType type) // 하트 이미지 준비
     {
         switch (type)
         {

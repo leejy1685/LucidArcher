@@ -2906,7 +2906,11 @@ MonoBehaviour:
   hpTransform: {fileID: 456012337}
   heartPrefabs:
   - {fileID: 1720464293077570516, guid: 6cd01a60be36afd46b4edcaff12d6140, type: 3}
-  createdHeart: []
+  createdHearts: []
+  heartSprites:
+  - {fileID: 21300000, guid: 95313406691658a499bc5e424d1159b7, type: 3}
+  - {fileID: 21300000, guid: 06c549241c1e95b40b4bea4a23742aa8, type: 3}
+  - {fileID: 21300000, guid: eafdfa0111082de42b238790841a415a, type: 3}
   staminaSlider: {fileID: 1131638209}
   Exp: {fileID: 33195974}
   playerAttackDelayText: {fileID: 897260398}
