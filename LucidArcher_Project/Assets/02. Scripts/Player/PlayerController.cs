@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     //공격 속도
     private float attackTime;
 
-    //대쉬기능 (일시 무적)
+    //대쉬기능 (일시 무적 및 속도 증가)
     private float dashTime = 0.5f;
     private float inDashTime;
     private bool isDash;
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     //루시드 파워
     private bool powerUp;
     public bool PowerUp { get { return powerUp; } }
-    private float tempAttackDelay;
+
 
 
     private void Awake()
@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
             lookDirection = moveDirection * Stat.Speed;
 
         //대쉬중이 아니고, 이동 중 일 때, 스패이스를 누르면 대쉬
-        if (!isDash && Input.GetKeyDown(KeyCode.J) && Mathf.Abs(moveDirection.magnitude) > 0.5f)
+        if (!isDash && Input.GetKeyDown(KeyCode.J) && Mathf.Abs(moveDirection.magnitude) > 0.5f && Stat.Stamina > 1)
         {
             //스태미나 소모
             Stat.Stamina--;
@@ -140,7 +140,14 @@ public class PlayerController : MonoBehaviour
     void Movement(Vector2 direction)
     {
         //이동 방향에 속도 넣기
-        direction = direction * Stat.Speed;
+        if (isDash)
+        {
+            direction = direction * Stat.Speed * 2;
+        }
+        else
+        {
+            direction = direction * Stat.Speed;
+        }
 
         //물리 실행
         rigidbody2D.velocity = direction;
