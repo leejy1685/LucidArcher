@@ -22,7 +22,7 @@ public class ShotAtTargetPattern : MonoBehaviour,IEnemyPattern
 
         for (int i = 0; i < projectilePoolSize; i++)
         {
-            GameObject projectileGO = Instantiate(projectilePrefab, transform);
+            GameObject projectileGO = Instantiate(projectilePrefab);
             MonsterProjectile monsterProjectile = projectileGO.GetComponent<MonsterProjectile>();
             projectileGO.SetActive(false);
             projectilePool.Enqueue(monsterProjectile);
@@ -55,6 +55,7 @@ public class ShotAtTargetPattern : MonoBehaviour,IEnemyPattern
         for (int i = 0; i < emitterCountPerShot; i++)
         {
             MonsterProjectile projectile = projectilePool.Dequeue();
+            
             projectile.Init(Monster, projectilePool, transform.position, Monster.detectedEnemy.transform.position);
 
             Vector2 shotDirection = Monster.detectedEnemy.transform.position - transform.position;
