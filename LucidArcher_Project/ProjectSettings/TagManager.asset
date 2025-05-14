@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Monster
-  - Boundary
   - Boss
+  - Boundary
   layers:
   - Default
   - TransparentFX
@@ -45,14 +45,14 @@ TagManager:
     uniqueID: 0
     locked: 0
   - name: FloorFX
-    uniqueID: 2805247083
+    uniqueID: 2894355251
     locked: 0
   - name: GroundObjects
     uniqueID: 3877138715
     locked: 0
   - name: AirObjects
-    uniqueID: 1229307485
+    uniqueID: 2324409245
     locked: 0
   - name: Effects
-    uniqueID: 1628290659
+    uniqueID: 304185501
     locked: 0
