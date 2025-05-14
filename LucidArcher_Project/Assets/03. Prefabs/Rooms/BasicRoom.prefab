@@ -53,6 +53,7 @@ MonoBehaviour:
   - {fileID: 5914564245205643286, guid: 39ee54e0e39e51c4c9453771a419659a, type: 3}
   - {fileID: 8307447088651370156, guid: 06161e09ede05ad40b1c2386b583fb8c, type: 3}
   - {fileID: 8307447088651370156, guid: f033320bfbc9ec545962296ad5ff4986, type: 3}
+  bossPrefab: {fileID: 2213215337557860722, guid: b20f1fca50a290242b77f53607e07d01, type: 3}
   spawnAnimationPrefab: {fileID: 485405093884706644, guid: 3256f91b21a6b8b4a99b0209ab220767, type: 3}
 --- !u!1 &250272807645688969
 GameObject:
@@ -11715,7 +11716,7 @@ GameObject:
   - component: {fileID: 758765729358020310}
   m_Layer: 0
   m_Name: BasicRoom
-  m_TagString: Untagged
+  m_TagString: Boundary
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

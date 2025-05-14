@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] UIManager UIManager;
 
     //플레이어
-    [SerializeField] PlayerController player;
+    public PlayerController player;
     
     //게임 실행 중
     private bool isPlaying;

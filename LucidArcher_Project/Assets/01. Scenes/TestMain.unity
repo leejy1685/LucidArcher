@@ -1405,7 +1405,7 @@ MonoBehaviour:
   weaponPrefap: {fileID: 3677935211016202402, guid: be3f0a510feb27b478aeb836c51b7c4a, type: 3}
   obstacle:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   damageClip: {fileID: 8300000, guid: 40cc26921b422b6418a356b7005ba7b3, type: 3}
   shildClip: {fileID: 8300000, guid: ea53e4a37865fb2449eea3d8b9d8ebd7, type: 3}
   dashClip: {fileID: 8300000, guid: d046e6ec53a70814e90203f1e9f4b722, type: 3}

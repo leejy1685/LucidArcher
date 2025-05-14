@@ -6,9 +6,10 @@ public class MonsterAnimationEvents : MonoBehaviour
 {
     public MonsterBase monster;
 
-    // Àû¿ëÀÌ ±î´Ù·Î¿ï ½Ã  MarbleWhale Die¿¡¼­ Àû´çÈ÷ ½Ã°£°è»êÇØ¼­ ÇØ°á
+    // ì ìš©ì´ ê¹Œë‹¤ë¡œìš¸ ì‹œ  MarbleWhale Dieì—ì„œ ì ë‹¹íˆ ì‹œê°„ê³„ì‚°í•´ì„œ í•´ê²°
     public void OnDeathAnimationEnd()
     {
-        Destroy(monster.gameObject);
+        monster.gameObject.SetActive(false);
+        GameManager.Instance.monsterSpawner.DecreaseMonsterCount();
     }
 }

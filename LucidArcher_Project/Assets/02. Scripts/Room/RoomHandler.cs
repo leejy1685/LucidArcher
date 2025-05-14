@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class RoomHandler : MonoBehaviour
 {
@@ -78,38 +77,33 @@ public class RoomHandler : MonoBehaviour
         gate.ControllGate(true);
         yield return WAIT_ONE_SEC;
 
+        SoundManager.PlayClip(closeSound);
 
         cameraController.SetOriginTarget();
         yield return cameraController.ZoomOutTarget(ZOOM_SIZE, ZOOM_DURATION);
 
-        //문 닫는 소리
-        SoundManager.PlayClip(closeSound);
-        yield return WAIT_ONE_SEC;
         //전투 브금
         SoundManager.instance.StartBattle();
 
         // 이벤트 실행
-        StartCoroutine(monsterSpawner.SpawnAllMonsters());
+        StartCoroutine(monsterSpawner.SpawnAllMonsters(roomState));
     }
 
     // 이벤트 종료 후 경험치, 아이템 등 획득 / 보스 방이면 계단도 보이게
     public IEnumerator EndEvent()
     {
+        SoundManager.instance.EndBattle();
+
         Transform target = roomState == RoomState.Boss ? stair.transform : gate.NearestGate(player.transform.position);
 
         cameraController.SetTarget(target);
         yield return cameraController.ZoomInTarget(ZOOM_SIZE, ZOOM_DURATION);
-
-        //전투 종료 브금
-        SoundManager.instance.EndBattle();
-        yield return WAIT_ONE_SEC;
 
         if (roomState == RoomState.Boss)
             stair.GetComponent<StairHandler>().MoveFrontTile();
         else
             gate.ControllGate(false);
 
-        //문 여는 소리
         SoundManager.PlayClip(openSound);
 
         yield return WAIT_ONE_SEC;

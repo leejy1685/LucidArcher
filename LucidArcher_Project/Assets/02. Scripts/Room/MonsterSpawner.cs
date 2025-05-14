@@ -8,6 +8,7 @@ public class MonsterSpawner : MonoBehaviour
 
     // 프리팹
     [SerializeField] private GameObject[] monsterPrefabs;
+    [SerializeField] private GameObject bossPrefab;
     [SerializeField] private SpawnAnimation spawnAnimationPrefab;
 
     // 변수
@@ -27,27 +28,29 @@ public class MonsterSpawner : MonoBehaviour
         room = _room;
     }
 
-    // 몬스터 랜덤 소환
-    public IEnumerator SpawnAllMonsters()
+    // 랜덤 몬스터 여러 마리 소환
+    public IEnumerator SpawnAllMonsters(RoomState roomState)
     {
-        monsterCount = Random.Range(4, 9);
+        monsterCount = roomState == RoomState.Boss ? 1 : Random.Range(4, 9);
         actualSpawnCount = monsterCount; // 테스트 코드
 
         for (int i = 0; i < monsterCount; i++)
         {
-            StartCoroutine(SpawnMonster());
+            StartCoroutine(SpawnMonster(roomState));
             yield return new WaitForSeconds(0.1f);
         }
     }
 
-    private IEnumerator SpawnMonster()
+    // 랜덤 몬스터 한마리 소환
+    private IEnumerator SpawnMonster(RoomState roomState)
     {
-        Vector3 spawnPosition = room.RandomPosition();
+        Vector3 spawnPosition = roomState == RoomState.Boss ? transform.position : room.RandomPosition();
 
         SpawnAnimation spawnAnimation = Instantiate(spawnAnimationPrefab, spawnPosition, Quaternion.identity, transform);
         yield return spawnAnimation.DrawSpawnCircle();
 
-        GameObject monster = Instantiate(monsterPrefabs[Random.Range(0, monsterPrefabs.Length)], transform);
+        GameObject monster = Instantiate(
+            roomState == RoomState.Boss ? bossPrefab : monsterPrefabs[Random.Range(0, monsterPrefabs.Length)], transform);
         monster.GetComponent<MonsterBase>().Init(this, spawnPosition);
 
         actualSpawnCount--; // 테스트 코드
