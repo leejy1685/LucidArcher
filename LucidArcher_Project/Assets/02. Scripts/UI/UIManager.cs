@@ -61,6 +61,7 @@ public class UIManager : MonoBehaviour
 
     public void PlayerLevelUp()
     {
+        Time.timeScale = 0f;
         ChangeState(UIState.LevelUp);
     }
 
