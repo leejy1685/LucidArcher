@@ -126,9 +126,11 @@ public class PlayerController : MonoBehaviour
     //캐릭터 조작
     void HandleAction()
     {
+
+
         //상하좌우 입력
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = KeyManager.getHorizontal();
+        float vertical = KeyManager.getVertical();
         moveDirection = new Vector2(horizontal, vertical).normalized;
 
         //주변에 몬스터가 있을 때
@@ -137,8 +139,9 @@ public class PlayerController : MonoBehaviour
         else
             lookDirection = moveDirection * Stat.Speed;
 
-        //대쉬중이 아니고, 이동 중 일 때, 스패이스를 누르면 대쉬
-        if (!isDash && Input.GetKeyDown(KeyCode.J) && Mathf.Abs(moveDirection.magnitude) > 0.5f && Stat.Stamina > 1)
+        //대쉬중이 아니고, 이동 중 일 때, 대쉬 키를 누르면 대쉬
+        if (!isDash  && Mathf.Abs(moveDirection.magnitude) > 0.5f && Stat.Stamina > 1
+            && Input.GetKeyDown(KeyManager.keycode[(int)KeyInput.Dash]))
         {
             //스태미나 소모
             Stat.Stamina--;

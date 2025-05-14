@@ -8,7 +8,8 @@ public enum UIState
     Robby,
     Game,
     GameOver,
-    SoundObtionUI
+    SoundObtionUI,
+    KeySettingUI
 }
 
 public class UIManager : MonoBehaviour
@@ -18,10 +19,11 @@ public class UIManager : MonoBehaviour
     private RobbyUI robbyUI;
     private StartUI startUI;
     private SoundObtionUI soundObtionUI;
+    private KeySettingUI keySettingUI;
 
     private UIState currentState;
 
-    private void Awake()
+    private void Start()
     {
         gameUI = GetComponentInChildren<GameUI>(true);
         gameUI.InIt(this);
@@ -33,8 +35,11 @@ public class UIManager : MonoBehaviour
         startUI.InIt(this);
         soundObtionUI = GetComponentInChildren<SoundObtionUI>(true);
         soundObtionUI.InIt(this);
+        keySettingUI = GetComponentInChildren<KeySettingUI>(true);
+        keySettingUI.InIt(this);
 
-        ChangeState(UIState.Start);
+
+        ChangeState(UIState.KeySettingUI);
     }
 
 // 임시 게임 종료 버튼 : Space바
@@ -42,7 +47,7 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SetGameOver();
+            //SetGameOver();
         }
     }
 
@@ -65,6 +70,7 @@ public class UIManager : MonoBehaviour
         robbyUI.SetActive(currentState);
         startUI.SetActive(currentState);
         soundObtionUI.SetActive(currentState);
+        keySettingUI.SetActive(currentState);
 
 
     }

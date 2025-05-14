@@ -19,17 +19,6 @@ public class SoundObtionUI : BaseUI
         OkButton.onClick.AddListener(OnclickOkButton);
     }
 
-    private void Update()
-    {
-        ChangeVolume();
-    }
-
-    void ChangeVolume()
-    {
-        SoundManager.instance.MusicVolume = BGM.value;
-        SoundManager.instance.SoundEffectVolume = SFX.value;
-    }
-
     protected override UIState GetUIState()
     {
         return UIState.SoundObtionUI;
@@ -37,6 +26,9 @@ public class SoundObtionUI : BaseUI
 
     void OnclickOkButton()
     {
+        SoundManager.instance.MusicVolume = BGM.value;
+        SoundManager.instance.SoundEffectVolume = SFX.value;
+
         GameManager.Instance.SoundOptionUIKey();
     }
 }
