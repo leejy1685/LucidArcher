@@ -1,38 +1,25 @@
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections;
 using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour
 {
     // 외부 오브젝트
     private RoomHandler room;
-    private List<MonsterBase> monsters = new List<MonsterBase>();
 
     // 프리팹
     [SerializeField] private GameObject[] monsterPrefabs;
+    [SerializeField] private GameObject bossPrefab;
+    [SerializeField] private SpawnAnimation spawnAnimationPrefab;
 
     // 변수
-    private int monsterCount = 0;
-    public int MonsterCount
-    {
-        get { return monsterCount; }
-        set
-        {
-            if (value <= 0)
-            {
-                room.EndEvent();
-                monsterCount = 0;
-            }
-            else monsterCount = value;
-        }
-    }
+    private int monsterCount;
+    public int MonsterCount { get { return monsterCount; } }
+
+    private int actualSpawnCount = 1; // 테스트용
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            DestroyMonster();
-        }
+        DestroyAllMonster();
     }
 
     // 몬스터 스포너 초기화
@@ -41,37 +28,56 @@ public class MonsterSpawner : MonoBehaviour
         room = _room;
     }
 
-    // 몬스터 소환
-    public void SpawnMosnters()
+    // 랜덤 몬스터 여러 마리 소환
+    public IEnumerator SpawnAllMonsters(RoomState roomState)
     {
-        monsterCount = Random.Range(4, 9);
+        monsterCount = roomState == RoomState.Boss ? 1 : Random.Range(4, 9);
+        actualSpawnCount = monsterCount; // 테스트 코드
 
         for (int i = 0; i < monsterCount; i++)
         {
-            GameObject monster = Instantiate(monsterPrefabs[Random.Range(0, monsterPrefabs.Length)], transform);
-            monster.GetComponent<MonsterBase>().Init(this);
-            monster.transform.localPosition = RandomPosition();
-            monsters.Add(monster.GetComponent<MonsterBase>());
+            StartCoroutine(SpawnMonster(roomState));
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
-    // 랜덤 포지션 반환
-    private Vector3 RandomPosition()
+    // 랜덤 몬스터 한마리 소환
+    private IEnumerator SpawnMonster(RoomState roomState)
     {
-        Vector2 colliderSize = room.GetComponent<BoxCollider2D>().size;
+        Vector3 spawnPosition = roomState == RoomState.Boss ? transform.position : room.RandomPosition();
 
-        float x = Random.Range(-colliderSize.x * 0.5f, colliderSize.x * 0.5f);
-        float y = Random.Range(-colliderSize.y * 0.5f, colliderSize.y * 0.5f);
+        SpawnAnimation spawnAnimation = Instantiate(spawnAnimationPrefab, spawnPosition, Quaternion.identity, transform);
+        yield return spawnAnimation.DrawSpawnCircle();
 
-        return new Vector3(x, y, 0);
+        GameObject monster = Instantiate(
+            roomState == RoomState.Boss ? bossPrefab : monsterPrefabs[Random.Range(0, monsterPrefabs.Length)], transform);
+        monster.GetComponent<MonsterBase>().Init(this, spawnPosition);
+
+        actualSpawnCount--; // 테스트 코드
+    }
+
+    // 몬스터 죽었을 때, 몬스터 수 감소 업데이트
+    public void DecreaseMonsterCount()
+    {
+        monsterCount--;
+
+        if(monsterCount <= 0)
+        {
+            StartCoroutine(room.EndEvent());
+        }
     }
 
     // 테스트용 : 몬스터 삭제
-    private void DestroyMonster()
+    private void DestroyAllMonster()
     {
-        if (MonsterCount == 0) return;
-
-        MonsterCount--;
-        monsters[MonsterCount].gameObject.SetActive(false);
+        if (actualSpawnCount == 0 && Input.GetKeyDown(KeyCode.Z))
+        {
+            MonsterBase[] monsters = GetComponentsInChildren<MonsterBase>();
+            foreach (MonsterBase monster in monsters)
+            {
+                monster.gameObject.SetActive(false);
+                DecreaseMonsterCount();
+            }
+        }
     }
 }

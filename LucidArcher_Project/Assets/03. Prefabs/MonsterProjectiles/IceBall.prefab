@@ -108,7 +108,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 72280032168499960}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98e0291333edef84fae5c6a03293e317, type: 3}
+  m_Script: {fileID: 11500000, guid: 57dbca710df03da4e9ff597eec954c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetPosition: {x: 0, y: 0}
@@ -116,7 +116,7 @@ MonoBehaviour:
   damage: 1
   rb: {fileID: 5497721096711683030}
   speed: 7
-  lifeTime: 5.7
+  lifeTime: 5
   targetMask:
     serializedVersion: 2
     m_Bits: 0
@@ -4990,8 +4990,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1084711723
-  m_SortingLayer: 2
+  m_SortingLayerID: 304185501
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -9894,8 +9894,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1084711723
-  m_SortingLayer: 2
+  m_SortingLayerID: 304185501
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -10015,7 +10015,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -417828581
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 200
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.5707547, g: 1, b: 1, a: 1}

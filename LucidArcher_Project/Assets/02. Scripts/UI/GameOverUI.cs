@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameOverUI : BaseUI
 {
@@ -13,7 +14,7 @@ public class GameOverUI : BaseUI
     {
         base.InIt(uIManager);
         retryButton.onClick.AddListener(OnclickRetryButton);
-        robbyButton.onClick.AddListener(OnClickRobbyButton);
+        robbyButton.onClick.AddListener(OnClickStartButton);
     }
 
     protected override UIState GetUIState()
@@ -23,11 +24,11 @@ public class GameOverUI : BaseUI
 
     public void OnclickRetryButton()
     {
-        uIManager.SetPlayGame();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void OnClickRobbyButton()
+    public void OnClickStartButton()
     {
-        uIManager.ChangeState(UIState.Robby);
+        uiManager.ChangeState(UIState.Start);
     }
 }

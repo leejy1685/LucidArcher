@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum RoomState
@@ -9,11 +10,13 @@ public enum RoomState
 
 public class RoomSpawner : MonoBehaviour
 {
-    // 싱글톤
-    public static RoomSpawner Instance { get; private set; }
-
     // 상수
     private const int MAX_ROOM = 6;
+
+    // 외부 오브젝트
+    [SerializeField] private GameObject player;
+    [SerializeField] private CameraController cameraController;
+    [SerializeField] private UIManager uiManager;
 
     // 프리팹
     [SerializeField] RoomHandler startRoom;
@@ -25,10 +28,9 @@ public class RoomSpawner : MonoBehaviour
     private RoomHandler currentRoom;
     private int roomCount;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
+    //게임 매니저에서 사용
+    public RoomHandler CurrentRoom { get { return currentRoom; } }
+
 
     public void Init()
     {
@@ -49,28 +51,37 @@ public class RoomSpawner : MonoBehaviour
         {
             case 1:
                 currentRoom = Instantiate(startRoom, transform);
-                currentRoom.InitRoom(RoomState.Start, initPosition);
+                currentRoom.InitRoom(RoomState.Start, initPosition, player);
                 break;
 
             case MAX_ROOM:
                 currentRoom = Instantiate(bossRoom, transform);
-                currentRoom.InitRoom(RoomState.Boss, initPosition);
+                currentRoom.InitRoom(RoomState.Boss, initPosition, player);
                 break;
 
             default:
                 currentRoom = Instantiate(rooms[Random.Range(0, rooms.Length)], transform);
-                currentRoom.InitRoom(RoomState.Enemy, initPosition);
+                currentRoom.InitRoom(RoomState.Enemy, initPosition, player);
                 break;
         }
     }
 
     // 다음 층으로 이동
-    public void MoveNextFloor(Vector3 initPosition)
+    public IEnumerator MoveNextFloor(Transform initTransform)
     {
-        DestroyAllRoom();
+        Vector3 initPosition = initTransform.position;
+        
+        cameraController.SetTarget(initTransform);
+        uiManager.FadeOut();
+        yield return cameraController.ZoomInTarget(1f, 1f);
 
+        cameraController.SetOriginTarget();
+        DestroyAllRoom();
         roomCount = 0;
         SpawnRoom(initPosition);
+
+        uiManager.FadeIn();
+        StartCoroutine(cameraController.ZoomOutTarget(1f, 1f));
     }
 
     // 모든 방 파괴

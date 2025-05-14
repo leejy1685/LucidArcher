@@ -9,6 +9,6 @@ public class GroundsRenderPriorityHandler : MonoBehaviour
 
     private void Update()
     {
-        sprite.sortingOrder = (int)(sprite.transform.position.y * -100);
+        sprite.sortingOrder = (int)(transform.position.y * -100);
     }
 }

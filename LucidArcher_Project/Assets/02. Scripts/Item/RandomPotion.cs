@@ -7,7 +7,7 @@ public class RandomPotion : ItemManager
 {
     public override void ItemAction(GameObject player)
     {
-        // ·£´ı ·ÎÁ÷
+        // ëœë¤ ë¡œì§
         PlayerStatHendler Playerstat = player.GetComponent<PlayerStatHendler>();
         WeaponStat weaponstat = player.GetComponentInChildren<WeaponStat>();
 
@@ -18,35 +18,36 @@ public class RandomPotion : ItemManager
 
         {
             case 0:
-                //Ã¼·ÂÈ¸º¹
-                Debug.Log("Ã¼·Â 1È¸º¹");
+                //ì²´ë ¥íšŒë³µ
+                Debug.Log("ì²´ë ¥ 1íšŒë³µ");
                 Playerstat.SetHP(1);
                 break;
 
             case 1:
-                // nÃÊ µ¿¾È °ø°İ·ÂÁõ°¡
+                // nì´ˆ ë™ì•ˆ ê³µê²©ë ¥ì¦ê°€
                 //StartCoroutine(RandomDamageBuff(weaponstat, weaponstat.Damage * 0.1f, 7f));
                 weaponstat.RandBuff(weaponstat.Damage * 0.1f, 7f);
 
                 break;
             case 2:
-                //µ¥¹ÌÁö
-                Debug.Log("Ã¼·Â 1°¨¼Ò");
+                //ë°ë¯¸ì§€
+                Debug.Log("ì²´ë ¥ 1ê°ì†Œ");
                 Playerstat.SetHP(-1);
                 break;
             case 3:
-                //»óÅÂÀÌ»ó (½½·Î¿ì)
-                
+                //ìƒíƒœì´ìƒ (ìŠ¬ë¡œìš°)
 
-                Playerstat.RandSpeed(7f, 7f);
+                Debug.Log("ì´ë™ ì†ë„ ê°ì†Œ (ìŠ¬ë¡œìš°)");
+                Playerstat.RandSpeed(4f, 7f);
 
-                
+
+
                 break;
 
             case 4:
-                //»óÅÂÀÌ»ó (ÀÌµ¿¹İÀü)
+                //ìƒíƒœì´ìƒ (ì´ë™ë°˜ì „)
 
-
+                Debug.Log("ì¡°ì‘ ë°˜ì „");
                 Playerstat.Reverse(7f);
 
 
@@ -60,11 +61,11 @@ public class RandomPotion : ItemManager
 
     // IEnumerator RandomDamageBuff(WeaponStat weaponstat, float damage, float duration)
     //{
-    //    Debug.Log($"{weaponstat.Damage}µ¥¹ÌÁö¿¡¼­ 7ÃÊµ¿¾È 10% Áõ°¡ÇØ¼­ {weaponstat.Damage * 1.1f}ÀÌ µÆ½À´Ï´Ù. ");
+    //    Debug.Log($"{weaponstat.Damage}ë°ë¯¸ì§€ì—ì„œ 7ì´ˆë™ì•ˆ 10% ì¦ê°€í•´ì„œ {weaponstat.Damage * 1.1f}ì´ ëìŠµë‹ˆë‹¤. ");
 
     //    weaponstat.PlusDamage(damage);
     //    yield return new WaitForSeconds(duration);
-    //    Debug.Log($"¹°¾à È¿°ú°¡ Á¾·áµÇ¾î °ø°İ·ÂÀÌ ¿ø·¡ ¼öÄ¡ÀÎ{weaponstat.Damage}À¸·Î µÆ½À´Ï´Ù. ");
+    //    Debug.Log($"ë¬¼ì•½ íš¨ê³¼ê°€ ì¢…ë£Œë˜ì–´ ê³µê²©ë ¥ì´ ì›ë˜ ìˆ˜ì¹˜ì¸{weaponstat.Damage}ìœ¼ë¡œ ëìŠµë‹ˆë‹¤. ");
 
     //    weaponstat.PlusDamage(-damage);
 

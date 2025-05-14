@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Monster
+  - Boss
+  - Boundary
   layers:
   - Default
   - TransparentFX
@@ -13,10 +15,10 @@ TagManager:
   - Water
   - UI
   - Enemy
-  - 
-  - 
-  - 
-  - 
+  - Projectile
+  - Player
+  - Map
+  - Obstacle
   - 
   - 
   - 
@@ -42,6 +44,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: FloorFX
+    uniqueID: 2894355251
+    locked: 0
   - name: GroundObjects
     uniqueID: 3877138715
+    locked: 0
+  - name: AirObjects
+    uniqueID: 2324409245
+    locked: 0
+  - name: Effects
+    uniqueID: 304185501
     locked: 0

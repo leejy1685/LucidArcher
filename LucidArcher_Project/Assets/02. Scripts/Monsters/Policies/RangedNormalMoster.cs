@@ -7,7 +7,8 @@ public class RangedNormalMoster : MonsterBase
 {
     public enum State
     {
-        Normal,
+        Idle,
+        Chase,
         Siege
     }
     [Header("Behaviour")]
@@ -15,7 +16,7 @@ public class RangedNormalMoster : MonsterBase
     [SerializeField] ShotAtTargetPattern shotComponent;
 
 
-    State state;
+    [SerializeField] State state;
     readonly int IsMove = Animator.StringToHash("IsMove");
     public float motionTime = 0.5f;
     private void Awake()
@@ -23,43 +24,66 @@ public class RangedNormalMoster : MonsterBase
         chaseComponent.Init(this);
         shotComponent.Init(this);
 
-        state = State.Normal;
+        state = State.Idle;
+    }
+    public override void OnPlayerDetected(GameObject Player)
+    {
+        base.OnPlayerDetected(Player);
+        EnterChaseState();
     }
 
+    public override void OnPlayerMissed()
+    {
+        base.OnPlayerMissed();
+        chaseComponent.isChasing = false;
+
+        if (state == State.Chase)
+        {
+            EnterIdleState();
+        }
+
+    }
     private void Update()
     {
         if (detectedEnemy != null)
-        {
-            if (state == State.Normal)
+        {          
+            if (IsEnemyInRange() && shotComponent.CanShot())
             {
-                animator.SetBool(IsMove, true);
-                chaseComponent.Chase(detectedEnemy);
+                EnterSiegeState();
+            }
 
-                if (IsEnemyInRange())
-                {
-                    TryShot();
-                }
-            }
-            else if (state == State.Siege)
-            {
-                Move(Vector2.zero);
-                
-            }
         }
     }
+    #region EnterStates
 
-    private void TryShot()
+    private void EnterIdleState()
     {
-        if (shotComponent.TryShot())
+        rb.velocity = Vector3.zero;
+        state = State.Idle;
+        animator.SetBool(IsMove, false);
+    }
+
+    private void EnterChaseState()
+    {
+        if (detectedEnemy != null)
         {
-            state = State.Siege;
-            StartCoroutine(PlayShotMotion());
+            state = State.Chase;
+            animator.SetBool(IsMove, true);
+            chaseComponent.Execute();
+        }
+        else
+        {
+            EnterIdleState();
         }
     }
-
-    IEnumerator PlayShotMotion()
+    private void EnterSiegeState()
     {
-        yield return new WaitForSeconds(motionTime);
-        state = State.Normal;
+        chaseComponent.isChasing = false;
+        state = State.Siege;
+        rb.velocity = Vector3.zero;
+        animator.SetBool(IsMove, false);
+        shotComponent.Execute(EnterChaseState);
     }
+    #endregion
+
 }
