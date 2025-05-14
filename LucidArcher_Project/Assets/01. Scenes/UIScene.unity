@@ -1029,6 +1029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a96712bb83ac414cbf1618cf8702ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeImage: {fileID: 0}
 --- !u!1 &242541481
 GameObject:
   m_ObjectHideFlags: 0
@@ -1376,10 +1377,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8700a518f705624aba63eda5f2af42d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomSpawner: {fileID: 696603584}
+  RoomSpawner: {fileID: 0}
+  monsterSpawner: {fileID: 0}
   UIManager: {fileID: 184002063}
   levelUpUI: {fileID: 242541483}
-  playerStatHendler: {fileID: 1678667613}
   weaponStat: {fileID: -1471012593068958616, guid: be3f0a510feb27b478aeb836c51b7c4a, type: 3}
   player: {fileID: 1678667612}
 --- !u!4 &412882064
@@ -1683,6 +1684,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b982305210444c4bb24cbd33c2f0fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  cameraController: {fileID: 0}
+  uiManager: {fileID: 0}
   startRoom: {fileID: 758765729358020310, guid: 786d63dd9d635e143a050cb745ce95df, type: 3}
   bossRoom: {fileID: 5541208768328510756, guid: a1d832331b443cb44bdccc7bb6c2158e, type: 3}
   rooms:
@@ -2136,8 +2140,6 @@ MonoBehaviour:
   playerDamageText: {fileID: 275976500}
   playerAttackDelayText: {fileID: 1091816747}
   playerSpeedText: {fileID: 1652313858}
-  hasAdditonalMaxHp: 0
-  hasAddionalLucidHp: 0
   stage: {fileID: 699536883}
 --- !u!1 &1091816745
 GameObject:
@@ -3396,6 +3398,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcae72f8e5a77384c91349edd2f0aa6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basespeed: 5
+  isReversed: 0
   speed: 5
   hp: 6
   maxhp: 6
@@ -3428,7 +3432,12 @@ MonoBehaviour:
     m_Bits: 64
   radius: 20
   weaponPrefap: {fileID: 3677935211016202402, guid: be3f0a510feb27b478aeb836c51b7c4a, type: 3}
-  shield: 3
+  obstacle:
+    serializedVersion: 2
+    m_Bits: 0
+  damageClip: {fileID: 0}
+  shildClip: {fileID: 0}
+  dashClip: {fileID: 0}
 --- !u!50 &1678667615
 Rigidbody2D:
   serializedVersion: 4
@@ -4303,6 +4312,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameStartButton: {fileID: 117510204}
   startUIButton: {fileID: 6627813}
+  KeySettingUIButton: {fileID: 0}
+  SoundSettingUIButton: {fileID: 0}
 --- !u!1 &2143642460
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,6 +22,7 @@ public class GameUI : BaseUI
     [SerializeField] private List<Sprite> heartSprites;
     [SerializeField] private Slider staminaSlider;
     [SerializeField] private Slider Exp;
+    [SerializeField] private Slider lucidPowerSlider;
     [SerializeField] private TextMeshProUGUI playerDamageText;
     [SerializeField] private TextMeshProUGUI playerAttackDelayText;
     [SerializeField] private TextMeshProUGUI playerSpeedText;
@@ -57,6 +58,7 @@ public class GameUI : BaseUI
         UpdateExpSlider((float)playerStatHendler.EXP / (float)playerStatHendler.MaxEXP);
         UpdateStaminaSlider();
         UpdatePlayerStatus();
+        UpdateLucidPowerSlider();
     }
 
     public void UpdateExpSlider(float percentage)
@@ -242,6 +244,11 @@ public class GameUI : BaseUI
     public void UpdateStaminaSlider()
     {
         staminaSlider.value = playerStatHendler.Stamina / 3;
+    }
+
+    public void UpdateLucidPowerSlider()
+    {
+        lucidPowerSlider.value = playerStatHendler.LucidPower / 100f;
     }
 
     public void UpdateStageText(int stage)
