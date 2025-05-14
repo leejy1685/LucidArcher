@@ -22,7 +22,7 @@ public class ShotAtTargetPattern : MonoBehaviour,IEnemyPattern
 
         for (int i = 0; i < projectilePoolSize; i++)
         {
-            GameObject projectileGO = Instantiate(projectilePrefab, transform);
+            GameObject projectileGO = Instantiate(projectilePrefab);
             MonsterProjectile monsterProjectile = projectileGO.GetComponent<MonsterProjectile>();
             projectileGO.SetActive(false);
             projectilePool.Enqueue(monsterProjectile);
