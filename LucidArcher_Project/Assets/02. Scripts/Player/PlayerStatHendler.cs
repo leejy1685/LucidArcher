@@ -17,6 +17,10 @@ public class PlayerStatHendler : MonoBehaviour
     public float Speed => (basespeed + speedModifier) * (isReversed ? -1 : 1f);
 
     //체력
+
+    [Range(1, 20)][SerializeField] private float speed;
+     public float Speed { get { return speed; } set { speed = value; } }
+
     [Range(1, 10)][SerializeField] private int hp = 6;
     public int Hp { get { return hp; } set { hp = value; } }
 
@@ -38,11 +42,13 @@ public class PlayerStatHendler : MonoBehaviour
         get => stamina;
         set => stamina = Mathf.Clamp(value, 0, 3);
 
-
     }
     // 공격 딜레이
-    [Range(0.1f, 1f)][SerializeField] private float attackDelay = 1f;
-    public float AttackDelay { get { return attackDelay; } }
+    [Range(0.1f, 1f)][SerializeField] private float attackDelay;
+    public float AttackDelay { 
+        get => attackDelay;
+        set => attackDelay = Mathf.Clamp(value, 0.1f, 1f);
+    }
 
     //특수게이지
     [Range(0f, 100f)][SerializeField] private float lucidPower = 0f;
@@ -140,12 +146,6 @@ public class PlayerStatHendler : MonoBehaviour
         basespeed += input;
     }
 
-    //public void ReverseMove() //조작 반전
-    //{
-
-    //    basespeed *= -1;
-
-    //}
     public void PlusLucidPower(float input) //특수 게이지 증가
     {
         Debug.Log($"루시드 파워 {input}증가");
@@ -208,8 +208,6 @@ public class PlayerStatHendler : MonoBehaviour
         Debug.Log("조작 반전해제");
         isReversed = false;
     
-
-
 
     }
 

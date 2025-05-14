@@ -7,7 +7,9 @@ public enum UIState
     Start,
     Robby,
     Game,
-    GameOver
+    GameOver,
+    SoundObtionUI,
+    KeySettingUI
 }
 
 public class UIManager : MonoBehaviour
@@ -20,10 +22,12 @@ public class UIManager : MonoBehaviour
     private GameOverUI gameOverUI;
     private RobbyUI robbyUI;
     private StartUI startUI;
+    private SoundObtionUI soundObtionUI;
+    private KeySettingUI keySettingUI;
 
     private UIState currentState;
 
-    private void Awake()
+    private void Start()
     {
         gameUI = GetComponentInChildren<GameUI>(true);
         gameUI.InIt(this);
@@ -33,7 +37,12 @@ public class UIManager : MonoBehaviour
         robbyUI.InIt(this);
         startUI = GetComponentInChildren<StartUI>(true);
         startUI.InIt(this);
+        soundObtionUI = GetComponentInChildren<SoundObtionUI>(true);
+        soundObtionUI.InIt(this);
+        keySettingUI = GetComponentInChildren<KeySettingUI>(true);
+        keySettingUI.InIt(this);
 
+        
         ChangeState(UIState.Start);
     }
 
@@ -42,7 +51,7 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SetGameOver();
+            //SetGameOver();
         }
     }
 
@@ -64,7 +73,10 @@ public class UIManager : MonoBehaviour
         gameOverUI.SetActive(currentState);
         robbyUI.SetActive(currentState);
         startUI.SetActive(currentState);
-        
+        soundObtionUI.SetActive(currentState);
+        keySettingUI.SetActive(currentState);
+
+
     }
 
     // 페이드 아웃 효과 : 점차 어두워짐

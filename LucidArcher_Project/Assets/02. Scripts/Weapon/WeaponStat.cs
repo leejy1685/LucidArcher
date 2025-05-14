@@ -17,10 +17,10 @@ public class WeaponStat : MonoBehaviour
     [SerializeField] float knockbackPower = 1f;
     public float KnockbackPower { get { return knockbackPower; } }
 
+
     //사거리
     [SerializeField] float range = 10f;
     public float Range { get { return range; } }
-
 
     public int UpgradeDamage_Count = 0;
     public int UpgradeBulletNum_Count = 0;
@@ -81,7 +81,6 @@ public class WeaponStat : MonoBehaviour
         Debug.Log($"버프가 끝나 {Damage}데미지로 돌아왔습니다. ");
 
     }
-
 
 
 }

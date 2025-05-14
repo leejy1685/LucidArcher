@@ -18,12 +18,13 @@ public class StartUI : BaseUI
 
     public void OnClickRobbyButton()
     {
-        uIManager.ChangeState(UIState.Robby);
+        GameManager.Instance.StartGame();
+        uiManager.ChangeState(UIState.Robby);
     }
 
     public void OnClickExitButton()
     {
-        // 게임 종료 OR StartUI로 돌아가기기
+        Application.Quit();
     }
 
     protected override UIState GetUIState()

@@ -30,6 +30,13 @@ public class RoomHandler : MonoBehaviour
 
     private CameraController cameraController;
 
+    //게임 매니저에서 사용
+    public MonsterSpawner MonsterSpawner { get { return monsterSpawner; } }
+
+    //소리 추가
+    [SerializeField] private AudioClip openSound;
+    [SerializeField] private AudioClip closeSound;
+
     private void Awake()
     {
         cameraController = Camera.main.gameObject.GetComponent<CameraController>();
@@ -71,8 +78,17 @@ public class RoomHandler : MonoBehaviour
         gate.ControllGate(true);
         yield return WAIT_ONE_SEC;
 
+
         cameraController.SetOriginTarget();
         yield return cameraController.ZoomOutTarget(ZOOM_SIZE, ZOOM_DURATION);
+
+        //문 닫는 소리
+        SoundManager.PlayClip(closeSound);
+        yield return WAIT_ONE_SEC;
+        //전투 브금
+        SoundManager.instance.StartBattle();
+        yield return WAIT_HALF_SEC;
+
 
         // 이벤트 실행
         StartCoroutine(monsterSpawner.SpawnAllMonsters());
@@ -86,10 +102,18 @@ public class RoomHandler : MonoBehaviour
         cameraController.SetTarget(target);
         yield return cameraController.ZoomInTarget(ZOOM_SIZE, ZOOM_DURATION);
 
+        //전투 종료 브금
+        SoundManager.instance.EndBattle();
+        yield return WAIT_ONE_SEC;
+
         if (roomState == RoomState.Boss)
             stair.GetComponent<StairHandler>().MoveFrontTile();
         else
             gate.ControllGate(false);
+
+        //문 여는 소리
+        SoundManager.PlayClip(openSound);
+
         yield return WAIT_ONE_SEC;
 
         // 경험치, 아이템 등 획득 : 현재 30%

@@ -1,35 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class ArrowController : MonoBehaviour
 {
-    //¹«±â ¼º´É
+    //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½
+    PlayerController playerController;
+
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     WeaponStat weaponStat;
 
-    //ÀÌµ¿ ±¸Çö
+    //ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
     private Rigidbody2D rigidbody2D;
 
-    //°ø°Ý ¸ñÇ¥
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥
     LayerMask target;
 
-    //»ç°Å¸® ±â´É
+    //ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
     Vector2 shootPosition;
     float distance = 0;
 
-    public void Init(LayerMask targetLayer,RangeWeaponController rangeWeaponController,Vector2 shootPosition)
+    //ï¿½ï¿½ Layer
+    [SerializeField] LayerMask mapLayer;
+
+    //ï¿½ï¿½Æ¼Å¬ ï¿½Ã½ï¿½ï¿½ï¿½
+    [SerializeField] ParticleSystem impact;
+
+    public void Init(PlayerController playerController, LayerMask targetLayer,RangeWeaponController rangeWeaponController,Vector2 shootPosition)
     {
-        //ÀÌµ¿ ±¸Çö
+        this.playerController = playerController;
+
+        //ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
         rigidbody2D = GetComponent<Rigidbody2D>();
 
-        //°ø°Ý ¸ñÇ¥
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥
         target = targetLayer;
 
-        //¹«±â ¼º´É
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         weaponStat = rangeWeaponController.Stat;
 
-        //»ç°Å¸® ±â´É
+        //ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
         this.shootPosition = shootPosition;
         distance = 0;
     }
@@ -39,41 +51,72 @@ public class ArrowController : MonoBehaviour
         rangeDestroy();
     }
 
-    //È­»ì ³¯¸®±â
+    //È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void ShootArrow(Vector2 lookDirection)
     {
-        //¹æÇâ¿¡ ¼Óµµ ³Ö±â
+        //ï¿½ï¿½ï¿½â¿¡ ï¿½Óµï¿½ ï¿½Ö±ï¿½
         Vector2 velocity = lookDirection.normalized * weaponStat.BulletSpeed;
         rigidbody2D.velocity = velocity;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Å¸°Ù°ú Ãæµ¹
-        if ((target | 1 << collision.gameObject.layer) == target)
-        {
-            //³Ë¹é Àû¿ë
-            if(!collision.gameObject.CompareTag("Boss"))
-                collision.GetComponent<KnockbackApplier>().Knockback(transform, weaponStat.KnockbackPower, weaponStat.KnockbackDuration);
-            collision.GetComponent<MonsterBase>().TakeDamage(weaponStat.Damage);
-
-            //ÆÄ±«
-            Destroy(gameObject);
-        }
-
+        AttackEnemy(collision);
+        ConflictMap(collision);
     }
 
-    //»ç°Å¸® ±â´É
+    //ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
     private void rangeDestroy()
     {
-        //ÀÌµ¿ °Å¸® °è»ê
+        //ï¿½Ìµï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
         distance = Vector2.Distance(shootPosition, transform.position);
 
-        //»ç°Å¸® º¸´Ù ¸Ö¸® °¡¸é ÆÄ±«
+        //ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ä±ï¿½
         if (distance > weaponStat.Range)
         {
             Destroy(gameObject);
         }
+    }
+
+    private void AttackEnemy(Collider2D collision)
+    {
+        //Å¸ï¿½Ù°ï¿½ ï¿½æµ¹
+        if ((target | 1 << collision.gameObject.layer) == target)
+        {
+            //ï¿½Ë¹ï¿½ ï¿½ï¿½ï¿½ï¿½
+            collision.GetComponent<KnockbackApplier>().Knockback(transform, weaponStat.KnockbackPower, weaponStat.KnockbackDuration);
+
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            if (playerController.PowerUp)
+            {   //Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½
+                collision.GetComponent<MonsterBase>().TakeDamage(weaponStat.Damage*2);
+            }
+            else
+            {   //ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                playerController.Stat.PlusLucidPower(5);
+                collision.GetComponent<MonsterBase>().TakeDamage(weaponStat.Damage);
+            }
+
+            //ï¿½Ä±ï¿½
+            Destroy(gameObject);
+        }
+    }
+
+    private void ConflictMap(Collider2D collision)
+    {
+        //ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ ï¿½æµ¹
+        if ((mapLayer | 1 << collision.gameObject.layer) == mapLayer)
+        {
+            //ï¿½Ä±ï¿½
+            Destroy(gameObject);
+        }
+    }
+
+    //È­ï¿½ï¿½ ï¿½Ä±ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼Å¬ ï¿½Ã½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private void OnDestroy()
+    {
+        GameObject go = Instantiate(impact.gameObject,transform.position,Quaternion.identity);
+        Destroy(go, 1f);
     }
 
 }

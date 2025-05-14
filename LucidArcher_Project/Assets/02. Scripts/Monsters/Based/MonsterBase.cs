@@ -19,11 +19,12 @@ public abstract class MonsterBase : MonoBehaviour
     [SerializeField] public Rigidbody2D rb;
     private MonsterSpawner monsterSpawner;
 
-    public GameObject detectedEnemy;    // ���� ���忡�� enemy, �� �÷��̾�. Ȥ�� ����ƺ� ��ų�� ����ٸ� ����ƺ�, �����̻� �� ����
+    public GameObject detectedEnemy;    // 쫒아가는 적, 여기서는 플레이어
 
 
-    //�˹�
+    //넉백 적용
     KnockbackApplier knockbackApplier;
+
 
 
     public event Action<float> OnTakeDamage;
@@ -35,13 +36,17 @@ public abstract class MonsterBase : MonoBehaviour
     public float dropForce = 2f; //아이템 튀어오를때 힘
 
 
+    //소리 추가
+    [SerializeField] private AudioClip damageClip;
+
+
     protected virtual void Start()
     {
         spriteOffsetX = sprite.transform.localPosition.x;
         currentHP = stats.HP;
 
 
-        //�˹�����
+        //넉백 컴포넌트
         knockbackApplier = GetComponent<KnockbackApplier>();
 
         if (sightCollider != null)
@@ -55,15 +60,16 @@ public abstract class MonsterBase : MonoBehaviour
     public void Init(MonsterSpawner _monsterSpawner, Vector3 position)
     {
         monsterSpawner = _monsterSpawner;
+
         transform.position = position;
-        detectedEnemy = GameManager.Instance.player;
+
     }
 
 
     public void TakeDamage(float damage)
     {
 
-        // TODO : HP ���
+        // TODO : HP 소모 계산
         float effectiveDamage = Mathf.Max(0.5f, damage - stats.Def); 
         currentHP -= effectiveDamage;
         if (currentHP < 0) { currentHP = 0; }
@@ -73,7 +79,12 @@ public abstract class MonsterBase : MonoBehaviour
         
         if (currentHP <= 0) Die();
 
+
         OnTakeDamage?.Invoke(effectiveDamage);
+
+        //소리 추가
+        SoundManager.PlayClip(damageClip);
+
     }
 
     protected virtual void Die()
@@ -103,8 +114,9 @@ public abstract class MonsterBase : MonoBehaviour
         sprite.transform.localPosition = spritePos;
 
         direction = direction* stats.MoveSpeed;
-        //�˹� ����
-        //direction = knockbackApplier.ApplyKnockback(direction);
+
+        //넉백 적용
+        direction = knockbackApplier.ApplyKnockback(direction);
 
         rb.velocity = direction;
     }

@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class ExitDetector : MonoBehaviour
 {
-    // ¿ÜºÎ ¿ÀºêÁ§Æ®
+    // ï¿½Üºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     [SerializeField] private GameObject colliderBox;
 
-    // º¯¼ö
+    // ï¿½ï¿½ï¿½ï¿½
     private bool isSpawn = false;
 
     private void Start()
@@ -18,9 +18,10 @@ public class ExitDetector : MonoBehaviour
     {
         if (!isSpawn && collision.CompareTag("Player"))
         {
-            RoomSpawner.Instance.SpawnRoom(transform.position + transform.localPosition);
+            GameManager.Instance.CreateRoom(transform.position + transform.localPosition);
             colliderBox.SetActive(true);
             StartCoroutine(MoveCollider());
+
             isSpawn = true;
         }
     }
