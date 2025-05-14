@@ -17,10 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] UIManager UIManager;
 
     public LevelUpUI levelUpUI;
-    public PlayerStatHendler playerStatHendler;
     public WeaponStat weaponStat;
-    public GameObject player;
-
 
     //플레이어
     public PlayerController player;
@@ -34,12 +31,10 @@ public class GameManager : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
-
     }
 
     private void Start()
     {
-        roomSpawner.Init();
         weaponStat = player.GetComponentInChildren<WeaponStat>(true);
     }
 
@@ -50,10 +45,11 @@ public class GameManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (playerStatHendler.MaxEXP == playerStatHendler.EXP)
+        if (player.Stat.MaxEXP <= player.Stat.EXP)
         {
             UIManager.PlayerLevelUp();
         }
+        player.Stat.LevelUP();
     }
 
     public void AttackDamageUp()
@@ -64,19 +60,19 @@ public class GameManager : MonoBehaviour
 
     public void AttackDelayUp()
     {
-        playerStatHendler.UpgradeAttackDelay();
+        player.Stat.UpgradeAttackDelay();
         UIManager.ChangeState(UIState.Game);
     }
 
     public void MaxHpUp()
     {
-        playerStatHendler.UpgradeMaxHP();
+        player.Stat.UpgradeMaxHP();
         UIManager.ChangeState(UIState.Game);
     }
 
     public void PlayerSpeedUp()
     {
-        playerStatHendler.UpgradePlayerSpeed();
+        player.Stat.UpgradePlayerSpeed();
         UIManager.ChangeState(UIState.Game);
     }
 

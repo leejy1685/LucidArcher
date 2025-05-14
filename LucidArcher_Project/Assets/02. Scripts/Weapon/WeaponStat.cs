@@ -6,7 +6,7 @@ public class WeaponStat : MonoBehaviour
 {
 
     [SerializeField] int bulletNum;    //화살개수
-    public int BulletNum { get { return bulletNum; }set { damage = value; } }
+    public int BulletNum { get { return bulletNum; }set { bulletNum = value; } }
     [SerializeField] float damage;    //데미지
     public float Damage { get { return damage; } set { damage = value; } }
     [SerializeField] float bulletSpeed; //화살 속도
@@ -68,7 +68,6 @@ public class WeaponStat : MonoBehaviour
         }
         else
         {
-
             return;
         }
 

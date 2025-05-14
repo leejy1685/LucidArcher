@@ -75,14 +75,7 @@ public class PlayerStatHendler : MonoBehaviour
         UpgradeAttackDelay_Count = 0;
         UpgradePlayerSpeed_Count = 0;
     }
-
-    public int UpgradeAttackDelay_Count = 0;
-
-    public int UpgradeSpeed_Count = 0;
-    
-
-
-    
+        
 
 
     public void UpgradeAttackDelay() // 공속 업그레이드
@@ -103,10 +96,10 @@ public class PlayerStatHendler : MonoBehaviour
     }
     public void UpgradeSpeed() // 이동속도 업그레이드
     {
-        if (UpgradeSpeed_Count < 4)
+        if (UpgradePlayerSpeed_Count < 4)
         {
             basespeed += 0.75f;
-            UpgradeSpeed_Count++;
+            UpgradePlayerSpeed_Count++;
         }
         else
         {
@@ -146,27 +139,11 @@ public class PlayerStatHendler : MonoBehaviour
 
     }
 
-
-    public void UpgradeAttackDelay()
-    {
-        if (UpgradeAttackDelay_Count < 4)
-        {
-            AttackDelay -= 0.2f;
-            UpgradeAttackDelay_Count++;
-
-        }
-        else
-        {
-
-            return;
-        }
-    }
-
     public void UpgradePlayerSpeed()
     {
         if (UpgradePlayerSpeed_Count < 4)
         {
-            Speed += 0.75f;
+            speed += 0.75f;
             UpgradePlayerSpeed_Count++;
 
         }
@@ -218,8 +195,8 @@ public class PlayerStatHendler : MonoBehaviour
             Level++;
 
             Debug.Log($"레벨업 현재 레벨:{level}");
+           
         }
-
 
     }
     //이동속도 감소 디버프
