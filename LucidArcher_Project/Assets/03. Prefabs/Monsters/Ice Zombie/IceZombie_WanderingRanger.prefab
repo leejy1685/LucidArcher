@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db6593af27c35384789d6cb2cdbfa947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detector: {fileID: 5748044765947776185}
+  detector: {fileID: 4339283908031893688}
 --- !u!1 &3473135095307287607
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,12 +212,12 @@ GameObject:
   - component: {fileID: 6875509501708510227}
   - component: {fileID: 541902488023345331}
   - component: {fileID: 2293454207743024038}
-  - component: {fileID: 5748044765947776185}
-  - component: {fileID: 1975967280816393189}
+  - component: {fileID: 4339283908031893688}
   - component: {fileID: 3655425381042361710}
   - component: {fileID: -6866788060554943843}
+  - component: {fileID: 660818633624433324}
   m_Layer: 6
-  m_Name: IceZombie_ChaseRanger
+  m_Name: IceZombie_WanderingRanger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -312,7 +312,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5748044765947776185
+--- !u!114 &4339283908031893688
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8307447088651370156}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52e429c75a6d57d49a31f849be41e4ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 1417bf53a9da4994b9cf706ae3c453a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 1d5dde669c3fe8043b1b287f65207c48, type: 2}
@@ -331,23 +331,9 @@ MonoBehaviour:
   animator: {fileID: 7282359747224320290}
   rb: {fileID: 2293454207743024038}
   detectedEnemy: {fileID: 0}
-  chaseComponent: {fileID: 1975967280816393189}
+  wanderComponent: {fileID: 660818633624433324}
   shotComponent: {fileID: 3655425381042361710}
   state: 0
-  motionTime: 0.5
---- !u!114 &1975967280816393189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8307447088651370156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2da39cccfd289e344b2f2f9c6385dd0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isChasing: 0
 --- !u!114 &3655425381042361710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,3 +363,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52fdba4b7d38a094f84682a0b97af333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &660818633624433324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8307447088651370156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acb77fb31e1661c4e8fb892af64e3bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWandering: 0
