@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponRenderer: {fileID: 8724346132587301213}
   arrow: {fileID: -2732247655681259535, guid: 559cda13bf40fb0468439693d3bb2c7b, type: 3}
+  atackSoundClip: {fileID: 8300000, guid: 7944a7e133d96db41921b3e4b13853ae, type: 3}
 --- !u!114 &-1471012593068958616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +172,6 @@ MonoBehaviour:
   bulletSpeed: 10
   knockbackDuration: 0.1
   knockbackPower: 1
+  range: 10
   UpgradeDamage_Count: 0
   UpgradeBulletNum_Count: 0
-  range: 10

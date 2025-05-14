@@ -87,8 +87,6 @@ public class RoomHandler : MonoBehaviour
         yield return WAIT_ONE_SEC;
         //전투 브금
         SoundManager.instance.StartBattle();
-        yield return WAIT_HALF_SEC;
-
 
         // 이벤트 실행
         StartCoroutine(monsterSpawner.SpawnAllMonsters());

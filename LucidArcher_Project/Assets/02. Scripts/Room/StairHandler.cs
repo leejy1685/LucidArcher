@@ -20,7 +20,7 @@ public class StairHandler : MonoBehaviour
         {
             canGoDown = false;
 
-            StartCoroutine(RoomSpawner.Instance.MoveNextFloor(transform));
+            StartCoroutine(GameManager.Instance.RoomSpawner.MoveNextFloor(transform));
         }
     }
 }

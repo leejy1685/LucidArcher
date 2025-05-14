@@ -12,6 +12,7 @@ public class MonsterSpawner : MonoBehaviour
 
     // 변수
     private int monsterCount;
+    public int MonsterCount { get { return monsterCount; } }
 
     private int actualSpawnCount = 1; // 테스트용
 

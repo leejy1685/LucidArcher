@@ -11,12 +11,12 @@ public abstract class ItemManager : MonoBehaviour
     public AudioClip pickupSound; //아이템 픽업 효과음
     public float itemY; //드랍될 아이템이 멈춰야 할 좌표
     public float tolerance = 0.05f; //오차범위
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
 
     public float pickupDelay = 0.5f; // 아이템 바로 먹어지면 안되니 딜레이
     public float spawnTime; // 아이템 생성된 시간 변수
 
-    private float gravityDelay = 0.3f; // 아이템 스폰되자마자 중력 0되는 거 방지 딜레이
+    protected float gravityDelay = 0.3f; // 아이템 스폰되자마자 중력 0되는 거 방지 딜레이
 
     public GameObject Monster; //몬스터 게임 오브젝트
     private void Start()
@@ -26,7 +26,7 @@ public abstract class ItemManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
 
         if (Time.time - spawnTime < gravityDelay) 
@@ -61,7 +61,7 @@ public abstract class ItemManager : MonoBehaviour
                 return;
 
             }
-            AudioSource.PlayClipAtPoint(pickupSound, transform.position); //사운드 재생
+            SoundManager.PlayClip(pickupSound);//.PlayClipAtPoint(pickupSound, transform.position); //사운드 재생
             ItemAction(other.gameObject); //아이템 고유 효과 발동
             
         }

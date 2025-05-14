@@ -14,12 +14,9 @@ public class PlayerStatHendler : MonoBehaviour
     public bool isReversed = false; // 반전 여부
 
     //현재 적용된 속도 계산 (기본속도 + 보정값) * (반전여부에 따라 양수 음수)
-    public float Speed => (basespeed + speedModifier) * (isReversed ? -1 : 1f);
-
-    //체력
 
     [Range(1, 20)][SerializeField] private float speed;
-     public float Speed { get { return speed; } set { speed = value; } }
+    public float Speed => (basespeed + speedModifier) * (isReversed ? -1 : 1f);
 
     [Range(1, 10)][SerializeField] private int hp = 6;
     public int Hp { get { return hp; } set { hp = value; } }

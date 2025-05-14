@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1970558051
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -1868056925, guid: 86ced2935995a434fa341f242ce92569, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -266,6 +266,9 @@ MonoBehaviour:
   animator: {fileID: 6413783972241455678}
   rb: {fileID: 7905769333203726251}
   detectedEnemy: {fileID: 0}
+  itemPrefabs: []
+  dropForce: 2
+  damageClip: {fileID: 8300000, guid: 28be550f02e7a934286dceaaa7c9beef, type: 3}
   state: 0
   actArea: {fileID: 0}
   patternComponents:
@@ -407,7 +410,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -417828581
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

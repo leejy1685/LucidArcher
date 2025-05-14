@@ -224,7 +224,10 @@ MonoBehaviour:
   - {fileID: 8242717484124984106, guid: f3063ba538b6e9f47bd5422189b0dc79, type: 3}
   - {fileID: 8242717484124984106, guid: f3063ba538b6e9f47bd5422189b0dc79, type: 3}
   dropForce: 2
+  damageClip: {fileID: 8300000, guid: c4c6b8b937dfcc446b5732a2e383843e, type: 3}
   chaseComponent: {fileID: 7662128237581430521}
+  sprintComponent: {fileID: 0}
+  type: 0
 --- !u!114 &7662128237581430521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da39cccfd289e344b2f2f9c6385dd0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChasing: 0
 --- !u!114 &9204561790456906631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +326,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -417828581
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2be10a12efbd96d4e8ff86c1f3c55943, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

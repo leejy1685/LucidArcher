@@ -6,20 +6,20 @@ using UnityEngine.Timeline;
 
 public class GameManager : MonoBehaviour
 {
-    //½Ì±ÛÅæ
+    //ì‹±ê¸€í†¤
     public static GameManager Instance;
 
-    //·ë ¸Å´ÏÀú
-    [SerializeField] RoomSpawner roomSpawner;
-    MonsterSpawner monsterSpawner;
+    //ë£¸ ë§¤ë‹ˆì €
+    public RoomSpawner RoomSpawner;
+    public MonsterSpawner monsterSpawner;
 
-    //UI ¸Å´ÏÀú
+    //UI ë§¤ë‹ˆì €
     [SerializeField] UIManager UIManager;
 
-    //ÇÃ·¹ÀÌ¾î
+    //í”Œë ˆì´ì–´
     [SerializeField] PlayerController player;
     
-    //°ÔÀÓ ½ÇÇà Áß
+    //ê²Œì„ ì‹¤í–‰ ì¤‘
     private bool isPlaying;
     public bool IsPlaying {  get { return isPlaying; } }
 
@@ -34,63 +34,54 @@ public class GameManager : MonoBehaviour
         ManagerHendler();
     }
 
-    //°ÔÀÓ ½ÃÀÛ ¹× µ¥ÀÌÅÍ ÃÊ±âÈ­
+    //ê²Œì„ ì‹œì‘ ë° ë°ì´í„° ì´ˆê¸°í™”
     public void StartGame()
     {
-        //¸Ê »ı¼º
-        roomSpawner.Init();
+        //ë§µ ìƒì„±
+        RoomSpawner.Init();
 
-        //bgm ½ÇÇà
+        //bgm ì‹¤í–‰
         SoundManager.instance.EndBattle();
 
-        //ÇÃ·¹ÀÌ Áß
+        //í”Œë ˆì´ ì¤‘
         isPlaying = true;
         Time.timeScale = 0;
     }
 
-    //°ÔÀÓ »ç¸Á UI ¶ç¿ì±â
+    //ê²Œì„ ì‚¬ë§ UI ë„ìš°ê¸°
     public void GameOver()
     {
-        //bgm ½ÇÇà
+        //bgm ì‹¤í–‰
         SoundManager.instance.EndBattle();
 
-        //ÇÃ·¹ÀÌ Á¾·á
+        //í”Œë ˆì´ ì¢…ë£Œ
         isPlaying = false;
         Time.timeScale = 0;
         UIManager.SetGameOver();
     }
 
-    //»õ·Î¿î ¹æ ¸¸µé±â
+    //ìƒˆë¡œìš´ ë°© ë§Œë“¤ê¸°
     public void CreateRoom(Vector2 position)
     {
-        roomSpawner.SpawnRoom(position);
-        monsterSpawner = roomSpawner.CurrentRoom.MonsterSpawner;
+        RoomSpawner.SpawnRoom(position);
+        monsterSpawner = RoomSpawner.CurrentRoom.MonsterSpawner;
     }
 
-    //´ÙÀ½ ÃşÀ¸·Î ÀÌµ¿
-    public void NextFloor(Vector2 position)
-    {
-        roomSpawner.MoveNextFloor(position);
-    }
-
-    //°æÇèÄ¡ Èí¼ö
+    //ê²½í—˜ì¹˜ í¡ìˆ˜
     public void AbsorbExp(ExpBall exp)
     {
-        if (Time.time - exp.spawnTime < exp.pickupDelay)  // ½ºÆùµÇ°í ºÎµúÈù ½Ã°£ÀÌ pickupDelayº¸´Ù ºü¸£¸é ¾È¸Ô¾îÁü
-            return;
 
-        //¹æÀÇ ¸ó½ºÅÍ°¡ ¾øÀ¸¸é ÀÌµ¿
+        //ë°©ì˜ ëª¬ìŠ¤í„°ê°€ ì—†ìœ¼ë©´ ì´ë™
         if (monsterSpawner.MonsterCount == 0)
         {
             exp.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             exp.GetComponent<Rigidbody2D>().gravityScale = 0;
             exp.transform.position = Vector3.Lerp(exp.transform.position, player.transform.position, Time.deltaTime * 3);
-
         }
 
     }
 
-    //Ä³¸¯ÅÍ Á¶ÀÛ¿Ü Á¶ÀÛ
+    //ìºë¦­í„° ì¡°ì‘ì™¸ ì¡°ì‘
     private void ManagerHendler()
     {
         if(Input.GetKeyDown(KeyCode.Escape))

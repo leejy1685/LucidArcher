@@ -5,8 +5,20 @@ using UnityEngine;
 public class ExpBall : ItemManager
 {
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
+        if (Time.time - spawnTime < gravityDelay)
+        {
+            return;
+        }
+
+        if ((transform.position.y - itemY) < tolerance) //ì˜¤ì°¨ë³´ë‹¤ ë‚®ì„ê²½ìš°
+        {
+
+            rb.gravityScale = 0;
+            rb.velocity = Vector2.zero; //ë©ˆì¶¤
+
+        }
         GameManager.Instance.AbsorbExp(this);
     }
 
@@ -14,7 +26,7 @@ public class ExpBall : ItemManager
     {
 
         PlayerStatHendler stat = player.GetComponent<PlayerStatHendler>();
-        //°æÇèÄ¡ Ãß°¡ ·ÎÁ÷
+        //ê²½í—˜ì¹˜ ì¶”ê°€ ë¡œì§
 
         stat.PlusEXP(1);
 

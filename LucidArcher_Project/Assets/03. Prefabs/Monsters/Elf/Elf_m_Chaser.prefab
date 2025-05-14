@@ -344,6 +344,7 @@ MonoBehaviour:
   - {fileID: 8242717484124984106, guid: f3063ba538b6e9f47bd5422189b0dc79, type: 3}
   - {fileID: 8242717484124984106, guid: f3063ba538b6e9f47bd5422189b0dc79, type: 3}
   dropForce: 2
+  damageClip: {fileID: 8300000, guid: c4c6b8b937dfcc446b5732a2e383843e, type: 3}
   chaseComponent: {fileID: 1985259115838637159}
   sprintComponent: {fileID: 0}
   type: 0
