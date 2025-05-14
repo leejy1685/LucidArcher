@@ -650,6 +650,7 @@ GameObject:
   - component: {fileID: 1192749450}
   - component: {fileID: 1192749452}
   - component: {fileID: 1192749451}
+  - component: {fileID: 1192749453}
   m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
@@ -674,7 +675,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 20.6, y: -29.9}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 2000, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1192749451
 MonoBehaviour:
@@ -718,6 +719,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192749449}
   m_CullTransparentMesh: 1
+--- !u!114 &1192749453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192749449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2824e3a41b17d4097d9fd61c572f39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subtitleText: {fileID: 1192749451}
+  lines:
+  - "\uC800\uAE30, \uB4E4\uB824.....?"
+  - .....
+  - "...\uC9C0\uAE08 \uB4E4\uB9AC\uBA74 \uB208\uC744 \uB5A0\uBD10..."
+  - "\uC7A0\uB4E4\uBA74 \uC548 \uB3FC!!! \uC545\uBABD\uC5D0 \uC7A0\uC2DD\uB418\uBA74..!!"
+  - ".... \uACB0\uAD6D \uC774\uB807\uAC8C \uB410\uB098."
+  - "\uC88B\uC740 \uAFC8 \uAFB8\uAE30\uB97C \uBC14\uB784\uAC8C.. \uB77C\uACE0\uB294
+    \uD560 \uC218 \uC5C6\uACA0\uC9C0.."
+  - "\uBD80\uB514 '\uADF8 \uB140\uC11D'\uC744 \uAF2D \uBB34\uCC14\uB7EC\uC918.."
+  - '''Lucid Archer'''
+  delays:
+  - 3
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  typingSpeed: 0.15
 --- !u!1 &1386600450
 GameObject:
   m_ObjectHideFlags: 0
