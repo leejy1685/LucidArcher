@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponStat : MonoBehaviour
 {
     [SerializeField] int bulletNum;    //ȭ�� ��
-    public int BulletNum { get { return bulletNum; }set { damage = value; } }
+    public int BulletNum { get { return bulletNum; }set { bulletNum = value; } }
     [SerializeField] float damage;    //�����
     public float Damage { get { return damage; } set { damage = value; } }
     [SerializeField] float bulletSpeed; //ȭ��ӵ�
@@ -21,6 +21,15 @@ public class WeaponStat : MonoBehaviour
 
     public int UpgradeDamage_Count = 0;
     public int UpgradeBulletNum_Count = 0;
+
+    public void ResetState()
+    {
+        BulletNum = 1;
+        Damage = 100;
+        UpgradeDamage_Count = 0;
+        UpgradeBulletNum_Count = 0;
+    }
+
     public void PlusDamage(float input) //���ݷ�����
     {
 

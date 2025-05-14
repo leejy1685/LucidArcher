@@ -170,5 +170,7 @@ MonoBehaviour:
   damage: 100
   bulletSpeed: 10
   knockbackDuration: 0.1
-  knockbackPower: 1
+  knockbackPower: 0
+  UpgradeDamage_Count: 0
+  UpgradeBulletNum_Count: 0
   range: 10

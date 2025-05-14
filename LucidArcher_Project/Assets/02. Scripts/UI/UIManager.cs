@@ -7,6 +7,7 @@ public enum UIState
     Start,
     Robby,
     Game,
+    LevelUp,
     GameOver
 }
 
@@ -16,6 +17,7 @@ public class UIManager : MonoBehaviour
     private GameOverUI gameOverUI;
     private RobbyUI robbyUI;
     private StartUI startUI;
+    private LevelUpUI levelUpUI;
 
     private UIState currentState;
 
@@ -29,17 +31,11 @@ public class UIManager : MonoBehaviour
         robbyUI.InIt(this);
         startUI = GetComponentInChildren<StartUI>(true);
         startUI.InIt(this);
+        levelUpUI = GetComponentInChildren<LevelUpUI>(true);
+        levelUpUI.InIt(this);
+        
 
         ChangeState(UIState.Start);
-    }
-
-// 임시 게임 종료 버튼 : Space바
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SetGameOver();
-        }
     }
 
     public void SetPlayGame()
@@ -52,6 +48,11 @@ public class UIManager : MonoBehaviour
         ChangeState(UIState.GameOver);
     }
 
+    public void PlayerLevelUp()
+    {
+        ChangeState(UIState.LevelUp);
+    }
+
     public void ChangeState(UIState state)
     {
         currentState = state;
@@ -60,7 +61,7 @@ public class UIManager : MonoBehaviour
         gameOverUI.SetActive(currentState);
         robbyUI.SetActive(currentState);
         startUI.SetActive(currentState);
-        
+        levelUpUI.SetActive(currentState);
     }
 
 

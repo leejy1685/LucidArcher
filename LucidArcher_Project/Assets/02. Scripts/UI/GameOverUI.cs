@@ -23,7 +23,7 @@ public class GameOverUI : BaseUI
 
     public void OnclickRetryButton()
     {
-        uIManager.ChangeState(UIState.Game);
+        uIManager.SetPlayGame();
     }
 
     public void OnClickRobbyButton()

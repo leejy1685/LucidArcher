@@ -18,7 +18,7 @@ public class RobbyUI : BaseUI
 
     public void OnClickGameStartButton()
     {
-        uIManager.ChangeState(UIState.Game);
+        uIManager.SetPlayGame();
     }
 
     public void OnClickStartUIButton()

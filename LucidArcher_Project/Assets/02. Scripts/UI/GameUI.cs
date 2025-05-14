@@ -16,21 +16,17 @@ public enum HeartType
 public class GameUI : BaseUI
 {
     [SerializeField] private PlayerStatHendler playerStatHendler;
-    // [SerializeField] private WeaponStat weaponStat;
     [SerializeField] private Transform hpTransform;
     [SerializeField] private List<GameObject> heartPrefabs;
     [SerializeField] private List<GameObject> createdHearts = new List<GameObject>();
     [SerializeField] private List<Sprite> heartSprites;
     [SerializeField] private Slider staminaSlider;
     [SerializeField] private Slider Exp;
-    // [SerializeField] private TextMeshProUGUI playerDamageText;
+    [SerializeField] private TextMeshProUGUI playerDamageText;
     [SerializeField] private TextMeshProUGUI playerAttackDelayText;
     [SerializeField] private TextMeshProUGUI playerSpeedText;
 
-    [SerializeField] private bool hasAdditonalMaxHp = false;
-    [SerializeField] private bool hasAddionalLucidHp = false;
-
-    public bool HasAdditionalMaxHp {get {return hasAdditonalMaxHp;} set {hasAdditonalMaxHp = value;} }
+    private WeaponStat weaponStat;
 
     public TextMeshProUGUI stage;
 
@@ -43,13 +39,21 @@ public class GameUI : BaseUI
 
     private void Start()
     {
-        InitHeartPrefabs();
+        weaponStat = playerStatHendler.GetComponentInChildren<WeaponStat>(true);
     }
 
+    private void OnEnable()
+    {
+        InitHeartPrefabs();
+    }
     void FixedUpdate()
     {
         ControlHeart();
+        UpdatePlayerInfo();
+    }
 
+    public void UpdatePlayerInfo()
+    {
         UpdateExpSlider((float)playerStatHendler.EXP / (float)playerStatHendler.MaxEXP);
         UpdateStaminaSlider();
         UpdatePlayerStatus();
@@ -63,7 +67,14 @@ public class GameUI : BaseUI
 
     public void InitHeartPrefabs()
     {
-        createdHearts.Clear();
+        // 기존 하트 오브젝트 모두 파괴
+        foreach (var heart in createdHearts)
+        {
+            Destroy(heart);
+        }
+
+        createdHearts.Clear(); // 리스트 초기화
+
 
         int maxHp = playerStatHendler.MaxHp;
         int shieldHp = playerStatHendler.LucidHp;
@@ -83,16 +94,16 @@ public class GameUI : BaseUI
 
     public void ControlHeart() // 추가되는 하트를 통제하는 메서드
     {
-        if (playerStatHendler.MaxHp > 6 && playerStatHendler.MaxHp % 2 == 1 && hasAdditonalMaxHp)
+        if (playerStatHendler.MaxHp > 6 && playerStatHendler.MaxHp % 2 == 1 && playerStatHendler.HasAdditionalMaxHp)
         {
             AdditionalRedHeartPrefabs();
-            hasAdditonalMaxHp = false;
+            playerStatHendler.HasAdditionalMaxHp = false;
         }
 
-        if (playerStatHendler.LucidHp > 0 && playerStatHendler.LucidHp <= 3 && hasAddionalLucidHp)
+        if (playerStatHendler.LucidHp > 0 && playerStatHendler.LucidHp <= 3 && playerStatHendler.HasAddionalLucidHp)
         {
             AdditionalShieldHeartPrefabs();
-            hasAddionalLucidHp = false;
+            playerStatHendler.HasAddionalLucidHp = false;
         }
         DestroyShieldHeart();
         Relocation();
@@ -240,7 +251,7 @@ public class GameUI : BaseUI
 
     public void UpdatePlayerStatus()
     {
-        // playerDamageText.text = weaponStat.Damage.ToString();
+        playerDamageText.text = weaponStat.Damage.ToString();
         playerAttackDelayText.text = playerStatHendler.AttackDelay.ToString();
         playerSpeedText.text = playerStatHendler.Speed.ToString();
     }

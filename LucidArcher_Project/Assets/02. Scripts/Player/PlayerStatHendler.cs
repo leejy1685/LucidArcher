@@ -4,56 +4,72 @@ using UnityEngine;
 
 public class PlayerStatHendler : MonoBehaviour
 {
-    //ÀÌµ¿ ¼Óµµ
+    //ï¿½Ìµï¿½ ï¿½Óµï¿½
     [Range(1, 20)][SerializeField] private float speed;
     public float Speed { get { return speed; } set { speed = value; } }
-    //Ã¼·Â
+    //Ã¼ï¿½ï¿½
     [Range(1, 10)][SerializeField] private int hp = 6;
     public int Hp { get { return hp; } set { hp = value; } }
 
     [Range(1, 10)][SerializeField] private int maxhp = 6;
     public int MaxHp { get { return maxhp; } set { maxhp = value; } }
-    //·ç½ÃµåÇÏÆ® (¹è¸®¾î)
+    //ï¿½ï¿½Ãµï¿½ï¿½ï¿½Æ® (ï¿½è¸®ï¿½ï¿½)
     [Range(0, 3)][SerializeField] private int lucidhp = 0;
     public int LucidHp { get { return lucidhp; } set { lucidhp = value; } }
-    //·¹º§
+    //ï¿½ï¿½ï¿½ï¿½
     [Range(1, 100)][SerializeField] private int level = 1;
     public int Level { get { return level; } set { level = value; } }
-    //½ºÅÂ¹Ì³Ê (´ë½¬ µî ¾µ ‹š »ç¿ë)
+    //ï¿½ï¿½ï¿½Â¹Ì³ï¿½ (ï¿½ë½¬ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½)
     [Range(1, 3)][SerializeField] private float stamina = 3;
 
-    //ÃÖ´ë ½ºÅÂ¹Ì³Ê
+    //ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Â¹Ì³ï¿½
     public float Maxstamina = 3;
     public float Stamina { get { return stamina; } set { stamina = value; } }
-    // °ø°Ý µô·¹ÀÌ
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     [Range(0.1f, 1f)][SerializeField] private float attackDelay;
-    public float AttackDelay { get { return attackDelay; } }
+    public float AttackDelay { get { return attackDelay; } set {attackDelay = value;} }
 
-    //Æ¯¼ö°ÔÀÌÁö
+    //Æ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     [Range(0f, 100f)][SerializeField] private float lucidPower = 0f;
     public float LucidPower { get { return lucidPower; } set { lucidPower = value; } }
-    //°æÇèÄ¡
+    //ï¿½ï¿½ï¿½ï¿½Ä¡
     [Range(0, 20)][SerializeField] private int exp = 0;
     public int EXP { get { return exp; } set { exp = value; } }
 
-    //ÃÖ´ë °æÇèÄ¡
+    //ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡
     public int MaxEXP => Level * 20;
-    //ÃÖ´ëÃ¼·Â ¸î ¹ø Áõ°¡½ÃÄ×´ÂÁö È®ÀÎÇÏ±â À§ÇÑ º¯¼ö
+    //ï¿½Ö´ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public int UpgradeMaxHp_Count = 0;
+    public int UpgradeAttackDelay_Count = 0;
+    public int UpgradePlayerSpeed_Count = 0;
+
+    private bool hasAdditonalMaxHp = false;
+    private bool hasAddionalLucidHp = false;
+
+    public bool HasAdditionalMaxHp { get { return hasAdditonalMaxHp; } set { hasAdditonalMaxHp = value; } }
+    public bool HasAddionalLucidHp { get { return hasAddionalLucidHp; } set { hasAddionalLucidHp = value; } }
+
+    void Awake()
+    {
+        UpgradeMaxHp_Count = 0;
+        UpgradeAttackDelay_Count = 0;
+        UpgradePlayerSpeed_Count = 0;
+    }
 
     public void SetHP(int input)
     {
-        Debug.Log($"HP{input}Áõ°¡");
+        Debug.Log($"HP{input}ï¿½ï¿½ï¿½ï¿½");
 
         Hp += input;
     }
 
-    public void UpgradeMaxHP() //ÃÖ´ëÃ¼·Â Áõ°¡ ÃÖ´ë 4¹ø±îÁö Áõ°¡½Ã ÇÏÆ® ÇÑÄ­ Áõ°¡
+    public void UpgradeMaxHP() //ï¿½Ö´ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ 4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½Ä­ ï¿½ï¿½ï¿½ï¿½
     {
         if (UpgradeMaxHp_Count < 4)
         {
-            MaxHp += 2;
-            Hp += 2;
+            MaxHp += 1;
+            Hp += 1;
+            HasAdditionalMaxHp = true;
             UpgradeMaxHp_Count++;
 
         }
@@ -65,45 +81,76 @@ public class PlayerStatHendler : MonoBehaviour
 
     }
 
-    public void PlusLucidHP(int input) //¹è¸®¾î Áõ°¡
+    public void UpgradeAttackDelay()
     {
-        Debug.Log($"·ç½ÃµåHP{input}Áõ°¡");
+        if (UpgradeAttackDelay_Count < 4)
+        {
+            AttackDelay -= 0.2f;
+            UpgradeAttackDelay_Count++;
+
+        }
+        else
+        {
+
+            return;
+        }
+    }
+
+    public void UpgradePlayerSpeed()
+    {
+        if (UpgradePlayerSpeed_Count < 4)
+        {
+            Speed += 0.75f;
+            UpgradePlayerSpeed_Count++;
+
+        }
+        else
+        {
+
+            return;
+        }
+    }
+
+    public void PlusLucidHP(int input) //ï¿½è¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    {
+        Debug.Log($"ï¿½ï¿½Ãµï¿½HP{input}ï¿½ï¿½ï¿½ï¿½");
         LucidHp += input;
+        HasAddionalLucidHp = true;
 
     }
 
-    public void PlusSpeed(float input) //½ºÇÇµå Áõ°¡
+    public void PlusSpeed(float input) //ï¿½ï¿½ï¿½Çµï¿½ ï¿½ï¿½ï¿½ï¿½
     {
-        Debug.Log($"½ºÇÇµå{input} Áõ°¡");
+        Debug.Log($"ï¿½ï¿½ï¿½Çµï¿½{input} ï¿½ï¿½ï¿½ï¿½");
         Speed += input;
     }
 
-    public void ReverseMove() //Á¶ÀÛ ¹ÝÀü
+    public void ReverseMove() //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
 
         Speed *= -1;
 
     }
-    public void PlusLucidPower(float input) //Æ¯¼ö °ÔÀÌÁö Áõ°¡
+    public void PlusLucidPower(float input) //Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
-        Debug.Log($"·ç½Ãµå ÆÄ¿ö {input}Áõ°¡");
+        Debug.Log($"ï¿½ï¿½Ãµï¿½ ï¿½Ä¿ï¿½ {input}ï¿½ï¿½ï¿½ï¿½");
         lucidPower += input;
 
     }
 
-    public void PlusEXP(int input) //°æÇèÄ¡ Áõ°¡
+    public void PlusEXP(int input) //ï¿½ï¿½ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
     {
 
-        Debug.Log($"°æÇèÄ¡ {input}Áõ°¡");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½Ä¡ {input}ï¿½ï¿½ï¿½ï¿½");
         EXP += input;
     }
-    public void LevelUP() //·¹º§¾÷
+    public void LevelUP() //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         while (EXP >= MaxEXP)
         {
             EXP -= MaxEXP;
             Level++;
-            Debug.Log($"·¹º§¾÷ ÇöÀç ·¹º§:{level}");
+            Debug.Log($"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½:{level}");
 
         }
 
@@ -117,11 +164,11 @@ public class PlayerStatHendler : MonoBehaviour
     }
     IEnumerator RandomSlowBuff(float speed, float duration)
     {
-        Debug.Log("ÀÌµ¿¼Óµµ °¨¼Ò");
+        Debug.Log("ï¿½Ìµï¿½ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½");
         float temp = Speed;
         PlusSpeed(-speed);
         yield return new WaitForSeconds(duration);
-        Debug.Log("ÀÌµ¿¼Óµµ µ¹¾Æ¿È");
+        Debug.Log("ï¿½Ìµï¿½ï¿½Óµï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½");
         Speed = temp;
 
 
@@ -134,13 +181,13 @@ public class PlayerStatHendler : MonoBehaviour
     IEnumerator ReverseMoveBuff(float duration)
     {
 
-        Debug.Log("Á¶ÀÛ ¹ÝÀü");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         float temp = Speed;
 
         ReverseMove();
 
         yield return new WaitForSeconds(duration);
-        Debug.Log("Á¶ÀÛ ¹ÝÀüÇØÁ¦");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         Speed = temp;
 
 
