@@ -5,15 +5,15 @@ using UnityEngine;
 public class Chest : MonoBehaviour
 {
    public Animator animator;
-    public GameObject[] itemPrefabs; //¾ÆÀÌÅÛ ¸ñ·Ï ´ãÀ» ¸®½ºÆ®
+    public GameObject[] itemPrefabs; //ì•„ì´í…œ ëª©ë¡ ë‹´ì„ ë¦¬ìŠ¤íŠ¸
 
-     
-    public float dropForce = 2f; //¾ÆÀÌÅÛ Æ¢¾î¿À¸¦¶§ Èû
+    public AudioClip chestsound;
+    public float dropForce = 2f; //ì•„ì´í…œ íŠ€ì–´ì˜¤ë¥¼ë•Œ í˜
 
     
 
 
-    public void DestroyChest() // »óÀÚ Á¦°Å
+    public void DestroyChest() // ìƒì ì œê±°
     {
         Destroy(gameObject, 1.0f);
 
@@ -23,8 +23,8 @@ public class Chest : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-
-            animator.SetTrigger("Open"); //Æ®¸®°Å ¹ß»ı ½Ã »óÀÚ¿©´Â ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
+            AudioSource.PlayClipAtPoint(chestsound, transform.position);
+            animator.SetTrigger("Open"); //íŠ¸ë¦¬ê±° ë°œìƒ ì‹œ ìƒìì—¬ëŠ” ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
 
 
             //DropItems();
@@ -40,20 +40,20 @@ public class Chest : MonoBehaviour
     void DropItems()
     {
 
-             int itemcount = Random.Range(1,6) ; //µå¶ø ¾ÆÀÌÅÛ °³¼ö
+             int itemcount = Random.Range(1,6) ; //ë“œë ì•„ì´í…œ ê°œìˆ˜
 
-        for (int i = 0; i < itemcount; i++) // µå¶ø ¾ÆÀÌÅÛ ¼ö ¸¸Å­ ¹İº¹
+        for (int i = 0; i < itemcount; i++) // ë“œë ì•„ì´í…œ ìˆ˜ ë§Œí¼ ë°˜ë³µ
         {
-            GameObject item_prefab = itemPrefabs[Random.Range(0, itemPrefabs.Length)]; //¾ÆÀÌÅÛ ¸ñ·ÏÁß¿¡ ÇÏ³ª Á¤ÇÔ
+            GameObject item_prefab = itemPrefabs[Random.Range(0, itemPrefabs.Length)]; //ì•„ì´í…œ ëª©ë¡ì¤‘ì— í•˜ë‚˜ ì •í•¨
 
-            Vector3 spawnPos = transform.position + new Vector3(Random.Range(-0.15f, 0.15f), -0.2f, 0); //¾ÆÀÌÅÛ ³ª¿Ã À§Ä¡ ·£´ıÀ¸·Î ¼³Á¤
+            Vector3 spawnPos = transform.position + new Vector3(Random.Range(-0.15f, 0.15f), -0.2f, 0); //ì•„ì´í…œ ë‚˜ì˜¬ ìœ„ì¹˜ ëœë¤ìœ¼ë¡œ ì„¤ì •
 
-            GameObject item = Instantiate(item_prefab, spawnPos, Quaternion.identity); //¾ÆÀÌÅÛ »ı¼º
+            GameObject item = Instantiate(item_prefab, spawnPos, Quaternion.identity); //ì•„ì´í…œ ìƒì„±
 
             Rigidbody2D rb = item.GetComponent<Rigidbody2D>();
-            if (rb != null) //rigidbody Á¸Àç½Ã
+            if (rb != null) //rigidbody ì¡´ì¬ì‹œ
             {
-                // À§·Î + ¿·À¸·Î ¾à°£ Æ¢´Â ·£´ı Èû
+                // ìœ„ë¡œ + ì˜†ìœ¼ë¡œ ì•½ê°„ íŠ€ëŠ” ëœë¤ í˜
                 Vector2 force = new Vector2(Random.Range(-1f, 1f), 1f) * dropForce;
                 rb.AddForce(force, ForceMode2D.Impulse);
             }
