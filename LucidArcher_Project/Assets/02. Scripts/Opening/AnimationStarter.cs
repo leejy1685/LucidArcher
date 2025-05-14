@@ -5,9 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class AnimationStarter : MonoBehaviour //애니메이션 재생을 위한 스크립트
 {
-    public Animator anim1;
-    public Animator anim2;
-    public Animator anim3;
+
+    public AudioSource intro; // 인트로동안 재생되는 브금
+    public AudioSource main; // 메인화면 브금
+    public Animator anim1; // 눈깜빡 애니메이션
+    public Animator anim2; // 팀로고 애니메이션
+    public Animator anim3; // 메인화면 전환 애니메이션
 
     bool gomain = false; // 키 입력이 true면 키 입력시 다음씬 이동
     void Start()
@@ -17,6 +20,7 @@ public class AnimationStarter : MonoBehaviour //애니메이션 재생을 위한
 
     IEnumerator PlayAnimations()
     {
+        intro.Play();
         anim1.SetTrigger("Play1");
 
         yield return new WaitForSeconds(37f);
@@ -25,6 +29,8 @@ public class AnimationStarter : MonoBehaviour //애니메이션 재생을 위한
 
         yield return new WaitForSeconds(9f);
         anim1.SetTrigger("Play3");
+        intro.Stop();
+        main.Play();
         yield return new WaitForSeconds(1.5f);
         anim3.SetTrigger("Play4");
 
