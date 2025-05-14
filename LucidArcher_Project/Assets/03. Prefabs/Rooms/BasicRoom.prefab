@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 3670128010389271619}
   m_Layer: 9
   m_Name: GateCollider
-  m_TagString: Untagged
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 5601883212883205956}
   m_Layer: 0
   m_Name: TopGate
-  m_TagString: Untagged
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6195,7 +6195,7 @@ GameObject:
   - component: {fileID: 255749910204397515}
   m_Layer: 0
   m_Name: Roof (1)
-  m_TagString: Untagged
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6279,7 +6279,7 @@ GameObject:
   - component: {fileID: 2729877585037628394}
   m_Layer: 9
   m_Name: GateCollider
-  m_TagString: Untagged
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6356,7 +6356,7 @@ GameObject:
   - component: {fileID: 1109911245323695416}
   m_Layer: 0
   m_Name: LeftGate
-  m_TagString: Untagged
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7812,7 +7812,7 @@ GameObject:
   - component: {fileID: 9169194071101335638}
   m_Layer: 0
   m_Name: BottomGate
-  m_TagString: Untagged
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8205,7 +8205,7 @@ GameObject:
   - component: {fileID: 4598165006727840772}
   m_Layer: 0
   m_Name: Roof (3)
-  m_TagString: Untagged
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8457,7 +8457,7 @@ GameObject:
   - component: {fileID: 8847040267192231960}
   m_Layer: 0
   m_Name: RightGate
-  m_TagString: Untagged
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9906,7 +9906,7 @@ GameObject:
   - component: {fileID: 8351136916425027454}
   m_Layer: 9
   m_Name: Collider_Wall
-  m_TagString: Untagged
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11217,7 +11217,7 @@ GameObject:
   - component: {fileID: 8506487311466039918}
   m_Layer: 9
   m_Name: GateCollider
-  m_TagString: Untagged
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11294,7 +11294,7 @@ GameObject:
   - component: {fileID: 1203663227069861715}
   m_Layer: 0
   m_Name: Roof (2)
-  m_TagString: Untagged
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11378,7 +11378,7 @@ GameObject:
   - component: {fileID: 6681660590103448990}
   m_Layer: 9
   m_Name: GateCollider
-  m_TagString: Untagged
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

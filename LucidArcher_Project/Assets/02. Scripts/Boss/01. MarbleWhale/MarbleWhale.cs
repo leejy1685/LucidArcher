@@ -157,5 +157,10 @@ public class MarbleWhale : MonsterBase
                 rb.velocity = Vector2.zero;
             }
         }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage(1);
+        }
     }
+ 
 }

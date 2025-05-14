@@ -69,7 +69,7 @@ public class WaterBombard : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if ((playerMask | 1 << collision.gameObject.layer) == playerMask)
+        if (collision.CompareTag("Player"))
         {
             collision.GetComponent<PlayerController>().TakeDamage(1);
         }

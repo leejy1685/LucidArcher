@@ -22,7 +22,7 @@ public class ShotAtTargetPattern : MonoBehaviour,IEnemyPattern
 
         for (int i = 0; i < projectilePoolSize; i++)
         {
-            GameObject projectileGO = Instantiate(projectilePrefab);
+            GameObject projectileGO = Instantiate(projectilePrefab, Monster.transform.parent);    // 주석 테스트
             MonsterProjectile monsterProjectile = projectileGO.GetComponent<MonsterProjectile>();
             projectileGO.SetActive(false);
             projectilePool.Enqueue(monsterProjectile);
@@ -72,4 +72,13 @@ public class ShotAtTargetPattern : MonoBehaviour,IEnemyPattern
         yield return new WaitForSeconds(castingTime);
         enterStateAction.Invoke();
     }
+
+    //private void OnDestroy()
+    //{
+    //    while(projectilePool.Count < 0)
+    //    {
+    //        MonsterProjectile mp = projectilePool.Dequeue();
+    //        Destroy(mp.gameObject);
+    //    }
+    //}
 }
