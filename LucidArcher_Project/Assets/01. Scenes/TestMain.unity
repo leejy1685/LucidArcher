@@ -7344,7 +7344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   createDustOnWalk: 1
-  dustParticleSystem: {fileID: 0}
+  dustParticleSystem: {fileID: 1839651399}
 --- !u!95 &1719836961
 Animator:
   serializedVersion: 5
