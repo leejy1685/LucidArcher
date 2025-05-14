@@ -1,27 +1,23 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour
 {
     // 외부 오브젝트
     private RoomHandler room;
-    private List<MonsterBase> monsters = new List<MonsterBase>();
 
     // 프리팹
     [SerializeField] private GameObject[] monsterPrefabs;
     [SerializeField] private SpawnAnimation spawnAnimationPrefab;
 
     // 변수
-    private bool isSpawn = false;
     private int monsterCount;
+
+    private int actualSpawnCount = 1; // 테스트용
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z) && isSpawn)
-        {
-            DestroyAllMonster();
-        }
+        DestroyAllMonster();
     }
 
     // 몬스터 스포너 초기화
@@ -33,9 +29,10 @@ public class MonsterSpawner : MonoBehaviour
     // 몬스터 랜덤 소환
     public IEnumerator SpawnAllMonsters()
     {
-        isSpawn = true;
+        monsterCount = Random.Range(4, 9);
+        actualSpawnCount = monsterCount; // 테스트 코드
 
-        for (int i = 0; i < Random.Range(4, 9); i++)
+        for (int i = 0; i < monsterCount; i++)
         {
             StartCoroutine(SpawnMonster());
             yield return new WaitForSeconds(0.1f);
@@ -44,59 +41,39 @@ public class MonsterSpawner : MonoBehaviour
 
     private IEnumerator SpawnMonster()
     {
-        Vector3 spawnPosition = RandomPosition();
+        Vector3 spawnPosition = room.RandomPosition();
 
         SpawnAnimation spawnAnimation = Instantiate(spawnAnimationPrefab, spawnPosition, Quaternion.identity, transform);
         yield return spawnAnimation.DrawSpawnCircle();
 
         GameObject monster = Instantiate(monsterPrefabs[Random.Range(0, monsterPrefabs.Length)], transform);
         monster.GetComponent<MonsterBase>().Init(this, spawnPosition);
-        monsters.Add(monster.GetComponent<MonsterBase>());
 
-        UpdateMonsterCount();
+        actualSpawnCount--; // 테스트 코드
     }
 
-    // 랜덤 포지션 반환
-    private Vector3 RandomPosition()
+    // 몬스터 죽었을 때, 몬스터 수 감소 업데이트
+    public void DecreaseMonsterCount()
     {
-        Vector2 colliderSize = room.GetComponent<BoxCollider2D>().size;
+        monsterCount--;
 
-        float x = Random.Range(-colliderSize.x * 0.5f, colliderSize.x * 0.5f);
-        float y = Random.Range(-colliderSize.y * 0.5f, colliderSize.y * 0.5f);
-
-        return transform.position + new Vector3(x, y, 0);
-    }
-
-    // 몬스터 수 업데이트
-    private void UpdateMonsterCount()
-    {
-        monsterCount = monsters.Count;
-
-        if(monsterCount == 0)
+        if(monsterCount <= 0)
         {
-            isSpawn = false;
             StartCoroutine(room.EndEvent());
         }
-    }
-
-    // 몬스터 죽었을 때, 몬스터 제거
-    public void DestroyMonster(MonsterBase monster)
-    {
-        monsters.Remove(monster);
-        monster.gameObject.SetActive(false);
-        
-        UpdateMonsterCount();
     }
 
     // 테스트용 : 몬스터 삭제
     private void DestroyAllMonster()
     {
-        foreach(MonsterBase monster in monsters)
+        if (actualSpawnCount == 0 && Input.GetKeyDown(KeyCode.Z))
         {
-            monster.gameObject.SetActive(false);
+            MonsterBase[] monsters = GetComponentsInChildren<MonsterBase>();
+            foreach (MonsterBase monster in monsters)
+            {
+                monster.gameObject.SetActive(false);
+                DecreaseMonsterCount();
+            }
         }
-        monsters.Clear();
-
-        UpdateMonsterCount();
     }
 }

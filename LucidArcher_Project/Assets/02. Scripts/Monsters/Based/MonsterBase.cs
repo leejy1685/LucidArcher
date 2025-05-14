@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public abstract class MonsterBase : MonoBehaviour
@@ -62,7 +63,8 @@ public abstract class MonsterBase : MonoBehaviour
 
     void Die()
     {
-        monsterSpawner.DestroyMonster(this);
+        gameObject.SetActive(false);
+        monsterSpawner.DecreaseMonsterCount();
     }
 
     public virtual void OnPlayerDetected(GameObject Player)

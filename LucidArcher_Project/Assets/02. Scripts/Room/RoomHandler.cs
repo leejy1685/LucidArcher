@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class RoomHandler : MonoBehaviour
 {
@@ -91,11 +92,14 @@ public class RoomHandler : MonoBehaviour
             gate.ControllGate(false);
         yield return WAIT_ONE_SEC;
 
-        cameraController.SetOriginTarget();
-        yield return cameraController.ZoomOutTarget(ZOOM_SIZE, ZOOM_DURATION);
+        // 경험치, 아이템 등 획득 : 현재 30%
+        if (Random.Range(1, 101) <= 30)
+        {
+            yield return SpawnChest();
+        }
 
-        // 경험치, 아이템 등 획득
-        if (Random.Range(1, 101) > 50) SpawnChest();
+        cameraController.SetOriginTarget();
+        StartCoroutine(cameraController.ZoomOutTarget(ZOOM_SIZE, ZOOM_DURATION));
     }
 
     // 방 파괴
@@ -116,8 +120,35 @@ public class RoomHandler : MonoBehaviour
     }
 
     // 상자 소환
-    private void SpawnChest()
+    private IEnumerator SpawnChest()
     {
-        GameObject chest = Instantiate(Chest, transform.position, Quaternion.identity, transform);
+        GameObject chest = Instantiate(Chest, transform);
+        Vector3 spawnPosition = RandomPosition();
+        
+        chest.transform.position = spawnPosition + new Vector3(0, 3, 0);
+        chest.GetComponent<Collider2D>().enabled = false;
+
+        cameraController.SetTarget(chest.transform);
+
+        float speed = 0f;
+        while (chest.transform.position != spawnPosition)
+        {
+            speed = speed + 9.8f * Time.deltaTime;
+            chest.transform.position = Vector3.MoveTowards(chest.transform.position, spawnPosition, speed * Time.deltaTime);
+            yield return null;
+        }
+
+        chest.GetComponent<Collider2D>().enabled = true;
+    }
+
+    // 소환가능한 랜덤 위치 반환
+    public Vector3 RandomPosition()
+    {
+        Vector2 colliderSize = GetComponent<BoxCollider2D>().size;
+
+        float x = Random.Range(-colliderSize.x * 0.5f, colliderSize.x * 0.5f);
+        float y = Random.Range(-colliderSize.y * 0.5f, colliderSize.y * 0.5f);
+
+        return transform.position + new Vector3(x, y, 0);
     }
 }
