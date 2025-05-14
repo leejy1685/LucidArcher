@@ -81,12 +81,16 @@ public class GameManager : MonoBehaviour
     //경험치 흡수
     public void AbsorbExp(ExpBall exp)
     {
+        if (Time.time - exp.spawnTime < exp.pickupDelay)  // 스폰되고 부딪힌 시간이 pickupDelay보다 빠르면 안먹어짐
+            return;
+
         //방의 몬스터가 없으면 이동
         if (monsterSpawner.MonsterCount == 0)
         {
             exp.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             exp.GetComponent<Rigidbody2D>().gravityScale = 0;
-            exp.transform.position = Vector3.Lerp(exp.transform.position, player.transform.position, Time.deltaTime*3);
+            exp.transform.position = Vector3.Lerp(exp.transform.position, player.transform.position, Time.deltaTime * 3);
+
         }
 
     }
