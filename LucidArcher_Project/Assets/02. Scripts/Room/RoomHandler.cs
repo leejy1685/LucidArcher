@@ -74,7 +74,7 @@ public class RoomHandler : MonoBehaviour
         yield return cameraController.ZoomOutTarget(ZOOM_SIZE, ZOOM_DURATION);
 
         // 이벤트 실행
-        monsterSpawner.SpawnMosnters();
+        StartCoroutine(monsterSpawner.SpawnAllMonsters());
     }
 
     // 이벤트 종료 후 경험치, 아이템 등 획득 / 보스 방이면 계단도 보이게

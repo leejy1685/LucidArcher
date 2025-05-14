@@ -3201,7 +3201,9 @@ MonoBehaviour:
   startRoom: {fileID: 758765729358020310, guid: 786d63dd9d635e143a050cb745ce95df, type: 3}
   bossRoom: {fileID: 5887362711908471495, guid: df06a8fe395b1014eb9f9616e2404526, type: 3}
   rooms:
+  - {fileID: 758765729358020310, guid: 786d63dd9d635e143a050cb745ce95df, type: 3}
   - {fileID: 4085126541155011880, guid: 4100f5659439dd04ea0b827bd844732a, type: 3}
+  - {fileID: 3347048960876687558, guid: 0260aba84156ecb40889bfa5c6e7a2c1, type: 3}
 --- !u!4 &1763777702
 Transform:
   m_ObjectHideFlags: 0

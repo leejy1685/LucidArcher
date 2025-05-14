@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class MonsterSpawner : MonoBehaviour
 
     // 프리팹
     [SerializeField] private GameObject[] monsterPrefabs;
+    [SerializeField] private SpawnAnimation spawnAnimationPrefab;
 
     // 변수
     private bool isSpawn = false;
@@ -29,17 +31,27 @@ public class MonsterSpawner : MonoBehaviour
     }
 
     // 몬스터 랜덤 소환
-    public void SpawnMosnters()
+    public IEnumerator SpawnAllMonsters()
     {
         isSpawn = true;
 
         for (int i = 0; i < Random.Range(4, 9); i++)
         {
-            GameObject monster = Instantiate(monsterPrefabs[Random.Range(0, monsterPrefabs.Length)], transform);
-            monster.GetComponent<MonsterBase>().Init(this);
-            monster.transform.localPosition = RandomPosition();
-            monsters.Add(monster.GetComponent<MonsterBase>());
+            StartCoroutine(SpawnMonster());
+            yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    private IEnumerator SpawnMonster()
+    {
+        Vector3 spawnPosition = RandomPosition();
+
+        SpawnAnimation spawnAnimation = Instantiate(spawnAnimationPrefab, spawnPosition, Quaternion.identity, transform);
+        yield return spawnAnimation.DrawSpawnCircle();
+
+        GameObject monster = Instantiate(monsterPrefabs[Random.Range(0, monsterPrefabs.Length)], transform);
+        monster.GetComponent<MonsterBase>().Init(this, spawnPosition);
+        monsters.Add(monster.GetComponent<MonsterBase>());
 
         UpdateMonsterCount();
     }
@@ -52,7 +64,7 @@ public class MonsterSpawner : MonoBehaviour
         float x = Random.Range(-colliderSize.x * 0.5f, colliderSize.x * 0.5f);
         float y = Random.Range(-colliderSize.y * 0.5f, colliderSize.y * 0.5f);
 
-        return new Vector3(x, y, 0);
+        return transform.position + new Vector3(x, y, 0);
     }
 
     // 몬스터 수 업데이트

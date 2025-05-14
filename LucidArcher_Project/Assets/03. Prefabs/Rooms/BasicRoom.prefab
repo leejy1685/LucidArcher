@@ -49,6 +49,7 @@ MonoBehaviour:
   - {fileID: 6577821320862494590, guid: acaa2341c87ec3b44bbbb04a8d767f93, type: 3}
   - {fileID: 6577821320862494590, guid: 44b5dde731b966e499a830f4c1d40593, type: 3}
   - {fileID: 8307447088651370156, guid: afe53bb7bc76b02418a3059934d4a9da, type: 3}
+  spawnAnimationPrefab: {fileID: 485405093884706644, guid: 3256f91b21a6b8b4a99b0209ab220767, type: 3}
 --- !u!1 &250272807645688969
 GameObject:
   m_ObjectHideFlags: 0
