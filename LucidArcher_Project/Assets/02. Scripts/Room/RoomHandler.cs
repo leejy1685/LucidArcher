@@ -1,22 +1,23 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class RoomHandler : MonoBehaviour
 {
     // 상수
     private const int X_MAX = 12;
     private const int Y_MAX = 6;
-    private static readonly int IS_GATE_UP = Animator.StringToHash("IsUp");
-    private static readonly WaitForSeconds WAIT_HALF_SEC = new WaitForSeconds(0.5f);
+    private const float ZOOM_SIZE = 3f;
+    private const float ZOOM_DURATION = 0.5f;
     private static readonly WaitForSeconds WAIT_ONE_SEC = new WaitForSeconds(1f);
 
     // 외부 오브젝트
     [Header("GameObjects")]
-    [SerializeField] private GameObject gate;
+    [SerializeField] private GateHandler gate;
     [SerializeField] private GameObject exitDetector;
     [SerializeField] private MonsterSpawner monsterSpawner;
-    [SerializeField] private Animator gateAnimator;
     private GameObject stair;
+    private GameObject player;
 
     // 프리팹
     [Header("Prefabs")]
@@ -34,24 +35,18 @@ public class RoomHandler : MonoBehaviour
         cameraController = Camera.main.gameObject.GetComponent<CameraController>();
     }
 
-    // 방의 위치와 상태 초기화
-    public void InitRoom(RoomState roomState, Vector3 position)
+    // 방의 위치와 상태 등 초기화
+    public void InitRoom(RoomState roomState, Vector3 position, GameObject _player)
     {
         this.roomState = roomState;
         transform.position = position;
-        float maxX = exitDetector.transform.GetChild(0).localPosition.x;
-        float maxY = exitDetector.transform.GetChild(2).localPosition.y;
-        cameraController.UpdateCameraLimit(position, maxX, maxY);
         monsterSpawner.Init(this);
+        player = _player; // 일단 테스트 용
 
-        if (roomState == RoomState.Start)
-        {
-            exitDetector.SetActive(true);
-        }
-        else
-        {
-            exitDetector.SetActive(false);
-        }
+        cameraController.UpdateRoomLimit(position,
+            exitDetector.transform.GetChild(3).localPosition.x, exitDetector.transform.GetChild(0).localPosition.y);
+
+        exitDetector.SetActive(roomState == RoomState.Start);
 
         if(roomState == RoomState.Boss)
         {
@@ -62,75 +57,49 @@ public class RoomHandler : MonoBehaviour
 
             stair.SetActive(true);
         }
-
-        ControllGate(true);
-    }
-
-    // 게이트 오브젝트 활성화/비활성화
-    private void ControllGate(bool isOpen)
-    {
-        gate.SetActive(!isOpen);
-        gateAnimator.SetBool(IS_GATE_UP, !isOpen);
     }
 
     // 방에 진입했을 때 이벤트 실행 (적 소환 등)
-    private void ExcuteEvent()
+    private IEnumerator ExcuteEvent()
     {
         isExcuted = true;
         exitDetector.SetActive(true);
 
-        StartCoroutine(CoroutineExcuteEvent());
-    }
-    IEnumerator CoroutineExcuteEvent()
-    {
-        cameraController.ChangeTarget(gateAnimator.transform.parent);
+        cameraController.SetTarget(gate.NearestGate(player.transform.position));
+        yield return cameraController.ZoomInTarget(ZOOM_SIZE, ZOOM_DURATION);
+
+        gate.ControllGate(true);
         yield return WAIT_ONE_SEC;
 
-        ControllGate(false);
-        yield return WAIT_ONE_SEC;
-
-        cameraController.ChangeTarget();
-        yield return WAIT_HALF_SEC;
+        cameraController.SetOriginTarget();
+        yield return cameraController.ZoomOutTarget(ZOOM_SIZE, ZOOM_DURATION);
 
         // 이벤트 실행
-        monsterSpawner.SpawnMosnters();
+        StartCoroutine(monsterSpawner.SpawnAllMonsters());
     }
-
 
     // 이벤트 종료 후 경험치, 아이템 등 획득 / 보스 방이면 계단도 보이게
-    public void EndEvent()
+    public IEnumerator EndEvent()
     {
-        if (roomState == RoomState.Start) return;
+        Transform target = roomState == RoomState.Boss ? stair.transform : gate.NearestGate(player.transform.position);
 
-        StartCoroutine(CoroutineEndEvent());
-    }
-    IEnumerator CoroutineEndEvent()
-    {
-        if(roomState == RoomState.Boss)
-        {
-            cameraController.ChangeTarget(stair.transform);
-        }
-        else
-        {
-            cameraController.ChangeTarget(gateAnimator.transform.parent);
-        }
-        yield return WAIT_ONE_SEC;
+        cameraController.SetTarget(target);
+        yield return cameraController.ZoomInTarget(ZOOM_SIZE, ZOOM_DURATION);
 
         if (roomState == RoomState.Boss)
-        {
             stair.GetComponent<StairHandler>().MoveFrontTile();
-        }
         else
-        {
-            ControllGate(true);
-        }
+            gate.ControllGate(false);
         yield return WAIT_ONE_SEC;
 
-        cameraController.ChangeTarget();
-        yield return WAIT_HALF_SEC;
+        // 경험치, 아이템 등 획득 : 현재 30%
+        if (Random.Range(1, 101) <= 30)
+        {
+            yield return SpawnChest();
+        }
 
-        // 경험치, 아이템 등 획득
-        SpawnChest();
+        cameraController.SetOriginTarget();
+        StartCoroutine(cameraController.ZoomOutTarget(ZOOM_SIZE, ZOOM_DURATION));
     }
 
     // 방 파괴
@@ -146,13 +115,40 @@ public class RoomHandler : MonoBehaviour
         {
             if(roomState == RoomState.Start) return;
 
-            ExcuteEvent();
+            StartCoroutine(ExcuteEvent());
         }
     }
 
     // 상자 소환
-    private void SpawnChest()
+    private IEnumerator SpawnChest()
     {
-        GameObject chest = Instantiate(Chest, transform.position, Quaternion.identity, transform);
+        GameObject chest = Instantiate(Chest, transform);
+        Vector3 spawnPosition = RandomPosition();
+        
+        chest.transform.position = spawnPosition + new Vector3(0, 3, 0);
+        chest.GetComponent<Collider2D>().enabled = false;
+
+        cameraController.SetTarget(chest.transform);
+
+        float speed = 0f;
+        while (chest.transform.position != spawnPosition)
+        {
+            speed = speed + 9.8f * Time.deltaTime;
+            chest.transform.position = Vector3.MoveTowards(chest.transform.position, spawnPosition, speed * Time.deltaTime);
+            yield return null;
+        }
+
+        chest.GetComponent<Collider2D>().enabled = true;
+    }
+
+    // 소환가능한 랜덤 위치 반환
+    public Vector3 RandomPosition()
+    {
+        Vector2 colliderSize = GetComponent<BoxCollider2D>().size;
+
+        float x = Random.Range(-colliderSize.x * 0.5f, colliderSize.x * 0.5f);
+        float y = Random.Range(-colliderSize.y * 0.5f, colliderSize.y * 0.5f);
+
+        return transform.position + new Vector3(x, y, 0);
     }
 }

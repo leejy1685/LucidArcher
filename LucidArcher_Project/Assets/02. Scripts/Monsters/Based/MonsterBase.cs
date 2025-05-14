@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public abstract class MonsterBase : MonoBehaviour
@@ -42,9 +43,10 @@ public abstract class MonsterBase : MonoBehaviour
     }   
 
 
-    public void Init(MonsterSpawner _monsterSpawner)
+    public void Init(MonsterSpawner _monsterSpawner, Vector3 position)
     {
         monsterSpawner = _monsterSpawner;
+        transform.position = position;
         detectedEnemy = GameManager.Instance.player;
     }
 
@@ -67,8 +69,9 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected virtual void Die()
     {
-        //monsterSpawner.MonsterCount--;
+
         gameObject.SetActive(false);
+        monsterSpawner.DecreaseMonsterCount();
     }
 
     public virtual void OnPlayerDetected(GameObject Player)
@@ -91,7 +94,7 @@ public abstract class MonsterBase : MonoBehaviour
 
         direction = direction* stats.MoveSpeed;
         //�˹� ����
-        direction = knockbackApplier.ApplyKnockback(direction);
+        //direction = knockbackApplier.ApplyKnockback(direction);
 
         rb.velocity = direction;
     }

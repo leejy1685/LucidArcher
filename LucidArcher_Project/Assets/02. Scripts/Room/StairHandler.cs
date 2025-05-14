@@ -19,7 +19,7 @@ public class StairHandler : MonoBehaviour
         if (canGoDown && collision.CompareTag("Player"))
         {
             canGoDown = false;
-            RoomSpawner.Instance.MoveNextFloor(collision.transform.position);
+            StartCoroutine(RoomSpawner.Instance.MoveNextFloor(transform));
         }
     }
 }

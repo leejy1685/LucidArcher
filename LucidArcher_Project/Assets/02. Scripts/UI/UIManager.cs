@@ -12,6 +12,10 @@ public enum UIState
 
 public class UIManager : MonoBehaviour
 {
+    // 상수
+    private static readonly int IS_BLIND = Animator.StringToHash("IsBlind");
+    [SerializeField] private Animator fadeImage;
+
     private GameUI gameUI;
     private GameOverUI gameOverUI;
     private RobbyUI robbyUI;
@@ -63,5 +67,15 @@ public class UIManager : MonoBehaviour
         
     }
 
+    // 페이드 아웃 효과 : 점차 어두워짐
+    public void FadeOut()
+    {
+        fadeImage.SetBool(IS_BLIND, true);
+    }
 
+    // 페이드 인 효과 : 점차 밝아짐
+    public void FadeIn()
+    {
+        fadeImage.SetBool(IS_BLIND, false);
+    }
 }
