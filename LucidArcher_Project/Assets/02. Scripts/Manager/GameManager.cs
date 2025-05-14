@@ -152,4 +152,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // 애니메이션 진행 중 플레이어 움직임 제한
+    public void PauseGame(bool isAnimationPlaying)
+    {
+        isPlaying = !isAnimationPlaying;
+    }
 }

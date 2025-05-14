@@ -93,7 +93,10 @@ public class PlayerController : MonoBehaviour
     {
         //게임 정지 시 조작 금지
         if (!GameManager.Instance.IsPlaying)
+        {
+            Movement(Vector2.zero);
             return;
+        }
 
         // 원형 레이캐스트로 몬스터 탐색
         targets = Physics2D.CircleCastAll(transform.position, radius, Vector2.zero, 0, targetLayer);
@@ -127,15 +130,13 @@ public class PlayerController : MonoBehaviour
     //캐릭터 조작
     void HandleAction()
     {
-
-
         //상하좌우 입력
         float horizontal = KeyManager.getHorizontal();
         float vertical = KeyManager.getVertical();
         moveDirection = new Vector2(horizontal, vertical).normalized;
 
         //주변에 몬스터가 있을 때
-        if(targets?.Length > 0 ) 
+        if (targets?.Length > 0 ) 
             lookDirection = NearestMonster().position - transform.position;
         else
             lookDirection = moveDirection * Stat.Speed;

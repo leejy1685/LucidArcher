@@ -68,6 +68,8 @@ public class RoomHandler : MonoBehaviour
     // 방에 진입했을 때 이벤트 실행 (적 소환 등)
     private IEnumerator ExcuteEvent()
     {
+        GameManager.Instance.PauseGame(true);
+
         isExcuted = true;
         exitDetector.SetActive(true);
 
@@ -87,11 +89,15 @@ public class RoomHandler : MonoBehaviour
 
         // 이벤트 실행
         StartCoroutine(monsterSpawner.SpawnAllMonsters(roomState));
+
+        GameManager.Instance.PauseGame(false);
     }
 
     // 이벤트 종료 후 경험치, 아이템 등 획득 / 보스 방이면 계단도 보이게
     public IEnumerator EndEvent()
     {
+        GameManager.Instance.PauseGame(true);
+
         SoundManager.instance.EndBattle();
 
         Transform target = roomState == RoomState.Boss ? stair.transform : gate.NearestGate(player.transform.position);
@@ -115,7 +121,9 @@ public class RoomHandler : MonoBehaviour
         }
 
         cameraController.SetOriginTarget();
-        StartCoroutine(cameraController.ZoomOutTarget(ZOOM_SIZE, ZOOM_DURATION));
+        yield return cameraController.ZoomOutTarget(ZOOM_SIZE, ZOOM_DURATION);
+
+        GameManager.Instance.PauseGame(false);
     }
 
     // 방 파괴
