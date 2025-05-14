@@ -331,6 +331,20 @@ MonoBehaviour:
   animator: {fileID: 7282359747224320290}
   rb: {fileID: 2293454207743024038}
   detectedEnemy: {fileID: 0}
+  itemPrefabs:
+  - {fileID: 4559769651083176745, guid: 64f0392bf350a9a4f8ffd8e58b19f5a2, type: 3}
+  - {fileID: 4559769651083176745, guid: 64f0392bf350a9a4f8ffd8e58b19f5a2, type: 3}
+  - {fileID: 4559769651083176745, guid: 64f0392bf350a9a4f8ffd8e58b19f5a2, type: 3}
+  - {fileID: 4559769651083176745, guid: 64f0392bf350a9a4f8ffd8e58b19f5a2, type: 3}
+  - {fileID: 4559769651083176745, guid: 64f0392bf350a9a4f8ffd8e58b19f5a2, type: 3}
+  - {fileID: 4559769651083176745, guid: 64f0392bf350a9a4f8ffd8e58b19f5a2, type: 3}
+  - {fileID: 4559769651083176745, guid: 64f0392bf350a9a4f8ffd8e58b19f5a2, type: 3}
+  - {fileID: 4559769651083176745, guid: 64f0392bf350a9a4f8ffd8e58b19f5a2, type: 3}
+  - {fileID: 4559769651083176745, guid: 64f0392bf350a9a4f8ffd8e58b19f5a2, type: 3}
+  - {fileID: 731397867598662296, guid: f08c9ef674917d740ad27ef1dc2edf2f, type: 3}
+  - {fileID: 8242717484124984106, guid: f3063ba538b6e9f47bd5422189b0dc79, type: 3}
+  - {fileID: 8242717484124984106, guid: f3063ba538b6e9f47bd5422189b0dc79, type: 3}
+  dropForce: 2
   wanderComponent: {fileID: 660818633624433324}
   shotComponent: {fileID: 3655425381042361710}
   state: 0
