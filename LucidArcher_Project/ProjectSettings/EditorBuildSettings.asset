@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01. Scenes/TestMain.unity
     guid: 50f38747b90a86b4b87b4f3f53bf7d91
+  - enabled: 1
+    path: Assets/01. Scenes/IntroMenuScene.unity
+    guid: ff86c2d4a347f504799163b38d19a7ec
   m_configObjects: {}

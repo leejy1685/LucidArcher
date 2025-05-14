@@ -23,7 +23,7 @@ public class OpeningText : MonoBehaviour
             yield return new WaitForSeconds(delays[i]);
         }
 
-        subtitleText.text = ""; // 마지막 자막 비우기 (선택)
+        subtitleText.text = ""; // 마지막 자막 비우기
     }
 
     IEnumerator TypeLine(string line)
