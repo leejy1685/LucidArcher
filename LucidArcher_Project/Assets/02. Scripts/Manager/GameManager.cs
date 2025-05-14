@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
     {
 
         //방의 몬스터가 없으면 이동
-        if (monsterSpawner.MonsterCount == 0)
+        if (monsterSpawner.MonsterCount <= 0)
         {
             exp.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             exp.GetComponent<Rigidbody2D>().gravityScale = 0;
