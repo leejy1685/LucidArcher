@@ -28,9 +28,11 @@ public class AnimationStarter : MonoBehaviour //애니메이션 재생을 위한
         anim2.SetTrigger("Play2"); ;
 
         yield return new WaitForSeconds(9f);
+        intro.Stop();
+        main.Play();
+        yield return new WaitForSeconds(0.5f); //  (오디오 전환과 애니메이션 전환처리가 한 프레임내에 이루어지지 않도록 대기)
+
         anim1.SetTrigger("Play3");
-       // intro.Stop();
-       // main.Play();
         yield return new WaitForSeconds(2.0f);
         anim3.SetTrigger("Play4");
 
