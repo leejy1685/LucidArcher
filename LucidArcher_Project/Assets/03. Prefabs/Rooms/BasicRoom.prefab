@@ -168,6 +168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8162754982233527217}
+  - component: {fileID: 5601883212883205956}
   m_Layer: 0
   m_Name: TopGate
   m_TagString: Untagged
@@ -193,6 +194,27 @@ Transform:
   - {fileID: 4914171340416073550}
   m_Father: {fileID: 2498485687056513900}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &5601883212883205956
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039097193900701645}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e29e2631e93220845bcd591d604d163a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1225228427411316049
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,7 +415,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 537333427188608199}
-  - component: {fileID: 4596993211811741997}
   m_Layer: 0
   m_Name: Gate
   m_TagString: Untagged
@@ -420,27 +441,6 @@ Transform:
   - {fileID: 7482573370251369441}
   m_Father: {fileID: 6044070490536239820}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &4596993211811741997
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2347882000168365513}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 9a176ec68f308894b94d80a205ef7c6a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2710002213074036209
 GameObject:
   m_ObjectHideFlags: 0
@@ -5647,10 +5647,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gateAnimator:
-  - {fileID: 6159103303295722838}
-  - {fileID: 4596993211811741997}
-  - {fileID: 5040566439446193237}
-  - {fileID: 6576821524429631178}
+  - {fileID: 5601883212883205956}
+  - {fileID: 9169194071101335638}
+  - {fileID: 1109911245323695416}
+  - {fileID: 8847040267192231960}
   gateCollider:
   - {fileID: 4976579998782892414}
   - {fileID: 8161033921506210133}
@@ -5665,7 +5665,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2846385877747147432}
-  - component: {fileID: 5040566439446193237}
   m_Layer: 0
   m_Name: Gate
   m_TagString: Untagged
@@ -5691,27 +5690,6 @@ Transform:
   - {fileID: 7327236170529633196}
   m_Father: {fileID: 4850139493395932035}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &5040566439446193237
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3381484942276178226}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e29e2631e93220845bcd591d604d163a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3973936963884118606
 GameObject:
   m_ObjectHideFlags: 0
@@ -5784,7 +5762,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 200
   m_Sprite: {fileID: 21300000, guid: eff08fb67f5e4424699e1f65e34d5bff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6103,7 +6081,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 200
   m_Sprite: {fileID: 21300000, guid: 216a2dc9ef961a24298a0166db2dc81b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6309,7 +6287,7 @@ Transform:
   m_GameObject: {fileID: 4976579998782892414}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6369,6 +6347,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4850139493395932035}
+  - component: {fileID: 1109911245323695416}
   m_Layer: 0
   m_Name: LeftGate
   m_TagString: Untagged
@@ -6393,6 +6372,27 @@ Transform:
   - {fileID: 2470630408689522644}
   m_Father: {fileID: 2498485687056513900}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1109911245323695416
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5115201419276561632}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e29e2631e93220845bcd591d604d163a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5382384179726156898
 GameObject:
   m_ObjectHideFlags: 0
@@ -6402,7 +6402,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1593605219577666725}
-  - component: {fileID: 6576821524429631178}
   m_Layer: 0
   m_Name: Gate
   m_TagString: Untagged
@@ -6428,27 +6427,6 @@ Transform:
   - {fileID: 3909035705095485248}
   m_Father: {fileID: 8859471011962575310}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &6576821524429631178
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5382384179726156898}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e29e2631e93220845bcd591d604d163a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5382944387946889851
 GameObject:
   m_ObjectHideFlags: 0
@@ -7517,7 +7495,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 200
   m_Sprite: {fileID: 21300000, guid: f9202786ffc59da448407349c032dabc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7685,7 +7663,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 20
+  m_SortingOrder: 55
   m_Sprite: {fileID: 21300000, guid: e7992cd671b84804d862b282f8f0ed18, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7769,7 +7747,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 50
   m_Sprite: {fileID: 21300000, guid: 216a2dc9ef961a24298a0166db2dc81b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7790,7 +7768,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1587178199159999107}
-  - component: {fileID: 6159103303295722838}
   m_Layer: 0
   m_Name: Gate
   m_TagString: Untagged
@@ -7817,27 +7794,6 @@ Transform:
   - {fileID: 2928730539009730202}
   m_Father: {fileID: 8162754982233527217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &6159103303295722838
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5964593820442844144}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e29e2631e93220845bcd591d604d163a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6173760647165742579
 GameObject:
   m_ObjectHideFlags: 0
@@ -7847,6 +7803,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6044070490536239820}
+  - component: {fileID: 9169194071101335638}
   m_Layer: 0
   m_Name: BottomGate
   m_TagString: Untagged
@@ -7872,6 +7829,27 @@ Transform:
   - {fileID: 4814896801997648937}
   m_Father: {fileID: 2498485687056513900}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &9169194071101335638
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6173760647165742579}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 9a176ec68f308894b94d80a205ef7c6a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6534690680185685390
 GameObject:
   m_ObjectHideFlags: 0
@@ -8197,7 +8175,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 200
   m_Sprite: {fileID: 21300000, guid: f9202786ffc59da448407349c032dabc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -8365,7 +8343,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 20
+  m_SortingOrder: 55
   m_Sprite: {fileID: 21300000, guid: e7992cd671b84804d862b282f8f0ed18, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -8449,7 +8427,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 50
   m_Sprite: {fileID: 21300000, guid: f9202786ffc59da448407349c032dabc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -8470,6 +8448,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8859471011962575310}
+  - component: {fileID: 8847040267192231960}
   m_Layer: 0
   m_Name: RightGate
   m_TagString: Untagged
@@ -8494,6 +8473,27 @@ Transform:
   - {fileID: 354291958816655629}
   m_Father: {fileID: 2498485687056513900}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &8847040267192231960
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7512284973233331091}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e29e2631e93220845bcd591d604d163a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7564958396206460436
 GameObject:
   m_ObjectHideFlags: 0
@@ -9874,7 +9874,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 20
+  m_SortingOrder: 205
   m_Sprite: {fileID: 21300000, guid: e7992cd671b84804d862b282f8f0ed18, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -11601,7 +11601,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 50
   m_Sprite: {fileID: 21300000, guid: eff08fb67f5e4424699e1f65e34d5bff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -11685,7 +11685,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 20
+  m_SortingOrder: 205
   m_Sprite: {fileID: 21300000, guid: e7992cd671b84804d862b282f8f0ed18, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -11868,7 +11868,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 50
   m_Sprite: {fileID: 21300000, guid: f9202786ffc59da448407349c032dabc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

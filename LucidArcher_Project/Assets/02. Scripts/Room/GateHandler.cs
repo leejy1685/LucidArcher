@@ -35,6 +35,6 @@ public class GateHandler : MonoBehaviour
             }
         }
 
-        return gate.parent.transform;
+        return gate;
     }
 }
