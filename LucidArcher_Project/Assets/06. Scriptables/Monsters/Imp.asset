@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterName: Big Zombie
   hp: 200
-  moveSpeed: 1
-  atk: 10
+  moveSpeed: 3
+  atk: 1
   atkDelay: 0
-  def: 15
+  def: 8
   range: 0
-  sightRange: 5
+  sightRange: 0
