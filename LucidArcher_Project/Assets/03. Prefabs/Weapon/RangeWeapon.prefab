@@ -167,8 +167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletNum: 1
-  damage: 100
+  damage: 0
   bulletSpeed: 10
   knockbackDuration: 0.1
   knockbackPower: 1
+  UpgradeDamage_Count: 0
+  UpgradeBulletNum_Count: 0
   range: 10

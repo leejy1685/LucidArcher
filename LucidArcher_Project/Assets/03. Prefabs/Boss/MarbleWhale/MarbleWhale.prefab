@@ -285,6 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c70d4e2dae54f104a8e683bd2a137528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprintTime: 2
 --- !u!114 &7628412820587481632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,7 +316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveObject: {fileID: 6764254870887602104}
-  castingTime: 1
+  castingTime: 3
   attackThickness: 1
 --- !u!114 &6658304184268156025
 MonoBehaviour:

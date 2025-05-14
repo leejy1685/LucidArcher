@@ -38,7 +38,7 @@ public class MarbleWhale : MonsterBase
 
             // 패턴이 요구하는 세부 사항은 일단 이렇게 해둘게요. 
             // 개선 아이디어는 패턴 수만큼 필드 그냥 만들어서(어차피 보스 패턴은 셀 수 있을 만큼)
-            // 인스펙터에서 리스트 아닌 걸로 받고 여기서 개별 초기화 후에 묶는 거
+            // 인스펙터에서 리스트 아닌 걸로 받고 여기서 개별 초기화 후에 리스트로 묶는 거
             if (pattern is AirStrikePattern airStrike)
             {
                 airStrike.SetLocation(actArea);

@@ -6,7 +6,7 @@ public class PoolElement : MonoBehaviour
 {
 
     Queue<PoolElement> home;
-    public void InIt (Queue<PoolElement> _home)
+    public void Init (Queue<PoolElement> _home)
     {
         home = _home;       
     }

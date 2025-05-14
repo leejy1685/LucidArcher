@@ -65,7 +65,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected virtual void Die()
     {
-        monsterSpawner.MonsterCount--;
+        //monsterSpawner.MonsterCount--;
         gameObject.SetActive(false);
     }
 

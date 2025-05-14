@@ -9,5 +9,5 @@ interface IEnemyPattern
     MonsterBase Monster { get; set; }
 
     public void Init(MonsterBase monster);
-    public void Execute(Action enterStateAction);    
+    public void Execute(Action actionAfterExecute);    
 }

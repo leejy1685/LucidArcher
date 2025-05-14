@@ -3,17 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChasePattern : MonoBehaviour
+public class ChasePattern : MonoBehaviour, IEnemyPattern
 {
-    private MonsterBase chaser;
+    public MonsterBase Monster { get; set; }
 
+    public bool isChasing;
+   
     public void Init(MonsterBase monster)
     {
-        chaser = monster;
+        Monster = monster;
+        isChasing = false;
     }
-    internal void Chase(GameObject detectedEnemy)
+
+    private void Update()
     {
-        Vector2 moveDirection = (detectedEnemy.transform.position - transform.position).normalized;
-        chaser.Move(moveDirection);
+        if (isChasing)
+        {
+            Vector2 moveDirection = (Monster.detectedEnemy.transform.position - transform.position).normalized;
+            Monster.Move(moveDirection);
+        }
     }
+    public void Execute(Action enterStateAction = null)
+    {
+        isChasing = true;
+    }
+
+    public void StopChasing()
+    {
+        isChasing = false;
+        Monster.rb.velocity = Vector2.zero;
+    }
+
 }

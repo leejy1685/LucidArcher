@@ -3,86 +3,72 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedNormalMoster : MonsterBase
+public class RangedWanderingMoster : MonsterBase
 {
     public enum State
     {
-        Idle,
-        Chase,
+        Wander,
         Siege
     }
     [Header("Behaviour")]
-    [SerializeField] ChasePattern chaseComponent;
+    [SerializeField] WanderPattern wanderComponent;
     [SerializeField] ShotAtTargetPattern shotComponent;
 
 
     [SerializeField] State state;
     readonly int IsMove = Animator.StringToHash("IsMove");
-    public float motionTime = 0.5f;
+
+    float lastAttackTime;
     private void Awake()
     {
-        chaseComponent.Init(this);
+        wanderComponent.Init(this);
         shotComponent.Init(this);
 
-        state = State.Idle;
+        state = State.Wander;
+        animator.SetBool(IsMove, true);
+        lastAttackTime = float.MaxValue;
     }
     public override void OnPlayerDetected(GameObject Player)
     {
         base.OnPlayerDetected(Player);
-        EnterChaseState();
+        EnterWanderState();
     }
 
     public override void OnPlayerMissed()
     {
         base.OnPlayerMissed();
-        chaseComponent.isChasing = false;
-
-        if (state == State.Chase)
-        {
-            EnterIdleState();
-        }
-
     }
     private void Update()
     {
+        lastAttackTime += Time.deltaTime;
         if (detectedEnemy != null)
         {          
             if (IsEnemyInRange() && shotComponent.CanShot())
             {
-                EnterSiegeState();
+                if(lastAttackTime > stats.AtkDelay) EnterSiegeState();
             }
 
         }
     }
     #region EnterStates
 
-    private void EnterIdleState()
+    private void EnterWanderState()
     {
-        rb.velocity = Vector3.zero;
-        state = State.Idle;
-        animator.SetBool(IsMove, false);
-    }
+        
+        state = State.Wander;
+        animator.SetBool(IsMove, true);
+        wanderComponent.Execute();
+    
 
-    private void EnterChaseState()
-    {
-        if (detectedEnemy != null)
-        {
-            state = State.Chase;
-            animator.SetBool(IsMove, true);
-            chaseComponent.Execute();
-        }
-        else
-        {
-            EnterIdleState();
-        }
     }
     private void EnterSiegeState()
     {
-        chaseComponent.isChasing = false;
+        lastAttackTime = 0;
+        wanderComponent.isWandering = false;
         state = State.Siege;
         rb.velocity = Vector3.zero;
         animator.SetBool(IsMove, false);
-        shotComponent.Execute(EnterChaseState);
+        shotComponent.Execute(EnterWanderState);
     }
     #endregion
 

@@ -23,7 +23,7 @@ public class AirStrikePattern : MonoBehaviour, IEnemyPattern
         {
             GameObject shotElGameObject = Instantiate(bombPrefab);  // 하이어라키 정리가 필요하면 여기서 설정
             PoolElement shotElement = shotElGameObject.GetComponent<PoolElement>();
-            shotElement.InIt(bombPool);
+            shotElement.Init(bombPool);
             shotElGameObject.SetActive(false);
             bombPool.Enqueue(shotElement);
         }

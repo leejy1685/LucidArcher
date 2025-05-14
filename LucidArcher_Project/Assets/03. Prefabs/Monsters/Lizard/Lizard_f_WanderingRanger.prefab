@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db6593af27c35384789d6cb2cdbfa947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detector: {fileID: 5748044765947776185}
+  detector: {fileID: 4374738551512812111}
 --- !u!1 &3473135095307287607
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 3473135095307287607}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.22, z: 0}
+  m_LocalPosition: {x: 0, y: 0.513, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -156,7 +156,7 @@ SpriteRenderer:
   m_SortingLayerID: -417828581
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7417226b2a744a6419ca38db4ad05c35, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7932f2759a2652442a287f6c6e0cf08f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -177,7 +177,7 @@ Animator:
   m_GameObject: {fileID: 3473135095307287607}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: cd578744dc3ec2b4dbc81a756be5ddaa, type: 2}
+  m_Controller: {fileID: 9100000, guid: ad0dcab81a5b01642bc381ed7d7e671b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -212,12 +212,12 @@ GameObject:
   - component: {fileID: 6875509501708510227}
   - component: {fileID: 541902488023345331}
   - component: {fileID: 2293454207743024038}
-  - component: {fileID: 5748044765947776185}
-  - component: {fileID: 1975967280816393189}
+  - component: {fileID: 4374738551512812111}
+  - component: {fileID: 7290043130684524338}
   - component: {fileID: 3655425381042361710}
   - component: {fileID: -6866788060554943843}
   m_Layer: 6
-  m_Name: IceZombie_ChaseRanger
+  m_Name: Lizard_f_WanderingRanger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -283,7 +283,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.61, y: 0.79}
+  m_Size: {x: 0.76, y: 0.79}
   m_EdgeRadius: 0
 --- !u!50 &2293454207743024038
 Rigidbody2D:
@@ -312,7 +312,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5748044765947776185
+--- !u!114 &4374738551512812111
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -321,20 +321,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 8307447088651370156}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52e429c75a6d57d49a31f849be41e4ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 1417bf53a9da4994b9cf706ae3c453a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 1d5dde669c3fe8043b1b287f65207c48, type: 2}
+  stats: {fileID: 11400000, guid: 688d036eef8dc31458ae76871cbebfd1, type: 2}
   currentHP: 0
   sightCollider: {fileID: 6355568672040475312}
   sprite: {fileID: 7505285176865546796}
   animator: {fileID: 7282359747224320290}
   rb: {fileID: 2293454207743024038}
   detectedEnemy: {fileID: 0}
-  chaseComponent: {fileID: 1975967280816393189}
+  wanderComponent: {fileID: 7290043130684524338}
   shotComponent: {fileID: 3655425381042361710}
-  motionTime: 0.5
---- !u!114 &1975967280816393189
+  state: 0
+--- !u!114 &7290043130684524338
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -343,10 +343,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8307447088651370156}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2da39cccfd289e344b2f2f9c6385dd0a, type: 3}
+  m_Script: {fileID: 11500000, guid: acb77fb31e1661c4e8fb892af64e3bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isChasing: 0
+  isWandering: 0
 --- !u!114 &3655425381042361710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,10 +359,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe44d436d65ffd448b418504be5fd23e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 72280032168499960, guid: 19fae19a09ee5404da73d2407fdd1b03, type: 3}
+  projectilePrefab: {fileID: 72280032168499960, guid: dad44c6e55c9b3948a8a870373083c0c, type: 3}
   projectilePoolSize: 10
-  emitterCountPerShot: 1
-  castingTime: 0
+  emitterCountPerShot: 3
+  shotIntervalTime: 0.15
+  castingTime: 0.7
 --- !u!114 &-6866788060554943843
 MonoBehaviour:
   m_ObjectHideFlags: 0
