@@ -29,11 +29,6 @@ public class GameManager : MonoBehaviour
             Instance = this;
     }
 
-    void Start()
-    {   
-        StartGame();
-    }
-
     private void Update()
     {
         ManagerHendler();
@@ -50,7 +45,7 @@ public class GameManager : MonoBehaviour
 
         //플레이 중
         isPlaying = true;
-        Time.timeScale = 1;
+        Time.timeScale = 0;
     }
 
     //게임 사망 UI 띄우기
@@ -100,11 +95,11 @@ public class GameManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            SoundOptionUIKey();
+            RobbyUIKey();
         }
     }
 
-    public void SoundOptionUIKey()
+    public void RobbyUIKey()
     {
         if (Time.timeScale == 0)
         {
@@ -114,7 +109,7 @@ public class GameManager : MonoBehaviour
         else
         {
             Time.timeScale = 0;
-            UIManager.ChangeState(UIState.SoundObtionUI);
+            UIManager.ChangeState(UIState.Robby);
         }
     }
 

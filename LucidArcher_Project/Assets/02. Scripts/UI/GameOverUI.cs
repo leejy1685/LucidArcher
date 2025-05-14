@@ -14,7 +14,7 @@ public class GameOverUI : BaseUI
     {
         base.InIt(uIManager);
         retryButton.onClick.AddListener(OnclickRetryButton);
-        robbyButton.onClick.AddListener(OnClickRobbyButton);
+        robbyButton.onClick.AddListener(OnClickStartButton);
     }
 
     protected override UIState GetUIState()
@@ -28,8 +28,8 @@ public class GameOverUI : BaseUI
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void OnClickRobbyButton()
+    public void OnClickStartButton()
     {
-        uiManager.ChangeState(UIState.Robby);
+        uiManager.ChangeState(UIState.Start);
     }
 }

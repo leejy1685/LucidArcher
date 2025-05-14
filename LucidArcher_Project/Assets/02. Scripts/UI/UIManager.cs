@@ -38,8 +38,8 @@ public class UIManager : MonoBehaviour
         keySettingUI = GetComponentInChildren<KeySettingUI>(true);
         keySettingUI.InIt(this);
 
-
-        ChangeState(UIState.KeySettingUI);
+        
+        ChangeState(UIState.Start);
     }
 
 // 임시 게임 종료 버튼 : Space바

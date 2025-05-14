@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SoundObtionUI : BaseUI
 {
-    [SerializeField]Slider BGM;
+    [SerializeField] Slider BGM;
     [SerializeField] Slider SFX;
     [SerializeField] Button OkButton;
 
@@ -29,6 +29,6 @@ public class SoundObtionUI : BaseUI
         SoundManager.instance.MusicVolume = BGM.value;
         SoundManager.instance.SoundEffectVolume = SFX.value;
 
-        GameManager.Instance.SoundOptionUIKey();
+        uiManager.ChangeState(UIState.Robby);
     }
 }
