@@ -29,9 +29,9 @@ public class AnimationStarter : MonoBehaviour //애니메이션 재생을 위한
 
         yield return new WaitForSeconds(9f);
         anim1.SetTrigger("Play3");
-        intro.Stop();
-        main.Play();
-        yield return new WaitForSeconds(1.5f);
+       // intro.Stop();
+       // main.Play();
+        yield return new WaitForSeconds(2.0f);
         anim3.SetTrigger("Play4");
 
         gomain = true;
@@ -45,6 +45,8 @@ public class AnimationStarter : MonoBehaviour //애니메이션 재생을 위한
             SceneManager.LoadScene("TestMain");
 
         }
+
+
     }
 
 
