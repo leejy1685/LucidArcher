@@ -160,14 +160,7 @@ public class PlayerController : MonoBehaviour
     void Movement(Vector2 direction)
     {
         //이동 방향에 속도 넣기
-        if (isDash)
-        {
-            direction = direction * Stat.Speed * 2;
-        }
-        else
-        {
-            direction = direction * Stat.Speed;
-        }
+        direction = direction * (isDash?Stat.Speed*2:Stat.Speed);
 
         //물리 실행
         rigidbody2D.velocity = direction;

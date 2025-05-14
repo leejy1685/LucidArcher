@@ -12980,6 +12980,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a7a03a9029f5ce04aa590f5777b4eacc, type: 3}
   staminaSlider: {fileID: 336937409}
   Exp: {fileID: 596403905}
+  lucidPowerSlider: {fileID: 623503490}
   playerDamageText: {fileID: 2058575322}
   playerAttackDelayText: {fileID: 2116378247}
   playerSpeedText: {fileID: 741323769}
