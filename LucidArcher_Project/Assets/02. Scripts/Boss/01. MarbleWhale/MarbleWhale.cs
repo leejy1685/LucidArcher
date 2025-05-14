@@ -20,7 +20,7 @@ public class MarbleWhale : MonsterBase
     [SerializeField] Location actArea;
     [SerializeField] List<MonoBehaviour> patternComponents;
     List<IEnemyPattern> patterns;
-    float spriteOffsetX;
+
 
     IEnemyPattern currentPattern;
 
@@ -47,7 +47,7 @@ public class MarbleWhale : MonsterBase
 
         base.Start();
         EnterIdleState();
-        spriteOffsetX = sprite.gameObject.transform.localPosition.x;
+
     }
     // Update is called once per frame
     void Update()
@@ -119,7 +119,7 @@ public class MarbleWhale : MonsterBase
     {
         state = State.Move;
         moveDirection = new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)).normalized;
-        FlipSpriteIfNeed();
+        FlipSprite();
         
         float stateTimeRange = UnityEngine.Random.Range(1.5f, 3f);
         StartCoroutine(EnterRandomPattern(stateTimeRange));
@@ -131,18 +131,15 @@ public class MarbleWhale : MonsterBase
         rb.velocity = Vector2.zero;
         state = State.InPattern;
         moveDirection = GetDirectionTowardEnemy();
-        FlipSpriteIfNeed();
+        FlipSprite();
 
         currentPattern = patterns[UnityEngine.Random.Range(0, patterns.Count)];
         currentPattern.Execute(EnterIdleState);
     }
 
-    private void FlipSpriteIfNeed()
+    private void FlipSprite()
     {
         sprite.flipX = moveDirection.x < 0 ? false : true;
-        Vector3 spritePos = sprite.gameObject.transform.localPosition;
-        spritePos.x = moveDirection.x < 0 ? spriteOffsetX : -spriteOffsetX;
-        sprite.gameObject.transform.localPosition = spritePos;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

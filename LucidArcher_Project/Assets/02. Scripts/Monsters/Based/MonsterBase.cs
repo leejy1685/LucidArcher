@@ -24,8 +24,10 @@ public abstract class MonsterBase : MonoBehaviour
     KnockbackApplier knockbackApplier;
 
     public event Action<float> OnTakeDamage;
+    float spriteOffsetX;
     protected virtual void Start()
     {
+        spriteOffsetX = sprite.transform.localPosition.x;
         currentHP = stats.HP;
 
 
@@ -82,6 +84,11 @@ public abstract class MonsterBase : MonoBehaviour
     public void Move(Vector2 direction)
     {
         sprite.flipX = direction.x < 0;
+
+        Vector3 spritePos = sprite.transform.localPosition;
+        spritePos.x *= direction.x < 0 ? -spriteOffsetX : spriteOffsetX;
+        sprite.transform.localPosition = spritePos;
+
         direction = direction* stats.MoveSpeed;
         //�˹� ����
         direction = knockbackApplier.ApplyKnockback(direction);
