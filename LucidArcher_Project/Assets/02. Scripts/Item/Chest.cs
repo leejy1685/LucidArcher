@@ -23,7 +23,7 @@ public class Chest : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            AudioSource.PlayClipAtPoint(chestsound, transform.position);
+            SoundManager.PlayClip(chestsound);
             animator.SetTrigger("Open"); //트리거 발생 시 상자여는 애니메이션 재생
 
 

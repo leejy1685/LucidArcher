@@ -84,7 +84,7 @@ public class ArrowController : MonoBehaviour
         if ((target | 1 << collision.gameObject.layer) == target)
         {
             //�˹� ����
-            collision.GetComponent<KnockbackApplier>().Knockback(transform, weaponStat.KnockbackPower, weaponStat.KnockbackDuration);
+            collision.GetComponent<KnockbackApplier>()?.Knockback(transform, weaponStat.KnockbackPower, weaponStat.KnockbackDuration);
 
             //����� ����
             if (playerController.PowerUp)

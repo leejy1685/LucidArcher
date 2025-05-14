@@ -23,6 +23,7 @@ public class PlayerStatHendler : MonoBehaviour
 
     [Range(1, 10)][SerializeField] private int maxhp = 6;
     public int MaxHp { get { return maxhp; } set { maxhp = value; } }
+
     //루시드하트 (배리어)
     [Range(0, 3)][SerializeField] private int lucidhp = 0;
     public int LucidHp { get { return lucidhp; } set { lucidhp = value; } }
@@ -57,15 +58,24 @@ public class PlayerStatHendler : MonoBehaviour
     //최대 경험치
     public int MaxEXP => Level * 20;
     //업그레이드 몇 번 했는지 확인하기 위한 변수들
+
     public int UpgradeMaxHp_Count = 0;
-
     public int UpgradeAttackDelay_Count = 0;
+    public int UpgradePlayerSpeed_Count = 0;
 
-    public int UpgradeSpeed_Count = 0;
-    
+    private bool hasAdditonalMaxHp = false;
+    private bool hasAddionalLucidHp = false;
 
+    public bool HasAdditionalMaxHp { get { return hasAdditonalMaxHp; } set { hasAdditonalMaxHp = value; } }
+    public bool HasAddionalLucidHp { get { return hasAddionalLucidHp; } set { hasAddionalLucidHp = value; } }
 
-    
+    void Awake()
+    {
+        UpgradeMaxHp_Count = 0;
+        UpgradeAttackDelay_Count = 0;
+        UpgradePlayerSpeed_Count = 0;
+    }
+        
 
 
     public void UpgradeAttackDelay() // 공속 업그레이드
@@ -86,10 +96,10 @@ public class PlayerStatHendler : MonoBehaviour
     }
     public void UpgradeSpeed() // 이동속도 업그레이드
     {
-        if (UpgradeSpeed_Count < 4)
+        if (UpgradePlayerSpeed_Count < 4)
         {
             basespeed += 0.75f;
-            UpgradeSpeed_Count++;
+            UpgradePlayerSpeed_Count++;
         }
         else
         {
@@ -110,15 +120,14 @@ public class PlayerStatHendler : MonoBehaviour
         Hp += input;
     }
 
-    
-    
 
     public void UpgradeMaxHP() //최대체력 증가 최대 4번까지 증가시 하트 한칸 증가
     {
         if (UpgradeMaxHp_Count < 4)
         {
-            MaxHp += 2;
-            Hp += 2;
+            MaxHp += 1;
+            Hp += 1;
+            HasAdditionalMaxHp = true;
             UpgradeMaxHp_Count++;
 
         }
@@ -130,12 +139,32 @@ public class PlayerStatHendler : MonoBehaviour
 
     }
 
+    public void UpgradePlayerSpeed()
+    {
+        if (UpgradePlayerSpeed_Count < 4)
+        {
+            speed += 0.75f;
+            UpgradePlayerSpeed_Count++;
+
+        }
+        else
+        {
+
+            return;
+        }
+    }
+
+
     public void PlusLucidHP(int input) //배리어 증가
     {
         Debug.Log($"루시드HP{input}증가");
+
         LucidHp += input;
+        HasAddionalLucidHp = true;
 
     }
+
+
 
     public void PlusSpeed(float input) //스피드 증가
     {
@@ -146,9 +175,11 @@ public class PlayerStatHendler : MonoBehaviour
     public void PlusLucidPower(float input) //특수 게이지 증가
     {
         Debug.Log($"루시드 파워 {input}증가");
+
         lucidPower += input;
 
     }
+
 
     public void PlusEXP(int input) //경험치 증가
     {
@@ -162,10 +193,10 @@ public class PlayerStatHendler : MonoBehaviour
         {
             EXP -= MaxEXP;
             Level++;
+
             Debug.Log($"레벨업 현재 레벨:{level}");
-
+           
         }
-
 
     }
     //이동속도 감소 디버프
@@ -177,15 +208,13 @@ public class PlayerStatHendler : MonoBehaviour
     }
     IEnumerator RandomSlowBuff(float speed, float duration)
     {
+
         Debug.Log("이동속도 감소");
         speedModifier -= speed; //속도 감소
 
         yield return new WaitForSeconds(duration);
         speedModifier += speed; //속도 복구
         Debug.Log("이동속도 돌아옴");
-
-
-
 
     }
     public void Reverse(float duration)
@@ -197,14 +226,13 @@ public class PlayerStatHendler : MonoBehaviour
     {
 
         Debug.Log("조작 반전");
-  
 
         isReversed = true;
 
         yield return new WaitForSeconds(duration);
+
         Debug.Log("조작 반전해제");
         isReversed = false;
-    
 
     }
 

@@ -24,7 +24,6 @@ public class GameOverUI : BaseUI
 
     public void OnclickRetryButton()
     {
-        //uIManager.ChangeState(UIState.Game);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

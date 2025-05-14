@@ -21,7 +21,7 @@ public class AirStrikePattern : MonoBehaviour, IEnemyPattern
 
         for (int i = 0; i < bombPoolSize; i++)
         {
-            GameObject shotElGameObject = Instantiate(bombPrefab);  // 하이어라키 정리가 필요하면 여기서 설정
+            GameObject shotElGameObject = Instantiate(bombPrefab, Monster.transform.parent);  // 하이어라키 정리가 필요하면 여기서 설정
             PoolElement shotElement = shotElGameObject.GetComponent<PoolElement>();
             shotElement.Init(bombPool);
             shotElGameObject.SetActive(false);

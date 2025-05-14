@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class WeaponStat : MonoBehaviour
 {
+
     [SerializeField] int bulletNum;    //화살개수
-    public int BulletNum { get { return bulletNum; }set { damage = value; } }
+    public int BulletNum { get { return bulletNum; }set { bulletNum = value; } }
     [SerializeField] float damage;    //데미지
     public float Damage { get { return damage; } set { damage = value; } }
     [SerializeField] float bulletSpeed; //화살 속도
@@ -24,11 +25,20 @@ public class WeaponStat : MonoBehaviour
 
     public int UpgradeDamage_Count = 0;
     public int UpgradeBulletNum_Count = 0;
+
+
+    public void ResetState()
+    {
+        BulletNum = 1;
+        Damage = 100;
+        UpgradeDamage_Count = 0;
+        UpgradeBulletNum_Count = 0;
+    }
+
+
     public void PlusDamage(float input) //데미지 증가
     {
-
         Damage += input;
-
     }
 
 
@@ -58,7 +68,6 @@ public class WeaponStat : MonoBehaviour
         }
         else
         {
-
             return;
         }
 

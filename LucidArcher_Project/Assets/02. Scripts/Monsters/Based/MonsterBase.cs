@@ -57,7 +57,7 @@ public abstract class MonsterBase : MonoBehaviour
     }   
 
 
-    public void Init(MonsterSpawner _monsterSpawner, Vector3 position)
+    public virtual void Init(MonsterSpawner _monsterSpawner, Vector3 position)
     {
         monsterSpawner = _monsterSpawner;
 

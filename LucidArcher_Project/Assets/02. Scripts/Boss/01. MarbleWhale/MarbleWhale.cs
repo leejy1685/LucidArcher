@@ -32,22 +32,8 @@ public class MarbleWhale : MonsterBase
 
     protected override void Start()
     {
-        foreach (IEnemyPattern pattern in patterns)
-        {
-            pattern.Init(this);
-
-            // ÆĞÅÏÀÌ ¿ä±¸ÇÏ´Â ¼¼ºÎ »çÇ×Àº ÀÏ´Ü ÀÌ·¸°Ô ÇØµÑ°Ô¿ä. 
-            // °³¼± ¾ÆÀÌµğ¾î´Â ÆĞÅÏ ¼ö¸¸Å­ ÇÊµå ±×³É ¸¸µé¾î¼­(¾îÂ÷ÇÇ º¸½º ÆĞÅÏÀº ¼¿ ¼ö ÀÖÀ» ¸¸Å­)
-            // ÀÎ½ºÆåÅÍ¿¡¼­ ¸®½ºÆ® ¾Æ´Ñ °É·Î ¹Ş°í ¿©±â¼­ °³º° ÃÊ±âÈ­ ÈÄ¿¡ ¸®½ºÆ®·Î ¹­´Â °Å
-            if (pattern is AirStrikePattern airStrike)
-            {
-                airStrike.SetLocation(actArea);
-            }
-        }
-
         base.Start();
         EnterIdleState();
-
     }
     // Update is called once per frame
     void Update()
@@ -63,6 +49,26 @@ public class MarbleWhale : MonsterBase
             //case State.InPattern:
             //    HandlePatternState();
             //    break;
+        }
+    }
+
+    public override void Init(MonsterSpawner _monsterSpawner, Vector3 position)
+    {
+        base.Init(_monsterSpawner, position);
+        detectedEnemy = GameManager.Instance.player.gameObject;
+        actArea = transform.parent.GetComponent<Location>();
+
+        foreach (IEnemyPattern pattern in patterns)
+        {
+            pattern.Init(this);
+
+            // íŒ¨í„´ì´ ìš”êµ¬í•˜ëŠ” ì„¸ë¶€ ì‚¬í•­ì€ ì¼ë‹¨ ì´ë ‡ê²Œ í•´ë‘˜ê²Œìš”. 
+            // ê°œì„  ì•„ì´ë””ì–´ëŠ” íŒ¨í„´ ìˆ˜ë§Œí¼ í•„ë“œ ê·¸ëƒ¥ ë§Œë“¤ì–´ì„œ(ì–´ì°¨í”¼ ë³´ìŠ¤ íŒ¨í„´ì€ ì…€ ìˆ˜ ìˆì„ ë§Œí¼)
+            // ì¸ìŠ¤í™í„°ì—ì„œ ë¦¬ìŠ¤íŠ¸ ì•„ë‹Œ ê±¸ë¡œ ë°›ê³  ì—¬ê¸°ì„œ ê°œë³„ ì´ˆê¸°í™” í›„ì— ë¦¬ìŠ¤íŠ¸ë¡œ ë¬¶ëŠ” ê±°
+            if (pattern is AirStrikePattern airStrike)
+            {
+                airStrike.SetLocation(actArea);
+            }
         }
     }
 
@@ -151,5 +157,10 @@ public class MarbleWhale : MonsterBase
                 rb.velocity = Vector2.zero;
             }
         }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage(1);
+        }
     }
+ 
 }

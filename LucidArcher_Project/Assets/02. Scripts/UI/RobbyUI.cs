@@ -8,7 +8,7 @@ public class RobbyUI : BaseUI
     [SerializeField] private Button gameStartButton;
     [SerializeField] private Button startUIButton;
 
-    //¼³Á¤ UI µé
+    //ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½
     [SerializeField] private Button KeySettingUIButton;
     [SerializeField] private Button SoundSettingUIButton;
 
