@@ -4,21 +4,30 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum HeartType
+{
+    Empty,
+    Half,
+    Full,
+    Shield
+}
+
+
 public class GameUI : BaseUI
 {
     [SerializeField] private PlayerStatHendler playerStatHendler;
-    // [SerializeField] private WeaponStat weaponStat;
     [SerializeField] private Transform hpTransform;
     [SerializeField] private List<GameObject> heartPrefabs;
-    [SerializeField] private List<GameObject> createdHeart = new List<GameObject>();
+    [SerializeField] private List<GameObject> createdHearts = new List<GameObject>();
+    [SerializeField] private List<Sprite> heartSprites;
     [SerializeField] private Slider staminaSlider;
     [SerializeField] private Slider Exp;
-    // [SerializeField] private TextMeshProUGUI playerDamageText;
+    [SerializeField] private TextMeshProUGUI playerDamageText;
     [SerializeField] private TextMeshProUGUI playerAttackDelayText;
     [SerializeField] private TextMeshProUGUI playerSpeedText;
 
-    [SerializeField] private bool isPlayerHit;
-    [SerializeField] private bool isHeal;
+    private WeaponStat weaponStat;
+
     public TextMeshProUGUI stage;
 
 
@@ -30,13 +39,22 @@ public class GameUI : BaseUI
 
     private void Start()
     {
-        UpdateExpSlider(0);
-        AddHeartPrefabs();
+        weaponStat = playerStatHendler.GetComponentInChildren<WeaponStat>(true);
     }
 
+    private void OnEnable()
+    {
+        InitHeartPrefabs();
+    }
     void FixedUpdate()
     {
-        UpdatePlayerHpHeart();
+        ControlHeart();
+        UpdatePlayerInfo();
+    }
+
+    public void UpdatePlayerInfo()
+    {
+        UpdateExpSlider((float)playerStatHendler.EXP / (float)playerStatHendler.MaxEXP);
         UpdateStaminaSlider();
         UpdatePlayerStatus();
     }
@@ -46,116 +64,180 @@ public class GameUI : BaseUI
         Exp.value = percentage;
     }
 
-    public void UpdatePlayerHpHeart() //체력 변화에 따른 하트를 표시해주는 메소드
-    {
-        PlayerGetDamage();
-        PlayerGetHeal();
-    }
 
-    public void AddHeartPrefabs()
+    public void InitHeartPrefabs()
     {
-        int lastHeart = (playerStatHendler.Hp / 2) + (playerStatHendler.Hp % 2); // 몇개의 하트가 있는지 (맨 끝 하트)
+        // 기존 하트 오브젝트 모두 파괴
+        foreach (var heart in createdHearts)
+        {
+            Destroy(heart);
+        }
+
+        createdHearts.Clear(); // 리스트 초기화
+
+
+        int maxHp = playerStatHendler.MaxHp;
+        int shieldHp = playerStatHendler.LucidHp;
+
+        int heartCount = (maxHp / 2) + (maxHp % 2) + shieldHp; // 몇개의 하트가 있는지 (맨 끝 하트)
 
         GameObject selectedHeart = heartPrefabs[0];
 
-        for (int i = 0; i < lastHeart; i++) //체력 프리펩을 가져와 표시해주는 반복문
+        for (int i = 0; i < heartCount; i++) //하트 프리펩을 가져와 표시해주는 반복문
         {
             GameObject heart = Instantiate(selectedHeart, hpTransform); // List createdHeart에 변수를 저장하기 위한 임시 변수 생성
-            heart.transform.localPosition = new Vector3((i) * 75, 0, 0);
+            heart.transform.localPosition = new Vector3((i) * 75 - 300, 0, 0);
 
-            if (playerStatHendler.Hp % 2 == 1 && i == lastHeart - 1)
-            {
-                Transform full = heart.transform.GetChild(0);
-                Transform half = heart.transform.GetChild(1);
-
-                full.gameObject.SetActive(false);
-                half.gameObject.SetActive(true);
-            }
-
-            createdHeart.Add(heart);
-
+            createdHearts.Add(heart);
         }
     }
 
-    private void PlayerGetDamage()
+    public void ControlHeart() // 추가되는 하트를 통제하는 메서드
     {
-        if (!isPlayerHit || playerStatHendler.Hp <= 0) return;
-
-        int targetHeart = (playerStatHendler.Hp % 2 == 1) || (playerStatHendler.Hp == 10) ? // 이 부분은 체력이 10이라 고정해두고 짠 코드, 나중에 캐릭터 최대 체력으로 수정
-                          (playerStatHendler.Hp / 2) + (playerStatHendler.Hp % 2) - 1 : (playerStatHendler.Hp / 2) + (playerStatHendler.Hp % 2); // 변화를 줄 하트 위치
-
-        Transform full = createdHeart[targetHeart].transform.GetChild(0);
-        Transform half = createdHeart[targetHeart].transform.GetChild(1);
-        Transform empty = createdHeart[targetHeart].transform.GetChild(2);
-
-        if (playerStatHendler.Hp % 2 == 1) // 플레이어가 데미지를 입었는데 체력이 홀수라면 반칸짜리 하트 표시
+        if (playerStatHendler.MaxHp > 6 && playerStatHendler.MaxHp % 2 == 1 && playerStatHendler.HasAdditionalMaxHp)
         {
-            if (playerStatHendler.Hp <= 7)
-            {
-                Transform nextHeartFull = createdHeart[targetHeart + 1].transform.GetChild(0);
-                Transform nextHeartHalf = createdHeart[targetHeart + 1].transform.GetChild(1);
-                Transform nextHeartEmpty = createdHeart[targetHeart + 1].transform.GetChild(2);
-
-                nextHeartEmpty.gameObject.SetActive(true);
-                nextHeartFull.gameObject.SetActive(false);
-                nextHeartHalf.gameObject.SetActive(false);
-            }
-
-            half.gameObject.SetActive(true);
-            full.gameObject.SetActive(false);
-            empty.gameObject.SetActive(false);
+            AdditionalRedHeartPrefabs();
+            playerStatHendler.HasAdditionalMaxHp = false;
         }
 
-        else if (playerStatHendler.Hp == 10)
+        if (playerStatHendler.LucidHp > 0 && playerStatHendler.LucidHp <= 3 && playerStatHendler.HasAddionalLucidHp)
         {
-            half.gameObject.SetActive(false);
-            full.gameObject.SetActive(true);
-            empty.gameObject.SetActive(false);
+            AdditionalShieldHeartPrefabs();
+            playerStatHendler.HasAddionalLucidHp = false;
         }
-
-        else // 플레이어가 데미지를 입었는데 체력이 짝수라면 빈 하트 표시 (일단 음수의 경우는 생각 안함)
-        {
-            half.gameObject.SetActive(false);
-            empty.gameObject.SetActive(true);
-            full.gameObject.SetActive(false);
-        }
-
+        DestroyShieldHeart();
+        Relocation();
+        HeartChargeDegree();
     }
 
-    private void PlayerGetHeal()
+    public void AdditionalRedHeartPrefabs() // 추가 체력에 따른 붉은 하트 프리펩 생성
     {
-        if (!isHeal || playerStatHendler.Hp <= 0) return;
+        int maxHp = playerStatHendler.MaxHp;
 
-        int targetHeart = (playerStatHendler.Hp / 2) + (playerStatHendler.Hp % 2) - 1; // 변화를 줄 하트 위치
+        int addHeartPos = maxHp / 2;
 
-        Transform full = createdHeart[targetHeart].transform.GetChild(0);
-        Transform half = createdHeart[targetHeart].transform.GetChild(1);
-        Transform empty = createdHeart[targetHeart].transform.GetChild(2);
+        GameObject selectedHeart = heartPrefabs[0];
+        GameObject heart = Instantiate(selectedHeart, hpTransform);
+        heart.transform.localPosition = new Vector3((addHeartPos) * 75 - 300, 0, 0);
 
-        if (playerStatHendler.Hp % 2 == 1)
-        {
-            if (playerStatHendler.Hp >= 3)
-            {
-                Transform lastHeartFull = createdHeart[targetHeart - 1].transform.GetChild(0);
-                Transform lastHeartHalf = createdHeart[targetHeart - 1].transform.GetChild(1);
-                Transform lastHeartEmpty = createdHeart[targetHeart - 1].transform.GetChild(2);
+        createdHearts.Add(heart);
 
-                lastHeartFull.gameObject.SetActive(true);
-                lastHeartHalf.gameObject.SetActive(false);
-                lastHeartEmpty.gameObject.SetActive(false);
-            }
-            full.gameObject.SetActive(false);
-            empty.gameObject.SetActive(false);
-            half.gameObject.SetActive(true);
-        }
-        else
-        {
-            full.gameObject.SetActive(true);
-            empty.gameObject.SetActive(false);
-            half.gameObject.SetActive(false);
-        }
-
+        Image heartSR = GetHeartImageComponent(addHeartPos);
+        SetHeartSprite(heartSR, HeartType.Empty);
     }
+
+        public void AdditionalShieldHeartPrefabs() // 추가 체력에 따른 쉴드 하트 프리펩 생성
+    {
+        int maxHp = playerStatHendler.MaxHp;
+        int shieldHp = playerStatHendler.LucidHp;
+
+        int addHeartPos = maxHp / 2 + shieldHp - 1;
+
+        GameObject selectedHeart = heartPrefabs[0];
+        GameObject heart = Instantiate(selectedHeart, hpTransform);
+        heart.transform.localPosition = new Vector3((addHeartPos) * 75 - 300, 0, 0);
+
+        createdHearts.Add(heart);
+
+        Image heartSR = GetHeartImageComponent(addHeartPos);
+        SetHeartSprite(heartSR, HeartType.Empty);
+    }
+
+    public void DestroyShieldHeart()
+    {
+        int maxHp = playerStatHendler.MaxHp;
+        int shieldHeartCount = createdHearts.Count - (maxHp / 2 + maxHp % 2);
+
+        if (playerStatHendler.LucidHp < shieldHeartCount)
+        {
+            GameObject lastHeart = createdHearts[createdHearts.Count - 1];
+            createdHearts.RemoveAt(createdHearts.Count - 1);
+            Destroy(lastHeart);
+        }
+    }
+
+    private void HeartChargeDegree() // 하트 채워짐 정도
+    {
+        int hp = playerStatHendler.Hp;
+
+        int fullHeartCount = hp / 2;
+        bool hasHalfHeart = hp % 2 == 1;
+
+        for (int i = 0; i < createdHearts.Count; i++)
+        {
+            Image heartSR = GetHeartImageComponent(i);
+
+            if (i < fullHeartCount)
+            {
+                SetHeartSprite(heartSR, HeartType.Full);
+            }
+            else if (i == fullHeartCount && hasHalfHeart)
+            {
+                SetHeartSprite(heartSR, HeartType.Half);
+            }
+            else
+            {
+                SetHeartSprite(heartSR, HeartType.Empty);
+            }
+        }
+
+        ShowShieldHeart();
+    }
+
+    public void ShowShieldHeart() // 실드 하트 보여주는 메서드
+    {
+        int redHeartCount = playerStatHendler.MaxHp / 2 + playerStatHendler.MaxHp % 2 - 1;
+        int shieldHeartCount = playerStatHendler.LucidHp;
+
+        for (int i = redHeartCount + 1; i < createdHearts.Count; i++)
+        {
+            Image heartSR = GetHeartImageComponent(i);
+            SetHeartSprite(heartSR, HeartType.Shield);
+        }
+    }
+
+    private void SetHeartSprite(Image img, HeartType type) // 하트 이미지 준비
+    {
+        switch (type)
+        {
+            case HeartType.Full:
+                img.sprite = heartSprites[2];
+                break;
+            case HeartType.Half:
+                img.sprite = heartSprites[1];
+                break;
+            case HeartType.Empty:
+                img.sprite = heartSprites[0];
+                break;
+            case HeartType.Shield:
+                img.sprite = heartSprites[3];
+                break;
+        }
+    }
+
+
+    private Image GetHeartImageComponent(int index) // 생성된 하트의 SpriteRenderer을 가져오는 메서드
+    {
+        Image img = createdHearts[index].GetComponent<Image>();
+
+        if (img == null)
+        {
+            img = createdHearts[index].GetComponentInChildren<Image>();
+        }
+
+        return img;
+    }
+
+    public void Relocation() // 쉴드 하트가 붉은 하트 뒤로 가도록 재정렬해주는 메서드
+    {
+        for (int i = 0; i < createdHearts.Count; i++)
+        {
+            createdHearts[i].transform.localPosition = new Vector3((i)*75 - 300, 0, 0);
+        }
+    }
+
+
+
 
     public void UpdateStaminaSlider()
     {
@@ -169,7 +251,7 @@ public class GameUI : BaseUI
 
     public void UpdatePlayerStatus()
     {
-        // playerDamageText.text = weaponStat.Damage.ToString();
+        playerDamageText.text = weaponStat.Damage.ToString();
         playerAttackDelayText.text = playerStatHendler.AttackDelay.ToString();
         playerSpeedText.text = playerStatHendler.Speed.ToString();
     }

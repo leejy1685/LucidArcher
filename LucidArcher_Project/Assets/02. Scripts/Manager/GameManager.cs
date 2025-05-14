@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     //UI 매니저
     [SerializeField] UIManager UIManager;
 
+    public LevelUpUI levelUpUI;
+    public WeaponStat weaponStat;
+
     //플레이어
     public PlayerController player;
     
@@ -23,15 +26,60 @@ public class GameManager : MonoBehaviour
     private bool isPlaying;
     public bool IsPlaying {  get { return isPlaying; } }
 
+
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
     }
 
+    private void Start()
+    {
+        weaponStat = player.GetComponentInChildren<WeaponStat>(true);
+    }
+
     private void Update()
     {
         ManagerHendler();
+    }
+
+    void FixedUpdate()
+    {
+        if (player.Stat.MaxEXP <= player.Stat.EXP)
+        {
+            UIManager.PlayerLevelUp();
+        }
+        player.Stat.LevelUP();
+    }
+
+    public void AttackDamageUp()
+    {
+        weaponStat.UpgradeDamage();
+        UIManager.ChangeState(UIState.Game);
+    }
+
+    public void AttackDelayUp()
+    {
+        player.Stat.UpgradeAttackDelay();
+        UIManager.ChangeState(UIState.Game);
+    }
+
+    public void MaxHpUp()
+    {
+        player.Stat.UpgradeMaxHP();
+        UIManager.ChangeState(UIState.Game);
+    }
+
+    public void PlayerSpeedUp()
+    {
+        player.Stat.UpgradePlayerSpeed();
+        UIManager.ChangeState(UIState.Game);
+    }
+
+    public void BulletNumUp()
+    {
+        weaponStat.UpgradeBulletNum();
+        UIManager.ChangeState(UIState.Game);
     }
 
     //게임 시작 및 데이터 초기화

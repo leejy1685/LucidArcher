@@ -72,6 +72,7 @@ public class PlayerController : MonoBehaviour
         if (weaponPrefap != null)
         {
             weaponController = Instantiate(weaponPrefap, weaponPivot);
+            weaponController.Stat.ResetState();
         }
 
         animator = characterRenderer.GetComponent<Animator>();
