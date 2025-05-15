@@ -13,9 +13,10 @@ enum KeyInput
     Dash,
     Count
 }
-public class KeyManager
+public class KeyManager : MonoBehaviour
 {
-    //ÃÊ±â Å° ¼³Á¤
+
+    //ì´ˆê¸° í‚¤ ì„¤ì •
     public static KeyCode[] keycode =
     {
         KeyCode.W,
@@ -25,7 +26,7 @@ public class KeyManager
         KeyCode.J
     };
 
-    //ÁÂ¿ì °ª ¸®ÅÏ
+    //ì¢Œìš° ê°’ ë¦¬í„´
     public static float getHorizontal()
     {
         float result = 0;
@@ -37,7 +38,7 @@ public class KeyManager
         return result;
     }
 
-    //À§¾Æ·¡ °ª ¸®ÅÏ
+    //ìœ„ì•„ëž˜ ê°’ ë¦¬í„´
     public static float getVertical()
     {
         float result = 0;

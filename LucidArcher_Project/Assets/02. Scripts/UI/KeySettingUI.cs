@@ -9,19 +9,19 @@ using UnityEngine.UI;
 
 public class KeySettingUI : BaseUI
 {
-    //º¯°æ °¡´É Å°
+    //ë³€ê²½ ê°€ëŠ¥ í‚¤
     [SerializeField] Button[] KeyButtons;
 
-    int index;   //¹Ù²Ü Å°ÀÇ ÀÎµ¦½º
+    int index;   //ë°”ê¿€ í‚¤ì˜ ì¸ë±ìŠ¤
 
-    //È®ÀÎ ¹öÆ°
+    //í™•ì¸ ë²„íŠ¼
     [SerializeField] Button OkButton;
 
     public override void InIt(UIManager uIManager)
     {
         base.InIt(uIManager);
 
-        //ÃÊ±â Å°°ª °¡Á®¿À±â
+        //ì´ˆê¸° í‚¤ê°’ ê°€ì ¸ì˜¤ê¸°
         for (int i = 0; i < (int)KeyInput.Count; i++)
         {
             KeyButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = KeyManager.keycode[i].ToString();
@@ -30,7 +30,7 @@ public class KeySettingUI : BaseUI
 
         index = 0;
 
-        //¹öÆ°¿¡ ±â´É ³Ö±â
+        //ë²„íŠ¼ì— ê¸°ëŠ¥ ë„£ê¸°
         OkButton.onClick.AddListener(OnclickOkButton);
     }
 
@@ -39,12 +39,12 @@ public class KeySettingUI : BaseUI
         return UIState.KeySettingUI;
     }
 
-    //ÀÎµ¦½º º¯°æ
+    //ì¸ë±ìŠ¤ ë³€ê²½
     void ChangeIndex()
     {
         for (int i = 0; KeyButtons.Length > i; i++)
         {   
-            //ÇöÀç Å¬¸¯ÇÑ ¹öÆ°ÀÇ ÀÎµ¦½º¸¦ Á¶È¸
+            //í˜„ì¬ í´ë¦­í•œ ë²„íŠ¼ì˜ ì¸ë±ìŠ¤ë¥¼ ì¡°íšŒ
             if(EventSystem.current.currentSelectedGameObject.Equals(KeyButtons[i].gameObject))
             {
                 index = i;
@@ -57,7 +57,7 @@ public class KeySettingUI : BaseUI
 
     private void OnGUI()
     {
-        //½ÇÁ¦ Å°¸¦ º¯°æÇØÁÖ´Â ¿ªÇÒ
+        //ì‹¤ì œ í‚¤ë¥¼ ë³€ê²½í•´ì£¼ëŠ” ì—­í• 
         Event keyEvent = Event.current;
         if (keyEvent.isKey)
         {
