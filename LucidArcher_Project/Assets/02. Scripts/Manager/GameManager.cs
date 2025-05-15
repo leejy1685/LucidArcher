@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
 
         //플레이 중
         isPlaying = true;
-        Time.timeScale = 0;
+        Time.timeScale = 1;
     }
 
     //게임 사망 UI 띄우기

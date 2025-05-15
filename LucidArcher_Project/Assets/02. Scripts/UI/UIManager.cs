@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
         keySettingUI = GetComponentInChildren<KeySettingUI>(true);
         keySettingUI.InIt(this);
 
-        ChangeState(UIState.Start);
+        ChangeState(UIState.Game);
     }
 
     public void SetPlayGame()
@@ -61,6 +61,7 @@ public class UIManager : MonoBehaviour
 
     public void PlayerLevelUp()
     {
+        Time.timeScale = 0f;
         ChangeState(UIState.LevelUp);
     }
 

@@ -40,6 +40,7 @@ public class GameUI : BaseUI
 
     private void Start()
     {
+        GameManager.Instance.StartGame();
         weaponStat = playerStatHendler.GetComponentInChildren<WeaponStat>(true);
     }
 
