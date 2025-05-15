@@ -34,8 +34,8 @@ public class PlayerController : MonoBehaviour
     private float attackTime;
 
     //대쉬기능 (일시 무적 및 속도 증가)
-    private float dashTime = 0.5f;
-    private float inDashTime;
+    private Coroutine DashCoroutine;
+    [SerializeField] private float dashTime = 0.5f;
     private bool isDash;
 
     //애니메이션
@@ -145,15 +145,7 @@ public class PlayerController : MonoBehaviour
         if (!isDash  && Mathf.Abs(moveDirection.magnitude) > 0.5f && Stat.Stamina > 1
             && Input.GetKeyDown(KeyManager.keycode[(int)KeyInput.Dash]))
         {
-            //스태미나 소모
-            Stat.Stamina--;
-
-            //일시 무적
-            isDash = true;
-            inDashTime = 0;
-
-            //소리 추가
-            SoundManager.PlayClip(dashClip);
+            DashCoroutine = StartCoroutine(Dash());
         }
     }
 
@@ -246,17 +238,35 @@ public class PlayerController : MonoBehaviour
     }
 
     //대쉬 기능, 유령화 기능
-    void Dash()
+    IEnumerator Dash()
     {
-        //스태미나 회복
-        Stat.Stamina += Time.deltaTime / 3;
+        //스태미나 소모
+        Stat.Stamina--;
+
+        //일시 무적
+        isDash = true;
 
         //충돌무시
         int targetLayerIndex = (int)Mathf.Log(targetLayer.value, 2);
         Physics2D.IgnoreLayerCollision(this.gameObject.layer, targetLayerIndex, isDash);
 
-        //애니메이션
+        //애니메이션 시작
         animator.SetBool(DASH, isDash);
+
+        //소리 추가
+        SoundManager.PlayClip(dashClip);
+
+        yield return new WaitForSeconds(dashTime);
+
+        //일시 무적
+        isDash = false;
+
+        //충돌 복구
+        Physics2D.IgnoreLayerCollision(this.gameObject.layer, targetLayerIndex, isDash);
+
+        //애니메이션 종료
+        animator.SetBool(DASH, isDash);
+
     }
 
     public void TakeDamage(int damage)
@@ -291,20 +301,16 @@ public class PlayerController : MonoBehaviour
 
     void CheckExtraTime()
     {
+        //스태미나 회복
+        Stat.Stamina += Time.deltaTime / 3;
+
         //무적 시간 체크
-        inDashTime += Time.deltaTime;
         onDamageTime += Time.deltaTime;
 
         //파워업 시간 체크
         if (powerUp)
         {
             Stat.LucidPower -= Time.deltaTime * 10;
-        }
-
-        //무적 종료
-        if (inDashTime > dashTime)
-        {
-            isDash = false;
         }
 
         if(onDamageTime > damageTime)
