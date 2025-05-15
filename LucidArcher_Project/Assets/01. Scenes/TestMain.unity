@@ -14282,6 +14282,7 @@ MonoBehaviour:
   RoomSpawner: {fileID: 460793711}
   monsterSpawner: {fileID: 0}
   UIManager: {fileID: 427226615}
+  cameraController: {fileID: 1663731783}
   levelUpUI: {fileID: 1919151916}
   weaponStat: {fileID: 0}
   player: {fileID: 208913864}
@@ -14383,8 +14384,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1663731782}
-  - {fileID: 782318443}
-  - {fileID: 427226616}
   - {fileID: 208913867}
-  - {fileID: 2133611317}
   - {fileID: 460793712}
+  - {fileID: 2133611317}
+  - {fileID: 427226616}
+  - {fileID: 782318443}
