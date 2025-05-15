@@ -112,6 +112,7 @@ public class CameraController : MonoBehaviour
         while (timer < duration)
         {
             Camera.main.orthographicSize = Mathf.Lerp(startSize, endSize, timer / duration);
+            Debug.Log("!! " + Camera.main.orthographicSize);
             timer += Time.deltaTime;
             yield return null;
         }
