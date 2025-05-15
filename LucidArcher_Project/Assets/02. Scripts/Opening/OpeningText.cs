@@ -32,7 +32,7 @@ public class OpeningText : MonoBehaviour
         foreach (char c in line)
         {
             subtitleText.text += c;
-            if(c!=' ' &&typingSound != null && audioSource != null) //공백은 제외
+            if(c!=' ' &&typingSound != null && audioSource != null) //공백은 제외 매 타이핑 마다 타이핑 사운드 재생
             {
 
                 audioSource.PlayOneShot(typingSound);

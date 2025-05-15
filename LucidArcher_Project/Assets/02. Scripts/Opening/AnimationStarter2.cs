@@ -28,13 +28,13 @@ public class AnimationStarter2 : MonoBehaviour //애니메이션 재생을 위�
         yield return new WaitForSeconds(2.0f);
         anim3.SetTrigger("Play4");
 
-        gomain = true;
+        gomain = true; //애니메이션 종료 시 게임 시작 가능
 
     }
 
     private void Update()
     {
-        if (gomain == true && Input.GetKeyDown(KeyCode.Space))
+        if (gomain == true && Input.GetKeyDown(KeyCode.Space)) //스페이스바 입력시 게임씬 이동
         {
             SceneManager.LoadScene("TestMain");
 
