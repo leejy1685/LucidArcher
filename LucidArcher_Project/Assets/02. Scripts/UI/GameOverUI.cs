@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class GameOverUI : BaseUI
 {
@@ -29,6 +28,6 @@ public class GameOverUI : BaseUI
 
     public void OnClickStartButton()
     {
-        SceneManager.LoadScene("TitleScene");
+        SceneManager.LoadScene(1);
     }
 }

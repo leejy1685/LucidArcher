@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     //UI 매니저
     [SerializeField] UIManager UIManager;
-
+    [SerializeField] CameraController cameraController;
     public LevelUpUI levelUpUI;
     public WeaponStat weaponStat;
 
@@ -169,8 +169,12 @@ public class GameManager : MonoBehaviour
         isPlaying = !isAnimationPlaying;
     }
 
-    public void GameEnd()
+    public IEnumerator GameEnd(Transform initTransform)
     {
-        SceneManager.LoadScene("EndingScene");
+        cameraController.SetTarget(initTransform);
+        UIManager.FadeOut();
+        yield return cameraController.ZoomInTarget(1f, 1f);
+
+        SceneManager.LoadScene(3);
     }
 }

@@ -30,7 +30,7 @@ public class AnimationStarter : MonoBehaviour //애니메이션 재생을 위한
         yield return new WaitForSeconds(9f); // 애니메이션 종료 대기 시간
         intro.Stop(); //브금 중지
 
-        SceneManager.LoadScene("TitleScene"); // 타이틀 씬 이동
+        SceneManager.LoadScene(1); // 타이틀 씬 이동
 
 
     }
@@ -39,7 +39,7 @@ public class AnimationStarter : MonoBehaviour //애니메이션 재생을 위한
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("TitleScene"); // esc 입력시 애니메이션 스킵하고 타이틀 씬으로 바로 이동
+            SceneManager.LoadScene(1); // esc 입력시 애니메이션 스킵하고 타이틀 씬으로 바로 이동
 
         }
 
