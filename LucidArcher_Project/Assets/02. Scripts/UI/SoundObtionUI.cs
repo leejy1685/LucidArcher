@@ -13,8 +13,8 @@ public class SoundObtionUI : BaseUI
     {
         base.InIt(uiManager);
 
-        BGM.value = SoundManager.instance.MusicVolume;
-        SFX.value = SoundManager.instance.SoundEffectVolume;
+        BGM.value = SoundManager.MusicVolume;
+        SFX.value = SoundManager.SoundEffectVolume;
 
         OkButton.onClick.AddListener(OnclickOkButton);
     }
@@ -26,8 +26,8 @@ public class SoundObtionUI : BaseUI
 
     void OnclickOkButton()
     {
-        SoundManager.instance.MusicVolume = BGM.value;
-        SoundManager.instance.SoundEffectVolume = SFX.value;
+        SoundManager.MusicVolume = BGM.value;
+        SoundManager.SoundEffectVolume = SFX.value;
 
         uiManager.ChangeState(UIState.Robby);
     }

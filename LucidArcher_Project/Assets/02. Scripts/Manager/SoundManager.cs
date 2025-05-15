@@ -6,20 +6,20 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
 
-    [SerializeField][Range(0f, 1f)] public float SoundEffectVolume;// È¿°úÀ½ º¼·ı
-    [SerializeField][Range(0f, 1f)] private float soundEffectPitchVariance;// È¿°úÀ½ ÇÇÄ¡ ·£´ı¼º
-    [SerializeField][Range(0f, 1f)] public float MusicVolume;// ¹è°æ À½¾Ç º¼·ı
+    [SerializeField][Range(0f, 1f)] public static float SoundEffectVolume;// íš¨ê³¼ìŒ ë³¼ë¥¨
+    [SerializeField][Range(0f, 1f)] private float soundEffectPitchVariance;// íš¨ê³¼ìŒ í”¼ì¹˜ ëœë¤ì„±
+    [SerializeField][Range(0f, 1f)] public static float MusicVolume;// ë°°ê²½ ìŒì•… ë³¼ë¥¨
 
-    private AudioSource musicAudioSource;// ¹è°æ À½¾Ç¿ë AudioSource
-    public AudioClip defalutBGM;// ±âº» ¹è°æ À½¾Ç Å¬¸³
-    public AudioClip BattleBGM;//ÀüÅõ½Ã ¹è°æ À½¾Ç Å¬¸³
+    private AudioSource musicAudioSource;// ë°°ê²½ ìŒì•…ìš© AudioSource
+    public AudioClip defalutBGM;// ê¸°ë³¸ ë°°ê²½ ìŒì•… í´ë¦½
+    public AudioClip BattleBGM;//ì „íˆ¬ì‹œ ë°°ê²½ ìŒì•… í´ë¦½
 
-    public SoundSource soundSourcePrefab;// È¿°úÀ½À» Àç»ıÇÒ ÇÁ¸®ÆÕ (SoundSource »ç¿ë)
+    public SoundSource soundSourcePrefab;// íš¨ê³¼ìŒì„ ì¬ìƒí•  í”„ë¦¬íŒ¹ (SoundSource ì‚¬ìš©)
     private void Awake()
     {
         instance = this;
 
-        // ¹è°æÀ½ Àç»ı¿ë AudioSource ¼³Á¤
+        // ë°°ê²½ìŒ ì¬ìƒìš© AudioSource ì„¤ì •
         musicAudioSource = GetComponent<AudioSource>();
         musicAudioSource.volume = MusicVolume;
         musicAudioSource.loop = true;
@@ -30,19 +30,19 @@ public class SoundManager : MonoBehaviour
         musicAudioSource.volume = MusicVolume;
     }
 
-    //ÀüÅõ ½ÃÀÛ
+    //ì „íˆ¬ ì‹œì‘
     public void StartBattle()
     {
         ChangeBackGroundMusic(BattleBGM);
     }
 
-    //ÀüÅõ Á¾·á
+    //ì „íˆ¬ ì¢…ë£Œ
     public void EndBattle()
     {
         ChangeBackGroundMusic(defalutBGM);
     }
 
-    // ¹è°æ À½¾ÇÀ» ´Ù¸¥ Å¬¸³À¸·Î ±³Ã¼ÇÏ´Â ÇÔ¼ö
+    // ë°°ê²½ ìŒì•…ì„ ë‹¤ë¥¸ í´ë¦½ìœ¼ë¡œ êµì²´í•˜ëŠ” í•¨ìˆ˜
     public void ChangeBackGroundMusic(AudioClip clip)
     {
         musicAudioSource.Stop();
@@ -51,12 +51,12 @@ public class SoundManager : MonoBehaviour
     }
 
 
-    // È¿°úÀ½À» Àç»ıÇÏ´Â Á¤Àû ¸Ş¼­µå (¿ÜºÎ ¾îµğ¼­µç È£Ãâ °¡´É)
+    // íš¨ê³¼ìŒì„ ì¬ìƒí•˜ëŠ” ì •ì  ë©”ì„œë“œ (ì™¸ë¶€ ì–´ë””ì„œë“  í˜¸ì¶œ ê°€ëŠ¥)
     public static void PlayClip(AudioClip clip)
     {
-        // SoundSource ÇÁ¸®ÆÕ ÀÎ½ºÅÏ½º »ı¼º ÈÄ Àç»ı
+        // SoundSource í”„ë¦¬íŒ¹ ì¸ìŠ¤í„´ìŠ¤ ìƒì„± í›„ ì¬ìƒ
         SoundSource obj = Instantiate(instance.soundSourcePrefab);
         SoundSource soundSource = obj.GetComponent<SoundSource>();
-        soundSource.Play(clip, instance.SoundEffectVolume, instance.soundEffectPitchVariance);
+        soundSource.Play(clip, SoundEffectVolume, instance.soundEffectPitchVariance);
     }
 }
