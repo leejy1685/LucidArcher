@@ -24,7 +24,7 @@ public class KeySettingUI : BaseUI
         //초기 키값 가져오기
         for (int i = 0; i < (int)KeyInput.Count; i++)
         {
-            KeyButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = KeyManager.instance.keycode[i].ToString();
+            KeyButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = KeyManager.keycode[i].ToString();
             KeyButtons[i].onClick.AddListener(ChangeIndex);
         }
 
@@ -62,7 +62,7 @@ public class KeySettingUI : BaseUI
         if (keyEvent.isKey)
         {
             KeyButtons[index].GetComponentInChildren<TextMeshProUGUI>().text = keyEvent.keyCode.ToString();
-            KeyManager.instance.keycode[index] = keyEvent.keyCode;
+            KeyManager.keycode[index] = keyEvent.keyCode;
         }
     }
 

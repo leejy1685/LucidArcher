@@ -15,15 +15,9 @@ enum KeyInput
 }
 public class KeyManager : MonoBehaviour
 {
-    public static KeyManager instance;
-
-    private void Awake()
-    {
-        instance = this;
-    }
 
     //초기 키 설정
-    public KeyCode[] keycode =
+    public static KeyCode[] keycode =
     {
         KeyCode.W,
         KeyCode.S,
@@ -33,7 +27,7 @@ public class KeyManager : MonoBehaviour
     };
 
     //좌우 값 리턴
-    public float getHorizontal()
+    public static float getHorizontal()
     {
         float result = 0;
         if (Input.GetKey(keycode[(int)KeyInput.Left]))
@@ -45,7 +39,7 @@ public class KeyManager : MonoBehaviour
     }
 
     //위아래 값 리턴
-    public float getVertical()
+    public static float getVertical()
     {
         float result = 0;
         if (Input.GetKey(keycode[(int)KeyInput.Down]))
