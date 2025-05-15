@@ -13,8 +13,10 @@ public class AnimationStarter2 : MonoBehaviour //애니메이션 재생을 위�
     public Animator anim3; // 메인화면 전환 애니메이션
 
     bool gomain = false; // 키 입력이 true면 키 입력시 다음씬 이동
+
     void Start()
     {
+        Time.timeScale = 1.0f;
         StartCoroutine(PlayAnimations());
     }
 
