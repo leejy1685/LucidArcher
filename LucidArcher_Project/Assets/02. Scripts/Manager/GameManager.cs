@@ -175,6 +175,6 @@ public class GameManager : MonoBehaviour
         UIManager.FadeOut();
         yield return cameraController.ZoomInTarget(1f, 1f);
 
-        SceneManager.LoadScene("EndingScene");
+        SceneManager.LoadScene(3);
     }
 }

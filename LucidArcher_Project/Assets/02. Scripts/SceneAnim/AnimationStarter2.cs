@@ -38,7 +38,7 @@ public class AnimationStarter2 : MonoBehaviour //애니메이션 재생을 위�
     {
         if (gomain == true && Input.GetKeyDown(KeyCode.Space)) //스페이스바 입력시 게임씬 이동
         {
-            SceneManager.LoadScene("TestMain");
+            SceneManager.LoadScene(2);
 
         }
 

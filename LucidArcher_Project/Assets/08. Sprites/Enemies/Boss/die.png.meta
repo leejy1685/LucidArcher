@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 86ced2935995a434fa341f242ce92569
+guid: 39ddac43b349cfb438efe4c8513b3005
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -119,11 +119,37 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: move_0
+      name: die_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3bee07d2946d94944a6dc7229dfa2744
-      internalID: -1868056925
+      spriteID: 575d4454cc9cba54990b56cb9b40d538
+      internalID: -93423047
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: move_1
+      name: die_1
       rect:
         serializedVersion: 2
         x: 164
@@ -158,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9328e3104f97b1b47862baef1e363198
-      internalID: 479175539
+      spriteID: cff13363c64373048aa4e1fde4420110
+      internalID: 1602733478
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: move_2
+      name: die_2
       rect:
         serializedVersion: 2
         x: 328
@@ -179,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 47e9a0c77c4a6ec4588ec4110aa441bf
-      internalID: 1993837946
+      spriteID: 3e3bfe998c9f45d498b34d109f000713
+      internalID: -738446597
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: move_3
+      name: die_3
       rect:
         serializedVersion: 2
         x: 492
@@ -200,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 425e201a580c6084dae94e3401795380
-      internalID: 2126114400
+      spriteID: 78f759c9de0a12d44a8fbcc3f1133014
+      internalID: -859046451
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: move_4
+      name: die_4
       rect:
         serializedVersion: 2
         x: 656
@@ -221,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7afca0fdb529984d948b2cdd48c5e13
-      internalID: -1439228766
+      spriteID: 08710ae9d19eb8446b7ba47abe833623
+      internalID: 913217000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: move_5
+      name: die_5
       rect:
         serializedVersion: 2
         x: 820
@@ -242,8 +268,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1172ed3dcb82ef248b27cc11b5015831
-      internalID: 909397642
+      spriteID: 43691fc1ba276524fbf77cd6580fecb1
+      internalID: 1639522889
       vertices: []
       indices: 
       edges: []
@@ -259,12 +285,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      move_0: -1868056925
-      move_1: 479175539
-      move_2: 1993837946
-      move_3: 2126114400
-      move_4: -1439228766
-      move_5: 909397642
+      die_0: -93423047
+      die_1: 1602733478
+      die_2: -738446597
+      die_3: -859046451
+      die_4: 913217000
+      die_5: 1639522889
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
