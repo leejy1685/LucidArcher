@@ -61,7 +61,7 @@ public class MonsterSpawner : MonoBehaviour
     {
         monsterCount--;
 
-        if(monsterCount <= 0)
+        if(monsterCount == 0)
         {
             StartCoroutine(room.EndEvent());
         }

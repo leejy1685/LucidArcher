@@ -18,6 +18,7 @@ public abstract class MonsterBase : MonoBehaviour
     [SerializeField] protected Animator animator;
     [SerializeField] public Rigidbody2D rb;
     private MonsterSpawner monsterSpawner;
+    private bool isDead = false;
 
     public GameObject detectedEnemy;    // 쫒아가는 적, 여기서는 플레이어
 
@@ -25,7 +26,7 @@ public abstract class MonsterBase : MonoBehaviour
     //넉백 적용
     KnockbackApplier knockbackApplier;
 
-
+    
 
     public event Action<float> OnTakeDamage;
     float spriteOffsetX;
@@ -68,6 +69,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (isDead) return;
 
         // TODO : HP 소모 계산
         float effectiveDamage = Mathf.Max(0.5f, damage - stats.Def); 
@@ -89,6 +91,8 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected virtual void Die()
     {
+        isDead = true;
+
         DropItems();
 
         gameObject.SetActive(false);
