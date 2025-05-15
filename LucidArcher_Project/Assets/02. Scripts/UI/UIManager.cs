@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
         keySettingUI = GetComponentInChildren<KeySettingUI>(true);
         keySettingUI.InIt(this);
 
-        ChangeState(UIState.Start);
+        ChangeState(UIState.Game);
     }
 
     public void SetPlayGame()

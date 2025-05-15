@@ -18,7 +18,6 @@ public class StartUI : BaseUI
 
     public void OnClickRobbyButton()
     {
-        GameManager.Instance.StartGame();
         uiManager.ChangeState(UIState.Robby);
     }
 

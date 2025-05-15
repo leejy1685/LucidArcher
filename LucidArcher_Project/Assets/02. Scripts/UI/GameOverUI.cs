@@ -29,6 +29,6 @@ public class GameOverUI : BaseUI
 
     public void OnClickStartButton()
     {
-        uiManager.ChangeState(UIState.Start);
+        SceneManager.LoadScene("TitleScene");
     }
 }
