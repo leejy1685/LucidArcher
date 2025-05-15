@@ -11,7 +11,7 @@ public class SkillCardController : MonoBehaviour
     private void Start()
     {
         levelUpUI = GameManager.Instance.levelUpUI;
-        playerStatHandler = GameManager.Instance.player.Stat;
+        playerStatHandler = GameManager.Instance.GetPlayerStatInfo();
         weaponStat = GameManager.Instance.weaponStat;
     }
 

@@ -55,7 +55,7 @@ public class MarbleWhale : MonsterBase
     public override void Init(MonsterSpawner _monsterSpawner, Vector3 position)
     {
         base.Init(_monsterSpawner, position);
-        detectedEnemy = GameManager.Instance.player.gameObject;
+        detectedEnemy = GameManager.Instance.GetPlayerTransform().gameObject;
         actArea = transform.parent.GetComponent<Location>();
 
         foreach (IEnemyPattern pattern in patterns)

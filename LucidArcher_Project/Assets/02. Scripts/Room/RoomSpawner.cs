@@ -14,7 +14,6 @@ public class RoomSpawner : MonoBehaviour
     private const int MAX_ROOM = 6;
 
     // 외부 오브젝트
-    [SerializeField] private GameObject player;
     [SerializeField] private CameraController cameraController;
     [SerializeField] private UIManager uiManager;
 
@@ -51,17 +50,17 @@ public class RoomSpawner : MonoBehaviour
         {
             case 1:
                 currentRoom = Instantiate(startRoom, transform);
-                currentRoom.InitRoom(RoomState.Start, initPosition, player);
+                currentRoom.InitRoom(RoomState.Start, initPosition, GameManager.Instance.GetPlayerTransform());
                 break;
 
             case MAX_ROOM:
                 currentRoom = Instantiate(bossRoom, transform);
-                currentRoom.InitRoom(RoomState.Boss, initPosition, player);
+                currentRoom.InitRoom(RoomState.Boss, initPosition, GameManager.Instance.GetPlayerTransform());
                 break;
 
             default:
                 currentRoom = Instantiate(rooms[Random.Range(0, rooms.Length)], transform);
-                currentRoom.InitRoom(RoomState.Enemy, initPosition, player);
+                currentRoom.InitRoom(RoomState.Enemy, initPosition, GameManager.Instance.GetPlayerTransform());
                 break;
         }
     }

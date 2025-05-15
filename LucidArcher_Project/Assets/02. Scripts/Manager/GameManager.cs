@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public WeaponStat weaponStat;
 
     //플레이어
-    public PlayerController player;
+    [SerializeField] PlayerController player;
     
     //게임 실행 중
     private bool isPlaying;
@@ -80,6 +80,16 @@ public class GameManager : MonoBehaviour
     {
         weaponStat.UpgradeBulletNum();
         UIManager.ChangeState(UIState.Game);
+    }
+
+    public Transform GetPlayerTransform()
+    {
+        return player.transform;
+    }
+
+    public PlayerStatHendler GetPlayerStatInfo()
+    {
+        return player.Stat;
     }
 
     //게임 시작 및 데이터 초기화

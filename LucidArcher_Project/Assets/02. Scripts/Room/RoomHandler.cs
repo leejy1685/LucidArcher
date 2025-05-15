@@ -16,7 +16,7 @@ public class RoomHandler : MonoBehaviour
     [SerializeField] private GameObject exitDetector;
     [SerializeField] private MonsterSpawner monsterSpawner;
     private GameObject stair;
-    private GameObject player;
+    private Transform player;
 
     // 프리팹
     [Header("Prefabs")]
@@ -42,7 +42,7 @@ public class RoomHandler : MonoBehaviour
     }
 
     // 방의 위치와 상태 등 초기화
-    public void InitRoom(RoomState roomState, Vector3 position, GameObject _player)
+    public void InitRoom(RoomState roomState, Vector3 position, Transform _player)
     {
         this.roomState = roomState;
         transform.position = position;
@@ -73,7 +73,7 @@ public class RoomHandler : MonoBehaviour
         isExcuted = true;
         exitDetector.SetActive(true);
 
-        cameraController.SetTarget(gate.NearestGate(player.transform.position));
+        cameraController.SetTarget(gate.NearestGate(player.position));
         yield return cameraController.ZoomInTarget(ZOOM_SIZE, ZOOM_DURATION);
 
         gate.ControllGate(true);
@@ -100,7 +100,7 @@ public class RoomHandler : MonoBehaviour
 
         SoundManager.instance.EndBattle();
 
-        Transform target = roomState == RoomState.Boss ? stair.transform : gate.NearestGate(player.transform.position);
+        Transform target = roomState == RoomState.Boss ? stair.transform : gate.NearestGate(player.position);
 
         cameraController.SetTarget(target);
         yield return cameraController.ZoomInTarget(ZOOM_SIZE, ZOOM_DURATION);
