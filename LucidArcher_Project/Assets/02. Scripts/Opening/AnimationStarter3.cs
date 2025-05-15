@@ -34,12 +34,12 @@ public class AnimationStarter3 : MonoBehaviour //애니메이션 재생을 위�
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("IntroMenuScene");
+            SceneManager.LoadScene("TitleScene");
 
         }
         if (Input.GetKeyDown(KeyCode.Space) && restart ==true)
         {
-            SceneManager.LoadScene("IntroMenuScene"); 
+            SceneManager.LoadScene("TitleScene"); 
         }
 
 
