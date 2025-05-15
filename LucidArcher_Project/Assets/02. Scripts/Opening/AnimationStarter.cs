@@ -7,12 +7,12 @@ public class AnimationStarter : MonoBehaviour //애니메이션 재생을 위한
 {
 
     public AudioSource intro; // 인트로동안 재생되는 브금
-    public AudioSource main; // 메인화면 브금
-    public Animator anim1; // 눈깜빡 애니메이션
+    
+    public Animator anim1; // 눈깜빡 화면 애니메이션
     public Animator anim2; // 팀로고 애니메이션
-    public Animator anim3; // 메인화면 전환 애니메이션
+    
 
-    bool gomain = false; // 키 입력이 true면 키 입력시 다음씬 이동
+
     void Start()
     {
         StartCoroutine(PlayAnimations());
@@ -20,31 +20,26 @@ public class AnimationStarter : MonoBehaviour //애니메이션 재생을 위한
 
     IEnumerator PlayAnimations()
     {
-        intro.Play();
-        anim1.SetTrigger("Play1");
+        intro.Play(); //브금 재생
+        anim1.SetTrigger("Play1"); // 화면 애니메이션 재생
 
-        yield return new WaitForSeconds(37f);
+        yield return new WaitForSeconds(37f); //애니메이션 종료 대기 시간
 
-        anim2.SetTrigger("Play2"); ;
+        anim2.SetTrigger("Play2"); ; // 팀로고 애니메이션
 
-        yield return new WaitForSeconds(9f);
-        intro.Stop();
-        main.Play();
-        yield return new WaitForSeconds(0.5f); //  (오디오 전환과 애니메이션 전환처리가 한 프레임내에 이루어지지 않도록 대기)
+        yield return new WaitForSeconds(9f); // 애니메이션 종료 대기 시간
+        intro.Stop(); //브금 중지
 
-        anim1.SetTrigger("Play3");
-        yield return new WaitForSeconds(2.0f);
-        anim3.SetTrigger("Play4");
+        SceneManager.LoadScene("TitleScene"); // 타이틀 씬 이동
 
-        gomain = true;
 
     }
 
     private void Update()
     {
-        if (gomain == true && Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("TestMain");
+            SceneManager.LoadScene("TitleScene"); // esc 입력시 애니메이션 스킵하고 타이틀 씬으로 바로 이동
 
         }
 
