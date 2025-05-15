@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Timeline;
 
 public class GameManager : MonoBehaviour
@@ -84,7 +85,7 @@ public class GameManager : MonoBehaviour
 
     public Transform GetPlayerTransform()
     {
-        return player.transform;
+        return player.gameObject.transform;
     }
 
     public PlayerStatHendler GetPlayerStatInfo()
@@ -166,5 +167,10 @@ public class GameManager : MonoBehaviour
     public void PauseGame(bool isAnimationPlaying)
     {
         isPlaying = !isAnimationPlaying;
+    }
+
+    public void GameEnd()
+    {
+        SceneManager.LoadScene("EndingScene");
     }
 }

@@ -36,18 +36,14 @@ public class RoomHandler : MonoBehaviour
     [SerializeField] private AudioClip openSound;
     [SerializeField] private AudioClip closeSound;
 
-    private void Awake()
-    {
-        cameraController = Camera.main.gameObject.GetComponent<CameraController>();
-    }
-
     // 방의 위치와 상태 등 초기화
-    public void InitRoom(RoomState roomState, Vector3 position, Transform _player)
+    public void InitRoom(RoomState roomState, Vector3 position, Transform _player, CameraController _cameraController)
     {
         this.roomState = roomState;
         transform.position = position;
         monsterSpawner.Init(this);
-        player = _player; // 일단 테스트 용
+        player = _player;
+        cameraController = _cameraController;
 
         cameraController.UpdateRoomLimit(position,
             exitDetector.transform.GetChild(3).localPosition.x, exitDetector.transform.GetChild(0).localPosition.y);

@@ -21,8 +21,6 @@ public class CameraController : MonoBehaviour
         initialCameraSize = Camera.main.orthographicSize;
         UpdateCameraSize(initialCameraSize);
         SetOriginTarget();
-        maxX = cameraHalfWidth;
-        maxY = cameraHalfHeight;
     }
 
     private void Update()
