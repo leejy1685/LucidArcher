@@ -13,10 +13,17 @@ enum KeyInput
     Dash,
     Count
 }
-public class KeyManager
+public class KeyManager : MonoBehaviour
 {
-    //ÃÊ±â Å° ¼³Á¤
-    public static KeyCode[] keycode =
+    public static KeyManager instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    //ì´ˆê¸° í‚¤ ì„¤ì •
+    public KeyCode[] keycode =
     {
         KeyCode.W,
         KeyCode.S,
@@ -25,8 +32,8 @@ public class KeyManager
         KeyCode.J
     };
 
-    //ÁÂ¿ì °ª ¸®ÅÏ
-    public static float getHorizontal()
+    //ì¢Œìš° ê°’ ë¦¬í„´
+    public float getHorizontal()
     {
         float result = 0;
         if (Input.GetKey(keycode[(int)KeyInput.Left]))
@@ -37,8 +44,8 @@ public class KeyManager
         return result;
     }
 
-    //À§¾Æ·¡ °ª ¸®ÅÏ
-    public static float getVertical()
+    //ìœ„ì•„ëž˜ ê°’ ë¦¬í„´
+    public float getVertical()
     {
         float result = 0;
         if (Input.GetKey(keycode[(int)KeyInput.Down]))
